@@ -1,15 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Perfil from '../assets/img/perfil.png'
-import Employees from '../assets/img/employees.png'
-import Historial from '../assets/img/historial.png'
-import Inventario from '../assets/img/inven.png'
+import Perfil from '../../assets/img/perfil.png'
+import Employees from '../../assets/img/employees.png'
+import Historial from '../../assets/img/historial.png'
+import Inventario from '../../assets/img/inven.png'
 import { useState } from 'react';
-import Logo from '../assets/img/logo.png'
+import Logo from '../../assets/img/logo.png'
 
 const blue = "#282C37";
 const orange = '#F75409';
 
-export const SinginPage = () => {
+export const Profile = () => {
 
     const [hovered1, setHovered1] = useState(false);
     const [hovered2, setHovered2] = useState(false);
@@ -47,12 +47,19 @@ export const SinginPage = () => {
                         </div>
                         
                     </ul>
-                        <button class=" btn rounded-pill fs-5" style={{backgroundColor: orange, width: 80, height: 37}}>Salir</button>
+                    <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 100, height: 35 }}> Salir </button>
                     </div>
                 </div>
             </nav>
+
+            <div className="">
+                <div className="">
+                    
+                </div>
+            </div>
+
         </>
     )
 }
 
-export default SinginPage;
+export default Profile;
