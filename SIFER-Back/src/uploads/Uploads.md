@@ -1,0 +1,1 @@
+En el caso de que se vayan a subir imagenes se guardarian aqui, o la logica iria aqui
