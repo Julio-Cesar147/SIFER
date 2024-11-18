@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OrderDetails from './OrderDetails';
+import NavBarEmployee from './NavBarEmployee';
 
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,80 +53,85 @@ const Orders = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-dark mx-auto text-center">Pedidos</h2>
+    <>
+      {/* NavBar para empleados */}
+      <NavBarEmployee />
 
-      {/* Buscador */}
-      <div className="input-group mb-4">
-        <input
-          type="text"
-          className="form-control rounded-pill"
-          placeholder="Buscar cliente..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <span className="input-group-text bg-white border-0">
-          <i className="bi bi-search"></i>
-        </span>
-      </div>
+      <div className="container mt-5">
+        <h2 className="text-dark mx-auto text-center">Pedidos</h2>
 
-      {/* Tabla de órdenes */}
-      <table className="table table-striped table-hover">
-        <thead className="table-primary">
-          <tr>
-            <th scope="col">Número de orden</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Cantidad productos</th>
-            <th scope="col">Total</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map((order, index) => (
-              <tr
-                key={index}
-                className={order.estado === 'Entregado' ? 'table-success' : ''}
-                onClick={() => setSelectedOrder(order)}
-                style={{ cursor: 'pointer' }}
-              >
-                <td>{order.numero}</td>
-                <td>{order.cliente}</td>
-                <td>{order.productos}</td>
-                <td>${order.total}</td>
-                <td>{order.estado}</td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Evitar que se ejecute el evento de seleccion ES IMPORTANTE
-                      handleDelete(order.numero);
-                    }}
-                  >
-                    <i className="bi bi-x-circle"></i>
-                  </button>
+        {/* Buscador */}
+        <div className="input-group mb-4">
+          <input
+            type="text"
+            className="form-control rounded-pill"
+            placeholder="Buscar cliente..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span className="input-group-text bg-white border-0">
+            <i className="bi bi-search"></i>
+          </span>
+        </div>
+
+        {/* Tabla de órdenes */}
+        <table className="table table-striped table-hover">
+          <thead className="table-primary">
+            <tr>
+              <th scope="col">Número de orden</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Cantidad productos</th>
+              <th scope="col">Total</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map((order, index) => (
+                <tr
+                  key={index}
+                  className={order.estado === 'Entregado' ? 'table-success' : ''}
+                  onClick={() => setSelectedOrder(order)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <td>{order.numero}</td>
+                  <td>{order.cliente}</td>
+                  <td>{order.productos}</td>
+                  <td>${order.total}</td>
+                  <td>{order.estado}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Evitar que se ejecute el evento de selección
+                        handleDelete(order.numero);
+                      }}
+                    >
+                      <i className="bi bi-x-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center text-muted">
+                  No se encontraron resultados
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" className="text-center text-muted">
-                No se encontraron resultados
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
 
-      {/* Mostrar detalles de la orden seleccionada */}
-      {selectedOrder && (
-        <OrderDetails
-          selectedOrder={selectedOrder}
-          onClose={() => setSelectedOrder(null)}
-        />
-      )}
-    </div>
+        {/* Mostrar detalles de la orden seleccionada */}
+        {selectedOrder && (
+          <OrderDetails
+            selectedOrder={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+          />
+        )}
+      </div>
+    </>
   );
 };
 
