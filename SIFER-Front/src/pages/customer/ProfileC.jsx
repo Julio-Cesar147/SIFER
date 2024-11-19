@@ -20,7 +20,7 @@ export const ProfileC = () => {
                     </a>
                     
                     <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <a class= "nav-link text-white fs-4" href="#">  Herramientas </a>
+                        <a class= "nav-link text-white fs-4" href="/Home">  Herramientas </a>
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -29,7 +29,7 @@ export const ProfileC = () => {
                             <img src={Lupa} style={{width:25, height:27}} className='me-2'/>
                         </div>
                     </ul>
-                        <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}>
+                        <button href="/Home" className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}>
                             Salir
                         </button>
                     </div>

@@ -21,7 +21,7 @@ export const SinginPage = () => {
                     </a>
                     
                     <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <a class= "nav-link text-white fs-4" href="#">  Herramientas </a>
+                        <a class= "nav-link text-white fs-4" href="/Home">  Herramientas </a>
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 

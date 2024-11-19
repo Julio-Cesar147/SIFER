@@ -14,12 +14,12 @@ export const Cart = () => {
         <>
             <nav class="navbar navbar-expand-lg p-0 ">
                 <div style={{backgroundColor: blue}} class="container-fluid">
-                    <a class="navbar-brand text-white" href="#"> 
+                    <a class="navbar-brand text-white" href="/Home"> 
                         <img src={Letras} style={{width: 250, height: 50}} />
                     </a>
                     
                     <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <a class= "nav-link text-white fs-4" href="#">  Herramientas </a>
+                        <a class= "nav-link text-white fs-4" href="/Home">  Herramientas </a>
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 

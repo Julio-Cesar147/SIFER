@@ -10,6 +10,6 @@ import ProfileC from './pages/customer/ProfileC.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ProfileC/>
+    <SinginPage/>
   </StrictMode>
 )
