@@ -24,7 +24,7 @@ const NavBarEmployee = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 w-100 d-flex justify-content-center">
                         {/* Contenedor centrado con Flexbox */}
                         <div className="bg-white rounded-pill border border-dark-subtle d-flex">
-                            <a className="nav-link active px-5" href="#"
+                            <a className="nav-link active px-5" href="/profile"
                                 onMouseEnter={() => setHovered1(true)} onMouseLeave={() => setHovered1(false)}
                                 style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
                                 <img src={Perfil} style={{ width: 41, height: 41, transform: hovered1 ? 'scale(1.1)' : 'scale(1)', filter: hovered1 ? 'brightness(1.2)' : 'brightness(1)' }} alt="perfil" />
