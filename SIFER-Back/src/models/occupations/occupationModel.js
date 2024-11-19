@@ -1,22 +1,22 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const sequelize = require('../../config/database')
 
-const Category = sequelize.define( '', {
-    idCategory: {
+const Occupation = sequelize.define( 'Occupation', {
+    idOccupation: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
-    category: {
+    occupation: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false        
     }
 },{
-    tablename: 'Categories',
+    tablename: 'occupations',
     timestamps: false
 })
 
 module.exports = {
-    Category
+    Occupation
 }

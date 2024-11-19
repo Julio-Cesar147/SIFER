@@ -13,7 +13,7 @@ const Unit = sequelize.define( 'Unit', {
         allowNull: false
     }
 },{
-    tablename: 'Unit',
+    tablename: 'unit',
     timestamps: false
 })
 
