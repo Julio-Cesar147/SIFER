@@ -13,7 +13,7 @@ const Occupation = sequelize.define( 'Occupation', {
         allowNull: false        
     }
 },{
-    tablename: 'occupations',
+    tableName: 'occupations',
     timestamps: false
 })
 

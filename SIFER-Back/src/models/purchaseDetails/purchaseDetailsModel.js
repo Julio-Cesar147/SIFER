@@ -21,7 +21,7 @@ const PurchaseDetail = sequelize.define( 'PurchaseDetail', {
         allowNull: false
     }
 },{
-    tablename: 'purchase_details',
+    tableName: 'purchase_details',
     timestamps: false
 })
 

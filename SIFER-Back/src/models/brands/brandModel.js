@@ -13,7 +13,7 @@ const Brand = sequelize.define( 'Brand', {
         allowNull: false
     }
 },{
-    tablename: 'brands',
+    tablName: 'brands',
     timestamps: false
 })
 

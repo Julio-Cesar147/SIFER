@@ -59,7 +59,7 @@ const Product = sequelize.define( 'Product', {
         allowNull: false
     }
 },{
-    tablename: 'products',
+    tableName: 'products',
     timestamps: false
 })
 

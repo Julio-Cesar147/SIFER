@@ -22,7 +22,7 @@ const History = sequelize.define( 'History', {
         allowNull: false
     }
 },{
-    tablename: 'history',
+    tableName: 'history',
     timestamps: false
 })
 

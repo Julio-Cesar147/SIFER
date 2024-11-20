@@ -28,7 +28,7 @@ const Reservation = sequelize.define( 'Reservation', {
         allowNull: false
     }
 },{
-    tablename: 'reservations',
+    tableName: 'reservations',
     timestamps: false
 })
 
