@@ -1,5 +1,5 @@
 const { app } = require('./config/server')
-const { sequelize } = require('./config/database')
+const sequelize = require('./config/database')
 
 const main = async () => {
     try {
