@@ -4,6 +4,7 @@ const cors = require('cors')
 
 //En esta parte se mandan a traer las rutas del archivo router, por lo que se importa de ese archivo
 //const {} = require()
+const { authRouter } = require('../routes/router')
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.get('/', (request, response) => {
  * Por ruta se entiende que son las que se traen del archivo router,
  * las cuales se importaron mas arriba
  */
+app.use('/api/auth', authRouter)
 
 module.exports = {
     app
