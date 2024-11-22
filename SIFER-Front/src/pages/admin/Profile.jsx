@@ -29,18 +29,18 @@ export const Profile = () => {
 
                         <div class="bg-white rounded-pill border border-dark-subtle d-flex position-absolute start-50 translate-middle">
                             
-                            <a class="nav-link active px-5" aria-current="page" href="#"  onMouseEnter={() => setHovered1(true)} onMouseLeave={() => setHovered1(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
+                            <a class="nav-link active px-5" aria-current="page" href="/profile"  onMouseEnter={() => setHovered1(true)} onMouseLeave={() => setHovered1(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
                             <img src={Perfil} style={{width: 41, height: 41, transform: hovered1 ? 'scale(1.1)' : 'scale(1)',filter: hovered1 ? 'brightness(1.2)' : 'brightness(1)',}} alt="usuarios"/></a>
             
-                            <a class="nav-link active px-5" aria-current="page" href="#"  onMouseEnter={() => setHovered2(true)} onMouseLeave={() => setHovered2(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
+                            <a class="nav-link active px-5" aria-current="page" href="/Employees"  onMouseEnter={() => setHovered2(true)} onMouseLeave={() => setHovered2(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
                                 <img src={Employees} style={{width: 41, height: 41, transform: hovered2 ? 'scale(1.1)' : 'scale(1)',filter: hovered2 ? 'brightness(1.2)' : 'brightness(1)',}} alt="usuarios"/>
                             </a>
                     
-                            <a class="nav-link active px-5" aria-current="page" href="#"  onMouseEnter={() => setHovered3(true)} onMouseLeave={() => setHovered3(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
+                            <a class="nav-link active px-5" aria-current="page" href="/history"  onMouseEnter={() => setHovered3(true)} onMouseLeave={() => setHovered3(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
                                 <img src={Historial} style={{width: 41, height: 41, transform: hovered3 ? 'scale(1.1)' : 'scale(1)',filter: hovered3 ? 'brightness(1.2)' : 'brightness(1)',}} alt="usuarios"/>
                             </a>
                             
-                            <a class="nav-link active px-5" aria-current="page" href="#"  onMouseEnter={() => setHovered4(true)} onMouseLeave={() => setHovered4(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
+                            <a class="nav-link active px-5" aria-current="page" href="/inventary"  onMouseEnter={() => setHovered4(true)} onMouseLeave={() => setHovered4(false)}style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}> 
                                 <img src={Inventario} style={{width: 41, height: 41, transform: hovered4 ? 'scale(1.1)' : 'scale(1)',filter: hovered4 ? 'brightness(1.2)' : 'brightness(1)',}} alt="usuarios"/>
                             </a>
                 

@@ -52,6 +52,7 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
           className="form-control"
           placeholder="Dinero recibido"
           value={payment}
+          min={1}
           onChange={(e) => setPayment(e.target.value)}
         />
         <button className="btn btn-success ms-2" onClick={handleSale}>

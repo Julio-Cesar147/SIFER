@@ -44,7 +44,7 @@ const NavBarEmployee = () => {
                         </div>
                     </ul>
 
-                    <button className="btn rounded-pill fs-5" style={{ backgroundColor: orange, width: 80, height: 37 }}>Salir</button>
+                    <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 100, height: 35 }}> Salir </button>
                 </div>
             </div>
         </nav>

@@ -9,8 +9,19 @@ const orange = '#F75409';
 
 export const SinginPage = () => {
 
-    const [hovered1, setHovered1] = useState(false);
-    const [hovered2, setHovered2] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Funcionalidad de autenticación
+    };
 
     return(
         <>
@@ -30,7 +41,8 @@ export const SinginPage = () => {
                             <img src={Lupa} style={{width:25, height:27}} className='me-2'/>
                         </div>
                     </ul>
-                        <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}>
+                        <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}
+                            onClick={() => (window.location.href = '/')}>
                             Iniciar Sesión
                         </button>
                     </div>
@@ -48,12 +60,15 @@ export const SinginPage = () => {
                         <form className="w-75">
                             <div className="mb-3">
                                 <Label htmlFor="username" className="form-label fw-bold text-primary">Usuario:</Label>
-                                    <input type="text" className="form-control" id="username" name="username" placeholder="Usuario" />
+                                    <input type="text" className="form-control" id="username" name="username" placeholder="Usuario" required value={username}
+                                    onChange={(e) => setUsername(e.target.value)}/>
                             </div>
 
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label fw-bold text-primary">Contraseña:</label>
-                                <input type="password" className="form-control" id="password" name="password" placeholder="********" required/>
+                                <input type= {showPassword ? 'text' : 'password'} className="form-control" id="password" name="password" placeholder="********" required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}/>
                             </div>
 
                             <button type="submit" className="btn btn-primary w-100 mb-4"> Iniciar Sesión </button>
