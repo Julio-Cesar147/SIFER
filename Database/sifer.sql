@@ -136,3 +136,39 @@ CREATE TABLE purchase_details (
     FOREIGN KEY (record) REFERENCES history(idHistory),
     FOREIGN KEY (product) REFERENCES products(idProduct)
 );
+
+INSERT INTO roles(role) VALUES
+('Administrador'),
+('Empleado'),
+('Cliente');
+
+INSERT INTO occupations(occupation) VALUES
+('Albañil'),
+('Carpintero'),
+('Plomero'),
+('Electricista'),
+('Mecánico'),
+('Chofer'),
+('Costurera'),
+('Herrero'),
+('Pintor'),
+('Jardinero'),
+('Panadero'),
+('Pescador'),
+('Zapatero'),
+('Comerciante'),
+('Artesano'),
+('Cocinero'),
+('Repartidor'),
+('Fontanero'),
+('Sastre'),
+('Vendedor ambulante');
+
+INSERT INTO units(unit) VALUES
+('Kilo(s)'),
+('Pieza(s)'),
+('Metro(s)'),
+('Litro(s)'),
+('Rollo(s)'),
+('Paquete(s)'),
+('Bulto(s)');
