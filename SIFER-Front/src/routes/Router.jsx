@@ -1,25 +1,44 @@
-import {Route, Routes } from "react-router-dom"
-import SinginPage from "../auth/SinginPage"
-import Cart from "../pages/customer/Cart"
-import Home from "../pages/customer/Home"
+import { Route, Routes } from "react-router-dom";
+import Login from '../auth/Login.jsx';
+import SinginPage from '../auth/SinginPage.jsx';
+import Orders from '../pages/Employee/Orders.jsx'; 
+import Profile from '../pages/admin/Profile.jsx'; 
+import Products from '../pages/Employee/Products.jsx';
+import Cart from'../pages/customer/Cart.jsx';
+import Home from '../pages/customer/Home.jsx';
+import NavBar from "../components/NavBar.jsx";
 
+export const Router = () => {
+  return (
+    <>
+      <div className="flex justify-around">
+       
+        <div className="mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border bg-white mb-3">
+          <Routes>
+            {/* Ruta pal inicio */}
+            <Route path="/home" element={<Home />} />
 
-export const Routers = () => {
-    return(
-        <>
-        <div className='flex justify-around'>
-            
-            <NavBar />
-            <div className='mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border bg-white mb-3'>
-            <Routes>
-                <Route  path="/Home" element={<Home />} />
-                <Route  path="/Cart" element={<Cart />} />
-                <Route  path="/SinginPage" element={<SinginPage />} />
+            {/* Ruta pal  */}
+            <Route path="/cart" element={<Cart />} />
 
-            </Routes>
-            </div>
-    
+            {/* Ruta pal inicio */}
+            <Route path="/" element={<SinginPage />} />
+
+            {/* Ruta pa pedidos */}
+            <Route path="/orders" element={<Orders />} />
+
+            {/* Ruta pal perfil */}
+            <Route path="/profile" element={<Profile />} />
+
+            {/* Ruta pa los productikis */}
+            <Route path="/products" element={<Products />} />
+
+            {/* Ruta pa los productikis */}
+            <Route path="/login" element={<Login />} />
+
+          </Routes>
         </div>
-        </>
-    )
-}
+      </div>
+    </>
+  );
+};
