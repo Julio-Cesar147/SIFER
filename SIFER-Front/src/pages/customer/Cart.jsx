@@ -55,7 +55,8 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p>
+                                    <input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} value={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
@@ -75,7 +76,7 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' value={1} min={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
@@ -99,7 +100,7 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' value={1} min={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
@@ -119,7 +120,7 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' value={1} min={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
