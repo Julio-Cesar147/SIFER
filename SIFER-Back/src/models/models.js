@@ -1,15 +1,15 @@
-const { Role } = require('../models/roles/roleModel')
-const { Occupation } = require('../models/occupations/occupationModel')
-const { Brand } = require('../models/brands/brandModel')
-const { Category } = require('../models/categories/categoryModel')
-const { Unit } = require('../models/units/unitModel')
-const { User } = require('../models/users/userModel')
-const { Address } = require('../models/addresses/addressModel')
-const { Product } = require('../models/products/productModel')
-const { Reservation } = require('../models/reservations/reservationModel')
-const { ReservationDetail } = require('../models/reservationDetails/reservationDetailModel')
-const { History } = require('../models/histories/historyModel')
-const { PurchaseDetail } = require('../models/purchaseDetails/purchaseDetailsModel')
+const { Role } = require('./roles/roleModel')
+const { Occupation } = require('./occupations/occupationModel')
+const { Brand } = require('./brands/brandModel')
+const { Category } = require('./categories/categoryModel')
+const { Unit } = require('./units/unitModel')
+const { User } = require('./users/userModel')
+const { Address } = require('./addresses/addressModel')
+const { Product } = require('./products/productModel')
+const { Reservation } = require('./reservations/reservationModel')
+const { ReservationDetail } = require('./reservationDetails/reservationDetailModel')
+const { History } = require('./histories/historyModel')
+const { PurchaseDetail } = require('./purchaseDetails/purchaseDetailsModel')
 
 // Relaciones declaradas en la tabla de users
 User.belongsTo(Role, { foreignKey: 'role' })
@@ -53,3 +53,18 @@ History.hasMany(PurchaseDetail, { foreignKey: 'record' })
 
 PurchaseDetail.belongsTo(Product, { foreignKey: 'product' })
 Product.hasMany(PurchaseDetail, { foreignKey: 'product' })
+
+module.exports = {
+    Role,
+    Occupation,
+    Brand, 
+    Category,
+    Unit,
+    User,
+    Address,
+    Product,
+    Reservation,
+    ReservationDetail,
+    History,
+    PurchaseDetail
+}

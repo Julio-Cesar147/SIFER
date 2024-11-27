@@ -14,6 +14,4 @@ const sequelize = new Sequelize(process.env.DBNAME, process.env.DBUSER, process.
     }
 })
 
-module.exports = {
-    sequelize
-}
+module.exports = sequelize
