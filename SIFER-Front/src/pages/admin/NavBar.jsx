@@ -18,7 +18,7 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg p-0">
             <div style={{ backgroundColor: blue }} className="container-fluid">
-                <a className="navbar-brand text-white" href="#">
+                <a className="navbar-brand text-white" href="/">
                     <img src={Logo} style={{ width: 100, height: 70 }} alt="Logo" />
                 </a>
 
@@ -43,14 +43,15 @@ const Navbar = () => {
                                 <img src={Historial} style={{ width: 41, height: 41, transform: hovered3 ? 'scale(1.1)' : 'scale(1)', filter: hovered3 ? 'brightness(1.2)' : 'brightness(1)' }} alt="historial" />
                             </a>
 
-                            <a className="nav-link active px-5" href="/inventary"
+                            <a className="nav-link active px-5" href="/inventory"
                                 onMouseEnter={() => setHovered4(true)} onMouseLeave={() => setHovered4(false)}
                                 style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
                                 <img src={Inventario} style={{ width: 41, height: 41, transform: hovered4 ? 'scale(1.1)' : 'scale(1)', filter: hovered4 ? 'brightness(1.2)' : 'brightness(1)' }} alt="inventario" />
                             </a>
                         </div>
                     </ul>
-                    <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 100, height: 35 }}> Salir </button>
+                    <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 100, height: 35 }}
+                    onClick={() => (window.location.href = '/')}> Salir </button>
                 </div>
             </div>
         </nav>

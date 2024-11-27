@@ -6,6 +6,8 @@ import Orders from "../pages/Employee/Orders.jsx";
 import Profile from "../pages/admin/Profile.jsx";
 import Products from "../pages/Employee/Products.jsx";
 import Employees from "../pages/admin/Employees.jsx";
+import Inventory from "../pages/admin/Inventory.jsx";
+import History from "../pages/admin/History.jsx";
 
 
 const Routers = () => {
@@ -17,9 +19,6 @@ const Routers = () => {
             
             {/* Ruta pa pedidos */}
             <Route path="/orders" element={<Orders />} />
-            
-            {/* Ruta pal perfil */}
-            <Route path="/profile" element={<Profile />} />
 
             {/* Ruta pa los productikis */}
             <Route path="/products" element={<Products />} />
@@ -31,6 +30,12 @@ const Routers = () => {
             <Route  path="/cart" element={<Cart />} />
 
             <Route path="/employees" element = {<Employees/>}/>
+
+            <Route path="/inventory" element = {<Inventory/>}/>
+
+            <Route path="/history" element = {<History/>}/>
+
+            <Route path="/profile" element={<Profile/>}/>
             
         </Routes>
     );

@@ -22,7 +22,8 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
         title: 'Venta realizada',
         text: `El cambio es: $${changeAmount.toFixed(2)}`,
         icon: 'success',
-        confirmButtonText: 'Aceptar'
+        showConfirmButton: false,
+        timer: 1500
       });
     } else {
       Swal.fire({
