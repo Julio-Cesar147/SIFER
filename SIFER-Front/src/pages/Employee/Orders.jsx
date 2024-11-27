@@ -74,7 +74,7 @@ const Orders = () => {
           </span>
         </div>
 
-        {/* Tabla de órdenes */}
+        {/* comienzo de tabla */}
         <table className="table table-striped table-hover">
           <thead className="table-primary">
             <tr>

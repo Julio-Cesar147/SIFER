@@ -7,6 +7,7 @@ import Products from '../pages/Employee/Products.jsx';
 import Cart from'../pages/customer/Cart.jsx';
 import Home from '../pages/customer/Home.jsx';
 import NavBar from "../components/NavBar.jsx";
+import Sales from "../pages/Employee/Sales.jsx";
 
 export const Router = () => {
   return (
@@ -18,7 +19,7 @@ export const Router = () => {
             {/* Ruta pal inicio */}
             <Route path="/home" element={<Home />} />
 
-            {/* Ruta pal  */}
+            {/* Ruta pal catalogo */}
             <Route path="/cart" element={<Cart />} />
 
             {/* Ruta pal inicio */}
@@ -35,6 +36,13 @@ export const Router = () => {
 
             {/* Ruta pa los productikis */}
             <Route path="/login" element={<Login />} />
+
+            {/* Ruta pa las ventas */}
+            <Route path="/sales" element={<Sales />} />
+
+            {/* Ruta pal historial */}
+            <Route path="/history" element={<History />} />
+
 
           </Routes>
         </div>

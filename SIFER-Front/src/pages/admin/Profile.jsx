@@ -8,6 +8,7 @@ import Logo from "../../assets/img/logo.png";
 
 const blue = "#282C37";
 const orange = "#F75409";
+const lightGray = "#D9D9D9"
 
 export const Profile = () => {
   const [hovered1, setHovered1] = useState(false);
@@ -130,248 +131,94 @@ export const Profile = () => {
           </div>
         </div>
       </nav>
-      <div className="container mt-4">
-        {/* Cambiar Contraseña Section */}
-        <button
-          className="d-flex align-items-center mb-3"
-          style={{
-            width: 267,
-            height: 39,
-            position: "relative",
-            background: "none",
-            border: "none",
-            padding: 0,
-            cursor: "pointer",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              padding: "12px 20px",
-              background: "#04478D",
-              borderRadius: 10,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div></div>
+      {/* Fin Navbar*/}
+
+      <div className="container mt-5">
+        {/* Información de Usuario */}
+        <div className="mb-4">
+          <h5 className="fw-bold">Información de Usuario</h5>
+          <hr />
+          <div className="row">
+            <div className="col-md-4 mb-3">
+              <label className="form-label">Nombre:</label>
+              <input
+                type="text"
+                value="luz elena garcia"
+                readOnly
+                className="form-control"
+                style={{ backgroundColor: lightGray, border: "none" }}
+              />
+            </div>
+            <div className="col-md-4 mb-3">
+              <label className="form-label">Correo:</label>
+              <input
+                type="text"
+                value="luz@gmail.com"
+                readOnly
+                className="form-control"
+                style={{ backgroundColor: lightGray, border: "none" }}
+              />
+            </div>
+            <div className="col-md-4 mb-3">
+              <label className="form-label">Fecha de nacimiento:</label>
+              <input
+                type="text"
+                value="16/09/1994"
+                readOnly
+                className="form-control"
+                style={{ backgroundColor: lightGray, border: "none" }}
+              />
+            </div>
+            <div className="col-md-4 mb-3">
+              <label className="form-label">Rol:</label>
+              <input
+                type="text"
+                value="Empleado"
+                readOnly
+                className="form-control"
+                style={{ backgroundColor: lightGray, border: "none" }}
+              />
+            </div>
           </div>
-          <div
+          <button
+            className="btn text-white mt-3"
             style={{
-              position: "absolute",
-              left: 38,
-              top: 7,
-              color: "#FFFEFE",
-              fontSize: 20,
-              fontFamily: "Be Vietnam Pro",
-              fontWeight: "400",
+              backgroundColor: blue,
+              borderRadius: "10px",
+              fontWeight: "500",
             }}
           >
             Cambiar contraseña
-          </div>
-        </button>
-
-        {/* Información de Usuario */}
-        <div
-          className="mb-3"
-          style={{
-            color: "black",
-            fontSize: 24,
-            fontFamily: "Be Vietnam",
-            fontWeight: "700",
-          }}
-        >
-          Información de Usuario
+          </button>
         </div>
-
-        <div style={{ width: "100%", height: 0, border: "1px solid black" }}></div>
-
-        <div className="mb-3">
-  <label
-    style={{
-      color: "black",
-      fontSize: 16,
-      fontFamily: "Be Vietnam Pro",
-      fontWeight: "400",
-    }}
-  >
-    Nombre:
-  </label>
-  <input
-    type="text"
-    value="luz elena garcia"
-    readOnly
-    style={{
-      width: 249,
-      height: 33,
-      background: "#D9D9D9",
-      borderRadius: 5,
-      border: "none",
-      padding: "5px 10px",
-      fontSize: 16,
-      fontFamily: "Be Vietnam",
-      fontWeight: "400",
-    }}
-  />
-</div>
-
-<div className="mb-3">
-  <label
-    style={{
-      color: "black",
-      fontSize: 16,
-      fontFamily: "Be Vietnam Pro",
-      fontWeight: "400",
-    }}
-  >
-    Rol:
-  </label>
-  <input
-    type="text"
-    value="Empleado"
-    readOnly
-    style={{
-      width: 247,
-      height: 33,
-      background: "#D9D9D9",
-      borderRadius: 5,
-      border: "none",
-      padding: "5px 10px",
-      fontSize: 16,
-      fontFamily: "Be Vietnam",
-      fontWeight: "400",
-    }}
-  />
-</div>
-
-<div className="mb-3">
-  <label
-    style={{
-      color: "black",
-      fontSize: 16,
-      fontFamily: "Be Vietnam Pro",
-      fontWeight: "400",
-    }}
-  >
-    Dirección:
-  </label>
-  <input
-    type="text"
-    value="av universidad 4 col. las flores, emiliano zapata"
-    readOnly
-    style={{
-      width: 430,
-      height: 33,
-      background: "#D9D9D9",
-      borderRadius: 5,
-      border: "none",
-      padding: "5px 10px",
-      fontSize: 16,
-      fontFamily: "Be Vietnam",
-      fontWeight: "400",
-    }}
-  />
-</div>
-
-<div className="mb-3">
-  <label
-    style={{
-      color: "black",
-      fontSize: 16,
-      fontFamily: "Be Vietnam Pro",
-      fontWeight: "400",
-    }}
-  >
-    Correo:
-  </label>
-  <input
-    type="text"
-    value="luz@gmail.com"
-    readOnly
-    style={{
-      width: 249,
-      height: 33,
-      background: "#D9D9D9",
-      borderRadius: 5,
-      border: "none",
-      padding: "5px 10px",
-      fontSize: 16,
-      fontFamily: "Be Vietnam",
-      fontWeight: "400",
-    }}
-  />
-</div>
-
-<div className="mb-3">
-  <label
-    style={{
-      color: "black",
-      fontSize: 16,
-      fontFamily: "Be Vietnam Pro",
-      fontWeight: "400",
-    }}
-  >
-    Fecha de nacimiento:
-  </label>
-  <input
-    type="text"
-    value="16/09/1994"
-    readOnly
-    style={{
-      width: 243,
-      height: 33,
-      background: "#D9D9D9",
-      borderRadius: 5,
-      border: "none",
-      padding: "5px 10px",
-      fontSize: 16,
-      fontFamily: "Be Vietnam",
-      fontWeight: "400",
-    }}
-  />
-</div>
-
-<div className="mb-3">
-  <label style={{
-      color: "black",
-      fontSize: 16,
-      fontFamily: "Be Vietnam Pro",
-      fontWeight: "400",}}
-      > Número de teléfono: </label><input
-    type="text"
-    value="7772568741"
-    readOnly
-    style={{
-      width: 249,
-      height: 33,
-      background: "#D9D9D9",
-      borderRadius: 5,
-      border: "none",
-      padding: "5px 10px",
-      fontSize: 16,
-      fontFamily: "Be Vietnam",
-      fontWeight: "400",
-    }}
-  />
-</div>
-
 
         {/* Información de Contacto */}
-        <div
-          className="mb-3"
-          style={{
-            color: "black",
-            fontSize: 24,
-            fontFamily: "Be Vietnam",
-            fontWeight: "700",
-          }}
-        >
-          Información de contacto
+        <div className="mb-4">
+          <h5 className="fw-bold">Información de contacto</h5>
+          <hr />
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Dirección:</label>
+              <input
+                type="text"
+                value="av universidad 4 col. las flores, emiliano zapata"
+                readOnly
+                className="form-control"
+                style={{ backgroundColor: lightGray, border: "none" }}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Número de teléfono:</label>
+              <input
+                type="text"
+                value="7772568741"
+                readOnly
+                className="form-control"
+                style={{ backgroundColor: lightGray, border: "none" }}
+              />
+            </div>
+          </div>
         </div>
-        <div style={{ width: "100%", height: 0, border: "1px solid black" }}></div>
-
-
       </div>
     </>
   );
