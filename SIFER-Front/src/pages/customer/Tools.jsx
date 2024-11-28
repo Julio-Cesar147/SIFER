@@ -43,16 +43,16 @@ const Tools = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)} />
                             </div>
                         </ul>
-                        
-                        <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 17, width: 190, height: 35 }}
-                            onClick={() => (window.location.href = '/login')}>
-                            Iniciar Sesión
+                        <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}
+                            onClick={() => (window.location.href = '/')}>
+                            Salir
                         </button>
                     </div>
                 </div>
             </nav>
 
-            <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+            {/* Carrusel */}
+            <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active" data-bs-interval="3000">
                         <img src="https://www.venturaferreteria.com/wp-content/uploads/herramientas.jpg" className="w-100" style={{ height: 500 }} alt="foto1" />
@@ -64,18 +64,18 @@ const Tools = () => {
                         <img src="https://i.pinimg.com/originals/bf/de/72/bfde722655276150519f5399cfd5d730.jpg" className="w-100" style={{ height: 500 }} alt="foto3" />
                     </div>
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
 
             {/* Sección de Cards */}
-        <div className="container my-4">
+            <div className="container my-4">
                 <p className="fs-2 fw-semibold mb-0">Productos disponibles</p>
                 <p className="p-0 mb-4">¡Lleva lo mejor y apártalo antes de que se agoten!</p>
                 <div className="row">
