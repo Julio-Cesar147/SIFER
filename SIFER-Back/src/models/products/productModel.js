@@ -28,6 +28,10 @@ const Product = sequelize.define( 'Product', {
         type: DataTypes.STRING(50),
         allowNull: false
     },
+    stock: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     minimum_stock: {
         type: DataTypes.INTEGER,
         allowNull: false

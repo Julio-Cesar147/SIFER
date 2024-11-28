@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import ferre from "../assets/ferre.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
+import apiConnect from "../utils/api.connection";
 
 const SinginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [response, setResponse] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -16,6 +18,24 @@ const SinginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  const signin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = { email, password }
+
+      const result = await apiConnect.post('api/auth/', formData);
+      const token = result.token
+
+      localStorage.setItem('token', token)
+
+      setResponse(result)      
+    } catch (error) {
+      console.error('no se front maistro, checa tu codigo, por que algo hiciste mal');
+      
+    }
+  }
 
   return (
     <>
@@ -84,7 +104,7 @@ const SinginPage = () => {
             {/* Formulario */}
             <div className="d-flex flex-column justify-content-center align-items-center p-4 bg-white w-100 w-md-50">
               <p className="fw-medium fs-1 mb-4">¡Bienvenido!</p>
-              <form onSubmit={handleSubmit} className="w-75">
+              <form onSubmit={signin} className="w-75">
                 <div className="form-floating mb-3">
                   <input
                     type="text"
@@ -92,8 +112,8 @@ const SinginPage = () => {
                     id="username"
                     placeholder="Usuario"
                     required
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <label htmlFor="username">Usuario</label>
                 </div>
