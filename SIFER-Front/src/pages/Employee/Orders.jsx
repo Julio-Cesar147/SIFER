@@ -37,11 +37,13 @@ const Orders = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setOrders(orders.filter(order => order.numero !== orderNumber));
-        Swal.fire(
-          '¡Eliminado!',
-          'La orden ha sido eliminada.',
-          'success'
-        );
+        Swal.fire({
+          icon: "success",
+          title: "Elimiado",
+          text: "La orden ha sido eliminada!",
+          showConfirmButton: false,
+          timer: 1500
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelado',
@@ -74,7 +76,7 @@ const Orders = () => {
           </span>
         </div>
 
-        {/* Tabla de órdenes */}
+        {/* comienzo de tabla */}
         <table className="table table-striped table-hover">
           <thead className="table-primary">
             <tr>

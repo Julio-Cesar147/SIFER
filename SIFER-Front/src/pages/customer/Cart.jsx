@@ -12,14 +12,14 @@ export const Cart = () => {
 
     return(
         <>
-            <nav class="navbar navbar-expand-lg p-0 ">
-                <div style={{backgroundColor: blue}} class="container-fluid">
-                    <a class="navbar-brand text-white" href="/Home"> 
+            <nav class="navbar navbar-expand-lg p-0  ">
+                <div style={{backgroundColor: blue}} className="container-fluid">
+                    <a class="navbar-brand text-white" href="/"> 
                         <img src={Letras} style={{width: 250, height: 50}} />
                     </a>
                     
                     <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <a class= "nav-link text-white fs-4" href="/Home">  Herramientas </a>
+                        <a class= "nav-link text-white fs-4" href="/">  Herramientas </a>
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -55,7 +55,8 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p>
+                                    <input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} value={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
@@ -75,7 +76,7 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' value={1} min={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
@@ -99,7 +100,7 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' value={1} min={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
@@ -119,7 +120,7 @@ export const Cart = () => {
                                 <p className='fw-bolder fs-4 m-0'>$200.00</p>
                                 <p class="card-text"></p>
                                 <div className="d-flex">
-                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' min={1} style={{width:50, height:25}}/>
+                                    <p className='fw-bolder '>Cantidad: </p><input className='ms-2 border shadow-sm bg-white rounded bg-secondary-subtle' type='number' value={1} min={1} style={{width:50, height:25}}/>
                                 </div>
                                 </div>
                             </div>
