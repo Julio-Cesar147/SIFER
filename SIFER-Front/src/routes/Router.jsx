@@ -8,6 +8,8 @@ import Products from "../pages/Employee/Products.jsx";
 import Employees from "../pages/admin/Employees.jsx";
 import Inventory from "../pages/admin/Inventory.jsx";
 import History from "../pages/admin/History.jsx";
+import Register from "../auth/Register.jsx";
+import Tools from "../pages/customer/Tools.jsx";
 
 
 const Routers = () => {
@@ -36,6 +38,10 @@ const Routers = () => {
             <Route path="/history" element = {<History/>}/>
 
             <Route path="/profile" element={<Profile/>}/>
+
+            <Route path="/register" element= {<Register/>}/>
+
+            <Route path="/tools" element={<Tools/>}/>
             
         </Routes>
     );

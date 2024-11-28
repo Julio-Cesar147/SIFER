@@ -49,7 +49,7 @@ export const SinginPage = () => {
                 </div>
             </nav>
 
-        <div className="d-flex justify-content-center align-items-center pt-5">
+        <div className="d-flex justify-content-center align-items-center pt-5 mt-5">
             <div className="border-0 shadow rounded-lg d-flex w-75">
                 <div className="bg-secondary-subtle border-0 d-flex justify-content-center align-items-center" style={{ width: '50%', height: '30rem' }}>
                     <img src={Logo} alt="Logo" className='w-100 h-auto ' />
@@ -77,7 +77,7 @@ export const SinginPage = () => {
                         <div className="text-center">
                             <p className="fw-bold mb-0 text-danger">¿Aún no tienes cuenta?</p>
                             <p className="mb-0">Regístrate gratis para conocer los lanzamientos y ofertas que tenemos para ti.</p>
-                            <button className="btn fw-bold fs-5" style={{color: orange}}>  Registrarse </button>
+                            <button className="btn fw-bold fs-5" style={{color: orange}} onClick={() => (window.location.href = '/register')}>  Registrarse </button>
                         </div>
                 </div>
             </div>
