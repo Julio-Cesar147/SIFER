@@ -30,7 +30,7 @@ export const Home = () => {
                     </a>
                     
                     <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <a class= "nav-link text-white fs-4" href="/Home">  Herramientas </a>
+                        <a class= "nav-link text-white fs-4" href="/Home">  Catálogo </a>
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -40,7 +40,7 @@ export const Home = () => {
                         </div>
                     </ul>
                         <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}
-                            onClick={() => (window.location.href = '/')}>
+                            onClick={() => (window.location.href = '/login')}>
                             Iniciar Sesión
                         </button>
                     </div>
