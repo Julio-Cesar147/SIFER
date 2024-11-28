@@ -75,6 +75,7 @@ CREATE TABLE products (
     sku VARCHAR(50) NOT NULL,
     selling_price DECIMAL(10,2) NOT NULL,
     model VARCHAR(50) NOT NULL,
+    stock INT NOT NULL,
     minimum_stock INT NOT NULL,
     maximum_stock INT NOT NULL,
     status BOOLEAN NOT NULL DEFAULT true,
