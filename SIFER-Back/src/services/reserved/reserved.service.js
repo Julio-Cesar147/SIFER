@@ -133,7 +133,52 @@ const collection = async (idUser, sales,  products, code) => {
     }   
 }
 
+const getReservation = async (code) => {
+    const reservation = await Reservation.findOne({
+        where: { code: code },
+        include: [{
+            model: ReservationDetail
+        }]
+    })
+
+    if (!reservation)
+        throw new Error('Reservation not found')
+    
+    return reservation
+}
+
+const getAllReservations = async () => {
+    const reservations = await Reservation.findAll({
+        include:[{
+            model: ReservationDetail
+        }]
+    })
+
+    if (!reservations)
+        throw new Error('Not reservations found')
+    
+    return reservations
+}
+
+const cancelReservation = async (idReservation) => {
+    const reservation = await Reservation.findOne({
+        where: { idReservation: idReservation }
+    })
+
+    if (!reservation)
+        throw new Error('Reservation not found')
+
+    await reservation.update({
+        status: 2
+    })
+
+    return message = 'Successfully cancelled'
+}
+
 module.exports = {
     reserved,
-    collection
+    collection,
+    getReservation,
+    getAllReservations,
+    cancelReservation
 }
