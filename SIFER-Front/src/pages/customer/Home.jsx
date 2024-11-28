@@ -45,7 +45,7 @@ const Tools = () => {
                         </ul>
                         
                         <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 17, width: 190, height: 35 }}
-                            onClick={() => (window.location.href = '/')}>
+                            onClick={() => (window.location.href = '/login')}>
                             Iniciar Sesión
                         </button>
                     </div>

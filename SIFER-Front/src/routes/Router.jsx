@@ -10,14 +10,12 @@ import Inventory from "../pages/admin/Inventory.jsx";
 import History from "../pages/admin/History.jsx";
 import Register from "../auth/Register.jsx";
 import Tools from "../pages/customer/Tools.jsx";
+import Sales from "../pages/Employee/Sales.jsx";
 
 export const Router = () => {
   return (
     <>
-      <div className="flex justify-around">
-       
-        <div className="mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border bg-white mb-3">
-          <Routes>
+        <Routes>
             {/* Ruta pal inicio */}
             <Route path="/" element={<Home />} />
 
@@ -42,6 +40,9 @@ export const Router = () => {
             {/* Ruta para ir a los productos apartados */}
             <Route  path="/cart" element={<Cart />} />
 
+            {/* Ruta pa las ventas */}
+            <Route path="/sales" element={<Sales />} />
+
             <Route path="/employees" element = {<Employees/>}/>
 
             <Route path="/inventory" element = {<Inventory/>}/>
@@ -55,5 +56,6 @@ export const Router = () => {
             <Route path="/tools" element={<Tools/>}/>
             
         </Routes>
+    </>
     );
 };
