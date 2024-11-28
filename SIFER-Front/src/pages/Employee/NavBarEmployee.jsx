@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from '../../assets/img/logo.png';
 import Perfil from '../../assets/img/perfil.png';
-import Historial from '../../assets/img/historial.png';
-import Employees from '../../assets/img/employees.png'; // Asegúrate de que este archivo exista
+import Inventario from '../../assets/img/inven.png';
+import Venta from '../../assets/img/venta.png'; // Asegúrate de que este archivo exista
 
 const blue = "#282C37";
 const orange = '#F75409';
@@ -16,7 +16,7 @@ const NavBarEmployee = () => {
     return (
         <nav className="navbar navbar-expand-lg p-0">
             <div style={{ backgroundColor: blue }} className="container-fluid">
-                <a className="navbar-brand text-white" href="#">
+                <a className="navbar-brand text-white" href="home">
                     <img src={Logo} style={{ width: 100, height: 70 }} alt="Logo" />
                 </a>
 
@@ -30,16 +30,16 @@ const NavBarEmployee = () => {
                                 <img src={Perfil} style={{ width: 41, height: 41, transform: hovered1 ? 'scale(1.1)' : 'scale(1)', filter: hovered1 ? 'brightness(1.2)' : 'brightness(1)' }} alt="perfil" />
                             </a>
 
-                            <a className="nav-link active px-5" href="#"
+                            <a className="nav-link active px-5" href="/sales"
                                 onMouseEnter={() => setHovered2(true)} onMouseLeave={() => setHovered2(false)}
                                 style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
-                                <img src={Employees} style={{ width: 41, height: 41, transform: hovered2 ? 'scale(1.1)' : 'scale(1)', filter: hovered2 ? 'brightness(1.2)' : 'brightness(1)' }} alt="employees" />
+                                <img src={Venta} style={{ width: 41, height: 41, transform: hovered2 ? 'scale(1.1)' : 'scale(1)', filter: hovered2 ? 'brightness(1.2)' : 'brightness(1)' }} alt="ventas" />
                             </a>
 
-                            <a className="nav-link active px-5" href="#"
+                            <a className="nav-link active px-5" href="History"
                                 onMouseEnter={() => setHovered3(true)} onMouseLeave={() => setHovered3(false)}
                                 style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
-                                <img src={Historial} style={{ width: 41, height: 41, transform: hovered3 ? 'scale(1.1)' : 'scale(1)', filter: hovered3 ? 'brightness(1.2)' : 'brightness(1)' }} alt="historial" />
+                                <img src={Inventario} style={{ width: 41, height: 41, transform: hovered3 ? 'scale(1.1)' : 'scale(1)', filter: hovered3 ? 'brightness(1.2)' : 'brightness(1)' }} alt="inventario" />
                             </a>
                         </div>
                     </ul>

@@ -15,8 +15,10 @@
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
+    "nodemailer": "^6.9.16",
     "request": "^2.88.2",
     "sequelize": "^6.37.5",
-    "sifer-back": "file:"
+    "sifer-back": "file:",
+    "uuid": "^11.0.3"
   }
 }
