@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Login from '../auth/Login.jsx';
 import SinginPage from '../auth/SinginPage.jsx';
 import Orders from '../pages/Employee/Orders.jsx'; 
 import Profile from '../pages/admin/Profile.jsx'; 
@@ -17,13 +16,13 @@ export const Router = () => {
         <div className="mt-9 w-11/12 p-4 flex  overflow-hidden rounded-md border bg-white mb-3">
           <Routes>
             {/* Ruta pal inicio */}
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
 
             {/* Ruta pal catalogo */}
             <Route path="/cart" element={<Cart />} />
 
             {/* Ruta pal inicio */}
-            <Route path="/" element={<SinginPage />} />
+            <Route path="/login" element={<SinginPage />} />
 
             {/* Ruta pa pedidos */}
             <Route path="/orders" element={<Orders />} />
@@ -33,9 +32,6 @@ export const Router = () => {
 
             {/* Ruta pa los productikis */}
             <Route path="/products" element={<Products />} />
-
-            {/* Ruta pa los productikis */}
-            <Route path="/login" element={<Login />} />
 
             {/* Ruta pa las ventas */}
             <Route path="/sales" element={<Sales />} />
