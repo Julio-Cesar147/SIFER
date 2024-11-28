@@ -79,7 +79,7 @@ return (
         <input
             type="text"
             className="form-control rounded-pill"
-            placeholder="Buscar empleado..."
+            placeholder="Buscar empleado"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -161,7 +161,12 @@ return (
                         </div>
                         <div className="mb-3">
                         <label className="form-label">Teléfono</label>
-                        <input type="tel" className="form-control" name="phone" value={newEmployee.phone}  onChange={handleInputChange}/>
+                        <input type="tel" className="form-control" name="phone" pattern="[0-9]{10}"
+                        title="Debe ser un número de 10 dígitos" // aqui puse un  mensajito pa recordar que solo son 10 numeritos
+                        maxLength="10" // esto hace que solo sean 10 digitos jiji
+                        required onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Elimina letras y caracteres
+                         }} value={newEmployee.phone}  onChange={handleInputChange}/>
                         </div>
                         <div className="mb-3">
                         <label className="form-label">Dirección</label>

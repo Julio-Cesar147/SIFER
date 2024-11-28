@@ -3,10 +3,13 @@ import SinginPage from '../auth/SinginPage.jsx';
 import Orders from '../pages/Employee/Orders.jsx'; 
 import Profile from '../pages/admin/Profile.jsx'; 
 import Products from '../pages/Employee/Products.jsx';
+import Sales from "../pages/Employee/Sales.jsx";
 import Cart from'../pages/customer/Cart.jsx';
 import Home from '../pages/customer/Home.jsx';
 import NavBar from "../components/NavBar.jsx";
-import Sales from "../pages/Employee/Sales.jsx";
+import Employees from "../pages/admin/Employees.jsx";
+import Stock from "../pages/admin/Stock.jsx";
+
 
 export const Router = () => {
   return (
@@ -38,6 +41,12 @@ export const Router = () => {
 
             {/* Ruta pal historial */}
             <Route path="/history" element={<History />} />
+
+            {/* Ruta pa los empleados */}
+            <Route path="/employees" element={<Employees />} />
+
+            {/* Ruta pal stock*/}
+            <Route path="/stock" element={<Stock />} />
 
 
           </Routes>

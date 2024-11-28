@@ -48,7 +48,7 @@ const SinginPage = () => {
             <button
               className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center"
               style={{
-                backgroundColor: "orange",
+                backgroundColor: "#f75409",
                 fontSize: 20,
                 width: 150,
                 height: 35,
