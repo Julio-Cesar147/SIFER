@@ -29,7 +29,7 @@ app.get('/', (request, response) => {
  * las cuales se importaron mas arriba
  */
 app.use('/api/auth', authRouter)
-app.use('api/reserved', reservedRouter)
+app.use('/api/reserved', reservedRouter)
 
 module.exports = {
     app

@@ -1,12 +1,13 @@
 const sequelize = require('../../config/database')
-const { Product, Reservation, ReservationDetail, History, PurchaseDetail } = require('../../models/models')
-const nanoid = require('nanoid')
+const { User, Product, Reservation, ReservationDetail, History, PurchaseDetail } = require('../../models/models')
+const { v4: uuidv4 } = require('uuid')
+const { sendEmail } = require('../../config/email')
 
 const reserved = async (idUser, products) => {
     if (!idUser || !Array.isArray(products) || products.length === 0)
         throw new Error('Missing fields or no products')
     
-    const code = nanoid(5)
+    const code = uuidv4().split('-')[0]
 
     try {
         const result = await sequelize.transaction(async (transaction) => {
@@ -16,6 +17,13 @@ const reserved = async (idUser, products) => {
             },{
                 transaction: transaction
             })
+
+            const user = await User.findOne({
+                where: { idUser: idUser },
+                transaction: transaction
+            })
+
+            let productDetailsHTML = ''
 
             for (const product of products){
                 const { sku, reserved } = product
@@ -38,10 +46,21 @@ const reserved = async (idUser, products) => {
                 },{
                     transaction: transaction
                 })
+
+                productDetailsHTML += `<li><strong>Producto:</strong> ${productExists.name} (SKU: ${sku}) - <strong>Cantidad:${reserved}</strong> ${reserved}</li>`
+
             }
+            
+            // Aqui en esta parte mandar el correo al cliente que aparto
+            const send = sendEmail(user, code, productDetailsHTML)
+
+            if (!send)
+                throw new Error('Error sending email')
+
+            return message = 'Successful reservation, a receipt has been sent to your e-mail address'
         })
 
-        // Aqui en esta parte mandar el correo al cliente que aparto
+        return result
     } catch (error) {
         throw new Error('Failed to make the reservation')
     }
