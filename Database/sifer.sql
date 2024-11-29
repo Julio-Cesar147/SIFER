@@ -78,6 +78,7 @@ CREATE TABLE products (
     stock INT NOT NULL,
     minimum_stock INT NOT NULL,
     maximum_stock INT NOT NULL,
+    image VARCHAR(400) NOT NULL,
     status BOOLEAN NOT NULL DEFAULT true,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
@@ -173,3 +174,25 @@ INSERT INTO units(unit) VALUES
 ('Rollo(s)'),
 ('Paquete(s)'),
 ('Bulto(s)');
+
+INSERT INTO users (name, lastname, surname, email, hash_password, telephone, birthday, role, occupation)
+VALUES (
+    'Juan', 
+    'Pérez', 
+    'López', 
+    'juan.perez@example.com', 
+    '$2b$10$bjVAgXKfYfwVBXc41kbFo..0deTwToykJiOE2g04OV6sSP3H2AjZi', --Administrador@123
+    '777-123-4567', 
+    '1985-05-15', 
+    1,
+    2
+);
+
+INSERT INTO addresses (street, city, state, postal_code, user)
+VALUES (
+    'Calle Emiliano Zapata 45', 
+    'Cuernavaca', 
+    'Morelos', 
+    '62000', 
+    LAST_INSERT_ID()
+);

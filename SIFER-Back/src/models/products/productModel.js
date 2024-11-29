@@ -40,6 +40,10 @@ const Product = sequelize.define( 'Product', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    image: {
+        type: DataTypes.STRING(400),
+        allowNull: false
+    },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
