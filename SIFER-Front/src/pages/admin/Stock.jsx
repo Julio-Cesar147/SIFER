@@ -56,7 +56,7 @@ const Stock = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`https://miapi.com/productos/${editableProduct.id}`, {
+      const response = await fetch(`laapi${editableProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
