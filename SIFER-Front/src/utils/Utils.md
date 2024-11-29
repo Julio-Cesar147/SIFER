@@ -1,0 +1,1 @@
+Archivos para la configuracion de librerias o dependencias que se vayan a ocupar, o cosas tales como la conexion con Backend mediante la declaracion de funciones para consumir los endpoints.
