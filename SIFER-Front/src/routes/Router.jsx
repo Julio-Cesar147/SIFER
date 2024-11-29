@@ -11,6 +11,8 @@ import History from "../pages/admin/History.jsx";
 import Register from "../auth/Register.jsx";
 import Tools from "../pages/customer/Tools.jsx";
 import Sales from "../pages/Employee/Sales.jsx";
+import Product from "../pages/customer/Product.jsx";
+import ProductSing from "../pages/customer/ProductSing.jsx";
 
 export const Router = () => {
   return (
@@ -54,6 +56,10 @@ export const Router = () => {
             <Route path="/register" element= {<Register/>}/>
 
             <Route path="/tools" element={<Tools/>}/>
+
+            <Route path="/product" element={<Product/>}/>
+
+            <Route path="/productsing" element= {<ProductSing/>}/>
             
         </Routes>
     </>
