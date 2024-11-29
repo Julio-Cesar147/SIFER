@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import Swal from 'sweetalert2'
 import Navbar from "./NavBar";
-import Swal from "sweetalert2";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import FileUploadModal from "./FileUploadModal";
 
 const productsData = [
   {
@@ -9,7 +12,7 @@ const productsData = [
     description: "Mangueras armadas 3 capas, conexiones plásticas, Pretul",
     price: 25.0,
     stock: 10,
-    image: "https://via.placeholder.com/150", // Imagen de ejemplo
+    image: "https://via.placeholder.com/150",
     category: "Herramientas",
   },
   {
@@ -21,66 +24,71 @@ const productsData = [
     image: "https://via.placeholder.com/150",
     category: "Herramientas",
   },
+  {
+    id: "P03",
+    title: "Taladro",
+    description: "Taladro de 500W, con broquero metálico y cable de 1.5m",
+    price: 120.0,
+    stock: 7,
+    image: "https://via.placeholder.com/150",
+    category: "Eléctricos",
+  },
 ];
 
-const Products = () => {
+const Stock = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [editableProduct, setEditableProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
-  // Filtrarlossss
-  const filteredProducts = productsData.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleAddProduct = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const handleSelectProduct = (product) => {
     setSelectedProduct(product);
+    setEditableProduct({ ...product });
   };
 
-  const styles = {
-    productImage: {
-      width: "100px",
-      marginRight: "10px",
-    },
-    productImageLarge: {
-      width: "550px",
-      height: "412px",
-      objectFit: "cover", //este esta bonmito es pa adecuar la imagen
-      display: "block",
-      margin: "0 auto",
-    },
-    card: {
-      border: "1px solid #ccc",
-      borderRadius: "8px",
-      padding: "25px",
-    },
-    productTitle: {
-      marginLeft: "10px",
-    },
-  };
-
-  const handleDeleteProduct = (id) => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esta acción",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, eliminarlo!",
-      cancelButtonText: "No, cancelar!",
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
+  const handleSaveChanges = async () => {
+    try {
+      const response = await fetch(`https://miapi.com/productos/${editableProduct.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editableProduct), 
+      });
+      
+      if (response.ok) {
         Swal.fire({
+          title: "Cambios guardados exitosamente",
           icon: "success",
-          title: "Eliminado",
-          text: "El producto ha sido eliminado!",
-          showConfirmButton: false,
-          timer: 1500,
         });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("Cancelado", "El producto no ha sido eliminado.", "error");
+        setSelectedProduct(editableProduct); 
+      } else {
+        Swal.fire({
+          title: "Error al guardar cambios",
+          icon: "error",
+        });
       }
-    });
+    } catch (error) {
+      Swal.fire({
+        title: "Error de conexión",
+        text: error.message,
+        icon: "error",
+      });
+    }
   };
+  
+
+  const filteredProducts = productsData.filter((product) =>
+    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -91,8 +99,11 @@ const Products = () => {
           <div className="col-md-6">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h3>Productos</h3>
-              <button className="btn btn-primary">Agregar</button>
+              <button className="btn btn-primary" onClick={handleAddProduct}>
+                Agregar
+              </button>
             </div>
+            {/* Input de búsqueda */}
             <div className="mb-3">
               <input
                 type="text"
@@ -102,6 +113,7 @@ const Products = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
+            {/* Lista de productos */}
             <ul className="list-group">
               {filteredProducts.map((product) => (
                 <li
@@ -114,11 +126,10 @@ const Products = () => {
                     <img
                       src={product.image}
                       alt={product.title}
-                      className="product-image"
-                      style={styles.productImage}
+                      style={{ width: "100px", marginRight: "10px" }}
                     />
-                    <strong style={styles.productTitle}>{product.title}</strong>{" "}
-                    - ${product.price.toFixed(2)}
+                    <strong>{product.title}</strong> - $
+                    {product.price.toFixed(2)}
                   </div>
                   <span
                     className={`badge ${
@@ -132,43 +143,103 @@ const Products = () => {
             </ul>
           </div>
 
+          {/* Modal para agregar producto */}
+          <FileUploadModal
+            showModal={showModal}
+            handleCloseModal={handleCloseModal}
+          />
+
           {/* Detalle del Producto */}
           <div className="col-md-6">
-            {selectedProduct ? (
-              <div className="card" style={styles.card}>
-                {/* Imagen */}
+            {editableProduct ? (
+              <div className="card">
                 <img
-                  src={selectedProduct.image}
-                  alt={selectedProduct.title}
-                  style={styles.productImageLarge}
+                  src={editableProduct.image}
+                  alt={editableProduct.title}
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover",
+                    marginBottom: "10px",
+                  }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title">{selectedProduct.title}</h5>
-                  <p className="card-text">{selectedProduct.description}</p>
+                  <h5 className="card-title">
+                    <input
+                      type="text"
+                      value={editableProduct.title}
+                      onChange={(e) =>
+                        setEditableProduct({
+                          ...editableProduct,
+                          title: e.target.value,
+                        })
+                      }
+                      className="form-control"
+                    />
+                  </h5>
+                  <textarea
+                    value={editableProduct.description}
+                    onChange={(e) =>
+                      setEditableProduct({
+                        ...editableProduct,
+                        description: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    rows="3"
+                  ></textarea>
                   <p>
-                    <strong>Precio:</strong> ${selectedProduct.price.toFixed(2)}
+                    <strong>Precio:</strong>{" "}
+                    <input
+                      type="number"
+                      value={editableProduct.price}
+                      onChange={(e) =>
+                        setEditableProduct({
+                          ...editableProduct,
+                          price: parseFloat(e.target.value),
+                        })
+                      }
+                      className="form-control"
+                    />
                   </p>
                   <p>
-                    <strong>Código:</strong> {selectedProduct.id}
+                    <strong>Categoría:</strong>{" "}
+                    <input
+                      type="text"
+                      value={editableProduct.category}
+                      onChange={(e) =>
+                        setEditableProduct({
+                          ...editableProduct,
+                          category: e.target.value,
+                        })
+                      }
+                      className="form-control"
+                    />
                   </p>
                   <p>
-                    <strong>Categoría:</strong> {selectedProduct.category}
+                    <strong>Stock:</strong>{" "}
+                    <input
+                      type="number"
+                      value={editableProduct.stock}
+                      onChange={(e) =>
+                        setEditableProduct({
+                          ...editableProduct,
+                          stock: parseInt(e.target.value),
+                        })
+                      }
+                      className="form-control"
+                    />
                   </p>
-                  <p>
-                    <strong>Stock:</strong> {selectedProduct.stock}
-                  </p>
-                  <button className="btn btn-warning me-2">Modificar</button>
                   <button
-                    className="btn btn-danger"
-                    onClick={() => handleDeleteProduct(selectedProduct.id)}
-                  >
-                    Eliminar
+                    className="btn btn-warning float-end mb-2 me-2"
+                    onClick={handleSaveChanges}
+                  >Modificar
                   </button>
                 </div>
               </div>
             ) : (
               <div className="text-center mt-5">
-                <p>En espera para que seleccione un producto...</p>
+                <p>Selecciona un producto para editarlo...</p>
               </div>
             )}
           </div>
@@ -178,4 +249,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Stock;

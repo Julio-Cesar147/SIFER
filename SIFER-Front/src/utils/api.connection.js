@@ -44,7 +44,7 @@ const apiConnect = {
             const response = await fetch(`${BASE_URL}${endpoint}`, {
                 method: 'PUT',
                 headers: {
-                    'authorization': `Bearer ${token}`,
+                    //'authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -68,7 +68,7 @@ const apiConnect = {
             const response = await fetch(url, {
                 method: 'PATCH',
                 headers: {
-                    'authorization': `Bearer ${token}`,
+                    //'authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
@@ -92,7 +92,7 @@ const apiConnect = {
             const response = await fetch(url, {
                 method: 'DELETE',
                 headers: {
-                    'authorization': `Bearer ${token}`,
+                    //'authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
