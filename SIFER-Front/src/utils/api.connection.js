@@ -1,111 +1,54 @@
 const BASE_URL = 'http://localhost:3000/'
 
 const apiConnect = {
-    get: async (endpoint, params = {}) => {
-        try {
-            const queryParams = new URLSearchParams(params).toString();
-            const url = `${BASE_URL}${endpoint}${queryParams ? `?${queryParams}` : ''}`
+    makeRequest: async (method, endpoint, data = null, param = null) => {
+        const url = param ? `${BASE_URL}${endpoint}/${param}` : `${BASE_URL}${endpoint}`
 
-            const response = await fetch(url)
+        const token = localStorage.getItem('token')
+
+        if (!token)
+            throw new Error('Token not found')
+
+        const options = {
+            method: method,
+            headers: {
+                'authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: data ? JSON.stringify(data) : null
+        }
+
+        try {
+            const response = await fetch(url, options)
 
             if (!response.ok)
-                throw new Error(`${response.statusText}`)
-            
+                throw new Error(`${response.status} ${response.statusText}`)
+
             return await response.json()
         } catch (error) {
             console.error(error)
-            throw new Error('Fallo al hacer el GET')
+            throw error
         }
+    },
+
+    get: async (endpoint, param) => {
+        return await apiConnect.makeRequest('GET', endpoint, null, param)
     },
 
     post: async (endpoint, data) => {
-        try {
-            const response = await fetch(`${BASE_URL}${endpoint}`, {
-                method: 'POST',
-                headers: {
-                    //'authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-
-            if (!response.ok)
-                throw new Error(`${response.statusText}`)
-
-            return await response.json()
-        } catch (error) {
-            console.error(error)
-            throw new Error('Fallo al hacer el POST')
-        }
+        return await apiConnect.makeRequest('POST', endpoint, data)
     },
 
-    put: async (endpoint, data) => {
-        try {
-            const response = await fetch(`${BASE_URL}${endpoint}`, {
-                method: 'PUT',
-                headers: {
-                    //'authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-
-            if (!response.ok)
-                throw new Error(`${response.statusText}`)
-
-            return await response.json()
-        } catch (error) {
-            console.error(error)
-            throw new Error('Fallo al hacer el PUT')
-        }
+    put: async (endpoint, data, param) => {
+        return await apiConnect.makeRequest('PUT', endpoint, data, param)
     },
 
-    patch: async (endpoint, params = {}) => {
-        try {
-            const queryParams = new URLSearchParams(params).toString();
-            const url = `${BASE_URL}${endpoint}${queryParams ? `?${queryParams}` : ''}`
-
-            const response = await fetch(url, {
-                method: 'PATCH',
-                headers: {
-                    //'authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-
-            if (!response.ok)
-                throw new Error(`${response.statusText}`)
-
-            return await response.json()
-        } catch (error) {
-            console.error(error)
-            throw new Error('Fallo al hacer el PATCH')
-        }
+    patch: async (endpoint, data, param) => {
+        return await apiConnect.makeRequest('PATCH', endpoint, data, param)
     },
 
-    delete: async (endpoint, params = {}) => {
-        try {
-            const queryParams = new URLSearchParams(params).toString();
-            const url = `${BASE_URL}${endpoint}${queryParams ? `?${queryParams}` : ''}`
-
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    //'authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-
-            if (!response.ok)
-                throw new Error(`${response.statusText}`)
-
-            return await response.json()
-        } catch (error) {
-            console.error(error)
-            throw new Error('Fallo al hacer el DELETE')
-        }
+    delete: async (endpoint, param) => {
+        return await apiConnect.makeRequest('DELETE', endpoint, null, param)
     }
 }
 
