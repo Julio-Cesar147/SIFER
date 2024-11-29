@@ -7,7 +7,8 @@ reservedRouter.post('/booking', [], reservedController.reserved)
 reservedRouter.post('/collection', [], reservedController.collection)
 reservedRouter.get('/:code', [], reservedController.getReservation)
 reservedRouter.get('/', [], reservedController.getAllReservations)
-reservedRouter.patch('/', [], reservedController.cancelReservation) 
+reservedRouter.patch('/', [], reservedController.cancelReservation)
+reservedRouter.get('/history', [], reservedController.getHistory)
 
 module.exports = {
     reservedRouter

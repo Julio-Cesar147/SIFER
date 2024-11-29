@@ -2,6 +2,7 @@ const sequelize = require('../../config/database')
 const { User, Product, Reservation, ReservationDetail, History, PurchaseDetail } = require('../../models/models')
 const { v4: uuidv4 } = require('uuid')
 const { sendEmail } = require('../../config/email')
+const { Sequelize } = require('sequelize')
 
 const reserved = async (idUser, products) => {
     if (!idUser || !Array.isArray(products) || products.length === 0)
@@ -175,10 +176,43 @@ const cancelReservation = async (idReservation) => {
     return message = 'Successfully cancelled'
 }
 
+const getHistory = async (startDate, endDate) => {
+    if (!startDate || !endDate) {
+        const histories = await History.findAll({
+            include: [{
+                model: PurchaseDetail
+            }]
+        })
+
+        if (!histories)
+            throw new Error('No reservations found')
+
+        return histories
+    } else {
+        const histories = await History.findAll({
+            where: {
+                sales_date: {
+                    [Sequelize.Op.gte]: startDate,
+                    [Sequelize.Op.lte]: endDate
+                }
+            },
+            include: [{
+                model: PurchaseDetail
+            }]
+        })
+
+        if (!histories)
+            throw new Error('No reservations found')
+
+        return histories
+    }
+}
+
 module.exports = {
     reserved,
     collection,
     getReservation,
     getAllReservations,
-    cancelReservation
+    cancelReservation,
+    getHistory
 }
