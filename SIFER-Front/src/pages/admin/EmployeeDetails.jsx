@@ -36,7 +36,7 @@ const EmployeeDetails = ({selectedEmployee, onClose, onSave, onDelete }) => {
                 icon: "success",
                 title: "Empleado Eliminado",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2500
             });
         }
         });

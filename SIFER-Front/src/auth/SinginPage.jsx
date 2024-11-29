@@ -6,6 +6,7 @@ import Lupa from "../assets/img/buscar.png";
 import apiConnect from "../utils/api.connection";
 const blue = "#282C37";
 const orange = '#F75409';
+import Swal from 'sweetalert2';
 
 const SinginPage = () => {
 
@@ -35,8 +36,14 @@ const SinginPage = () => {
 
         setResponse(result)      
         } catch (error) {
-        console.error('no se front maistro, checa tu codigo, por que algo hiciste mal');
-        
+            console.log(error)
+            Swal.fire({
+                title: 'Iniciar Sesion',
+                text:'Usuario y/o contraseña incorrecta',
+                icon:'info',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText:'Aceptar'
+            })
         }
     }
 
