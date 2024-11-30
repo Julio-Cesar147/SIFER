@@ -3,9 +3,10 @@ import Perfil from "../../assets/img/perfil.png";
 import Employees from "../../assets/img/employees.png";
 import Historial from "../../assets/img/historial.png";
 import Inventario from "../../assets/img/inven.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Logo from "../../assets/img/logo.png";
 import Navbar from "./NavBar";
+import apiConnect from "../../utils/api.connection";
 
 const blue = "#282C37";
 const orange = "#F75409";
@@ -20,6 +21,24 @@ export const Profile = () => {
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  const [user, setUser] = useState({});
+  const [change, setChange] = useState("");
+
+  useEffect(() => {
+    getDataUser();
+  }, []);
+
+  const getDataUser = async () => {
+    try {
+      const id = localStorage.getItem("id");
+
+      const response = await apiConnect.get(`api/admin/getEmployee/${id}`);
+
+      setUser(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -36,7 +55,7 @@ export const Profile = () => {
               <label className="form-label">Nombre:</label>
               <input
                 type="text"
-                value="luz elena garcia"
+                value={user?.name + " " + user?.lastname + " " + user?.surname}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -46,7 +65,7 @@ export const Profile = () => {
               <label className="form-label">Correo:</label>
               <input
                 type="text"
-                value="luz@gmail.com"
+                value={user?.email}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -56,7 +75,7 @@ export const Profile = () => {
               <label className="form-label">Fecha de nacimiento:</label>
               <input
                 type="text"
-                value="16/09/1994"
+                value={user?.birthday}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -66,7 +85,7 @@ export const Profile = () => {
               <label className="form-label">Rol:</label>
               <input
                 type="text"
-                value="Empleado"
+                value={user.Role?.role}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -95,7 +114,15 @@ export const Profile = () => {
               <label className="form-label">Dirección:</label>
               <input
                 type="text"
-                value="av universidad 4 col. las flores, emiliano zapata"
+                value={
+                  user.Address?.street +
+                  " " +
+                  user.Address?.city +
+                  " " +
+                  user.Address?.state +
+                  " " +
+                  user.Address?.postal_code
+                }
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -105,7 +132,7 @@ export const Profile = () => {
               <label className="form-label">Número de teléfono:</label>
               <input
                 type="text"
-                value="7772568741"
+                value={user?.telephone}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}

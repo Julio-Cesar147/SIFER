@@ -1,18 +1,18 @@
 const BASE_URL = 'http://localhost:3000/'
 
 const apiConnect = {
-    makeRequest: async (method, endpoint, data = null, param = null) => {
+    makeRequest: async (method, endpoint, data, param) => {
         const url = param ? `${BASE_URL}${endpoint}/${param}` : `${BASE_URL}${endpoint}`
 
-        const token = localStorage.getItem('token')
+        //const token = localStorage.getItem('token')
 
-        if (!token)
-            throw new Error('Token not found')
+        /*if (!token)
+            throw new Error('Token not found')*/
 
         const options = {
             method: method,
             headers: {
-                'authorization': `Bearer ${token}`,
+                //'authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: data ? JSON.stringify(data) : null

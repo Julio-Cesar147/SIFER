@@ -6,7 +6,7 @@ const signin = async (req, res) => {
 
         const token = await authService.signin(email, password)
 
-        res.status(200).json({ token: token })
+        res.status(200).json( token )
     } catch (error) {
         console.error(error)
         res.status(400).json({ message: `${error}` })
