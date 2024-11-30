@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import Navbar from "./NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -57,19 +57,19 @@ const Stock = () => {
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(`laapi${editableProduct.id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(editableProduct), 
+        body: JSON.stringify(editableProduct),
       });
-      
+
       if (response.ok) {
         Swal.fire({
           title: "Cambios guardados exitosamente",
           icon: "success",
         });
-        setSelectedProduct(editableProduct); 
+        setSelectedProduct(editableProduct);
       } else {
         Swal.fire({
           title: "Error al guardar cambios",
@@ -84,7 +84,6 @@ const Stock = () => {
       });
     }
   };
-  
 
   const filteredProducts = productsData.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -143,26 +142,13 @@ const Stock = () => {
             </ul>
           </div>
 
-          {/* Modal para agregar producto */}
-          <FileUploadModal
-            showModal={showModal}
-            handleCloseModal={handleCloseModal}
-          />
+          <FileUploadModal showModal={showModal} handleCloseModal={handleCloseModal}/>
 
           {/* Detalle del Producto */}
           <div className="col-md-6">
             {editableProduct ? (
               <div className="card">
-                <img
-                  src={editableProduct.image}
-                  alt={editableProduct.title}
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    objectFit: "cover",
-                    marginBottom: "10px",
-                  }}
-                />
+                <img src={editableProduct.image} alt={editableProduct.title} style={{ width: "100%", height: "200px", objectFit: "cover", marginBottom: "10px",}}/>
                 <div className="card-body">
                   <h5 className="card-title">
                     <input
@@ -202,44 +188,25 @@ const Stock = () => {
                       className="form-control"
                     />
                   </p>
-                  <p>
-                    <strong>Categoría:</strong>{" "}
-                    <input
-                      type="text"
-                      value={editableProduct.category}
-                      onChange={(e) =>
-                        setEditableProduct({
-                          ...editableProduct,
-                          category: e.target.value,
-                        })
-                      }
-                      className="form-control"
-                    />
+                  <p> <strong>Categoría:</strong>{" "}
+                    <input type="text"value={editableProduct.category} onChange={(e) => setEditableProduct({ ...editableProduct, category: e.target.value, }) } className="form-control"/>
                   </p>
-                  <p>
-                    <strong>Stock:</strong>{" "}
-                    <input
-                      type="number"
-                      value={editableProduct.stock}
-                      onChange={(e) =>
-                        setEditableProduct({
-                          ...editableProduct,
-                          stock: parseInt(e.target.value),
-                        })
-                      }
-                      className="form-control"
-                    />
+                  <p> <strong>Stock:</strong>{" "}
+                    <input type="number" value={editableProduct.stock} onChange={(e) => setEditableProduct({ ...editableProduct, stock: parseInt(e.target.value), })} className="form-control"/>
                   </p>
-                  <button
-                    className="btn btn-warning float-end mb-2 me-2"
-                    onClick={handleSaveChanges}
-                  >Modificar
+                  <button className="btn btn-warning float-end mb-2 me-2" onClick={handleSaveChanges}>
+                    Modificar
                   </button>
                 </div>
               </div>
             ) : (
               <div className="text-center mt-5">
                 <p>Selecciona un producto para editarlo...</p>
+                <div className="d-flex justify-content-center mt-3">
+                  <div className="spinner-border text-primary" role="status" style={{ width: "3rem", height: "3rem" }}>
+                    <span className="visually-hidden">Cargando...</span>
+                  </div>
+                </div>
               </div>
             )}
           </div>
