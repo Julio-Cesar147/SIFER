@@ -4,7 +4,6 @@ import ferre from "../assets/ferre.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
 import apiConnect from "../utils/api.connection";
-import { useNavigate } from "react-router-dom";
 const blue = "#282C37";
 const orange = "#F75409";
 
@@ -12,7 +11,6 @@ const SinginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [response, setResponse] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -24,38 +22,36 @@ const SinginPage = () => {
 
   const signin = async (e) => {
     e.preventDefault();
-    const navigate = useNavigate()
 
     try {
       const formData = { email, password };
 
       const result = await apiConnect.post("api/auth/", formData);
-      const token = result.token;
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("role", result.role);
+      localStorage.setItem("id", result.id);
 
-        switch (result.role) {
-            case 'Cliente':
-                window.location.href = '/tools'
-                break;
-            case 'Empleado':
-                window.location.href = '/orders'
-                break;
-            case 'Administrador':
-                window.location.href = '/profile'
-                break;
-        
-            default:
-                break;
-        }
-     
-        } catch (error) {
-        console.error('no se front maistro, checa tu codigo, por que algo hiciste mal');
-        
-        }
+      switch (result.role) {
+        case "Cliente":
+          window.location.href = "/tools";
+          break;
+        case "Empleado":
+          window.location.href = "/orders";
+          break;
+        case "Administrador":
+          window.location.href = "/profile";
+          break;
+
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <>
