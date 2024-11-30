@@ -6,7 +6,7 @@ const cors = require('cors')
 //const {} = require()
 
 
-const { authRouter, reservedRouter, adminRouter, productRouter } = require('../routes/router')
+const { authRouter, reservedRouter, adminRouter, productRouter, occupationsRouter } = require('../routes/router')
 
 
 const app = express()
@@ -37,7 +37,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/reserved', reservedRouter)
 app.use('/api/products', productRouter)
 app.use('/api/admin', adminRouter)
-
+app.use('/api/occupation', occupationsRouter)
 
 module.exports = {
     app
