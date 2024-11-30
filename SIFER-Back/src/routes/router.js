@@ -9,6 +9,7 @@ module.exports = {
     authRouter,
     reservedRouter,
     adminRouter,
+    productRouter,
     occupationsRouter
 }
 
