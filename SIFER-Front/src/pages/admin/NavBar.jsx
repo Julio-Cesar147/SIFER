@@ -19,7 +19,7 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg p-0">
             <div style={{ backgroundColor: blue }} className="container-fluid">
-                <a className="navbar-brand text-white" href="/">
+                <a className="navbar-brand text-white" href="/login">
                     <img src={Logo} style={{ width: 100, height: 70 }} alt="Logo" />
                 </a>
 
