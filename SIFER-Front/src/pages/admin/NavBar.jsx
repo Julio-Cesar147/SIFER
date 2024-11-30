@@ -44,7 +44,7 @@ const Navbar = () => {
                                 <img src={Historial} style={{ width: 41, height: 41, transform: hovered3 ? 'scale(1.1)' : 'scale(1)', filter: hovered3 ? 'brightness(1.2)' : 'brightness(1)' }} alt="historial" />
                             </a>
 
-                            <a className="nav-link active px-5" href="/inventory"
+                            <a className="nav-link active px-5" href="/Stock"
                                 onMouseEnter={() => setHovered4(true)} onMouseLeave={() => setHovered4(false)}
                                 style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
                                 <img src={Inventario} style={{ width: 41, height: 41, transform: hovered4 ? 'scale(1.1)' : 'scale(1)', filter: hovered4 ? 'brightness(1.2)' : 'brightness(1)' }} alt="inventario" />

@@ -66,8 +66,8 @@ const Register = () =>{
     }
 
     const [searchTerm, setSearchTerm] = useState('');
-
-    return(
+    
+    return (
         <>
             <nav class="navbar navbar-expand-lg p-0 ">
                 <div style={{backgroundColor: blue}} class="container-fluid">
@@ -178,13 +178,14 @@ const Register = () =>{
 
                             
 
-                            <button type="submit" className="btn btn-primary w-100 mb-4"> Registrarse </button>
+                            <button type="submit" className="btn btn-primary w-100 mb-4">
+                                Registrarse
+                            </button>
                         </form>
-
+                    </div>
                 </div>
             </div>
-        </div>
-    </>
+        </>
     );
 };
 

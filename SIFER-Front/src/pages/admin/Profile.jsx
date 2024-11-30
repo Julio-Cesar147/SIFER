@@ -96,7 +96,7 @@ export const Profile = () => {
                 <a
                   class="nav-link active px-5"
                   aria-current="page"
-                  href="#"
+                  href="/stock"
                   onMouseEnter={() => setHovered4(true)}
                   onMouseLeave={() => setHovered4(false)}
                   style={{

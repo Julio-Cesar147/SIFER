@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import Logo from '../../assets/img/logo.png'
 import Letras from '../../assets/img/nombre.png'
 import Lupa from '../../assets/img/buscar.png'
 const blue = "#282C37";
