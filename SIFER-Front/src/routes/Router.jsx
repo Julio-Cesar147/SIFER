@@ -11,6 +11,7 @@ import Products from "../pages/Employee/Products.jsx";
 import Sales from "../pages/Employee/Sales.jsx";
 import Register from "../auth/Register.jsx";
 import SinginPage from "../auth/SinginPage.jsx"
+import Product from "../pages/customer/Product.jsx";
 
 
 
@@ -39,6 +40,8 @@ export const Router = () => {
             {/* Clientes */}
             <Route path="/products" element={<Products />} />
             <Route  path="/cart" element={<Cart />} />
+            <Route path="/product" element={<Product/>}/>
+            <Route path="/tools" element={<Tools/>}/>
 
         </Routes>
     </>

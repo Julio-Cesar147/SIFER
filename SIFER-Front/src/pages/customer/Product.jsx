@@ -89,8 +89,8 @@ const Product = () => {
         <div className="container" style={{marginTop: 100}}>
             <div className="btn rounded-pill d-flex justify-content-center align-items-center text-center position-absolute shadow " 
                     style={{ backgroundColor: 'gray', top: "90px",  left: "15px", zIndex: 2,}} onClick={() => (window.location.href = '/profile')}>
-                    <img src='https://cdn-icons-png.flaticon.com/128/6676/6676016.png' style={{ width: 57, height: 55 }} className="bg-white border shadow rounded-circle me-2"/>
-                    <p className="fs-4 fw-bolder text-center text-white m-0">Luz Elena</p>
+                    <img src='https://cdn-icons-png.flaticon.com/128/6676/6676016.png' style={{ width: 37, height: 35 }} className="bg-white border shadow rounded-circle me-2"/>
+                    <p className="fs-5 fw-bolder text-center text-white m-0">Luz Elena</p>
             </div>
         <p className='fs-3 fw-semibold mt-5 mb-4'>{selectedProduct.category}</p>
             <div className="row">

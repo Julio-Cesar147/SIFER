@@ -61,8 +61,8 @@ const Tools = () => {
             <div id="carouselExampleInterval" className="carousel slide position-relative" style={{marginTop: 85}} data-bs-ride="carousel">
                 <div className="btn rounded-pill d-flex justify-content-center align-items-center text-center position-absolute shadow " 
                     style={{ backgroundColor: 'gray', top: "5px",  left: "15px", zIndex: 2,}} onClick={() => (window.location.href = '/profile')}>
-                    <img src='https://cdn-icons-png.flaticon.com/128/6676/6676016.png' style={{ width: 57, height: 55 }} className="bg-white border shadow rounded-circle me-2"/>
-                    <p className="fs-4 fw-bolder text-center text-white m-0">Luz Elena</p>
+                    <img src='https://cdn-icons-png.flaticon.com/128/6676/6676016.png' style={{ width: 37, height: 35 }} className="bg-white border shadow rounded-circle me-2"/>
+                    <p className="fs-5 fw-bolder text-center text-white m-0">Luz Elena</p>
                 </div>
                 <div className="carousel-inner">
                     <div className="carousel-item active" data-bs-interval="3000">
