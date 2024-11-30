@@ -37,7 +37,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/reserved', reservedRouter)
 app.use('/api/products', productRouter)
 app.use('/api/admin', adminRouter)
-app.user('api/occupation', occupationsRouter)
+app.use('/api/occupation', occupationsRouter)
 
 module.exports = {
     app

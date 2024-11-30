@@ -1,4 +1,4 @@
-const {User, Address} = require('../../models/models')
+const {User, Address, Role} = require('../../models/models')
 const { hashPayload } = require('../../utils/functions')
 const sequelize = require('../../config/database')
 
@@ -74,7 +74,7 @@ const getEmployeeById = async (idUser) => {
     try {
 
         const employee = await User.findByPk(idUser, {
-            include: [{ model: Address, as: 'address' }]
+            include: [{ model: Address },{ model:Role }]
         });
 
         if (!employee) throw new Error('Employee not found');
