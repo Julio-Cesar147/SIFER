@@ -11,8 +11,7 @@ import Products from "../pages/Employee/Products.jsx";
 import Sales from "../pages/Employee/Sales.jsx";
 import Register from "../auth/Register.jsx";
 import SinginPage from "../auth/SinginPage.jsx"
-
-
+import ProductSing from "../pages/customer/ProductSing.jsx"
 
 
 export const Router = () => {
@@ -37,8 +36,9 @@ export const Router = () => {
             <Route path="/orders" element={<Orders />} />
 
             {/* Clientes */}
-            <Route path="/products" element={<Products />} />
+            <Route path="/products" element={<Products/>} />
             <Route  path="/cart" element={<Cart />} />
+            <Route  path="/productsing" element={<ProductSing />} />
 
         </Routes>
     </>
