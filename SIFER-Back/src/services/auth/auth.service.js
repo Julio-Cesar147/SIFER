@@ -28,7 +28,9 @@ const signin = async (email, password) => {
                 userRole: user.Role.role,
             })
 
-            return token
+            const role = user.Role.role
+
+            return {token, role}
         }
     }
 }

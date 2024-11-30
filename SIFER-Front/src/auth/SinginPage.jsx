@@ -33,7 +33,21 @@ const SinginPage = () => {
 
         localStorage.setItem('token', token)
 
-        setResponse(result)      
+        switch (result.role) {
+            case 'Cliente':
+                window.location.href = '/tools'
+                break;
+            case 'Empleado':
+                window.location.href = '/orders'
+                break;
+            case 'Administrador':
+                window.location.href = '/profile'
+                break;
+        
+            default:
+                break;
+        }
+     
         } catch (error) {
         console.error('no se front maistro, checa tu codigo, por que algo hiciste mal');
         
