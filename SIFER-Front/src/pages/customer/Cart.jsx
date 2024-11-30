@@ -102,8 +102,8 @@ export const Cart = () => {
         <div className="container" style={{ marginTop: 90 }}>
         <div className="btn rounded-pill d-flex justify-content-center align-items-center text-center position-absolute shadow " 
                     style={{ backgroundColor: 'gray', top: "90px",  left: "15px", zIndex: 2,}} onClick={() => (window.location.href = '/profile')}>
-                    <img src='https://cdn-icons-png.flaticon.com/128/6676/6676016.png' style={{ width: 57, height: 55 }} className="bg-white border shadow rounded-circle me-2"/>
-                    <p className="fs-4 fw-bolder text-center text-white m-0">Luz Elena</p>
+                    <img src='https://cdn-icons-png.flaticon.com/128/6676/6676016.png' style={{ width: 37, height: 35 }} className="bg-white border shadow rounded-circle me-2"/>
+                    <p className="fs-5 fw-bolder text-center text-white m-0">Luz Elena</p>
             </div>
             <p className="fs-1 fw-bolder text-center pt-3">Mis Apartados</p>
             <div className="border-black border-bottom" />
@@ -137,17 +137,10 @@ export const Cart = () => {
                                     </p>
                                     <p className="card-text fw-bolder">${product.price}</p>
 
-                                    {/* Cantidad y control para actualizar */}
-                                    <div className="d-flex align-items-center mt-3">
-                                        <p className="fw-medium me-2">Cantidad:</p>
-                                        <input
-                                            type="number"
-                                            min={1}
-                                            value={product.quantity}
-                                            onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
-                                            className="form-control text-center"
-                                            style={{ width: '60px' }}
-                                        />
+                                    <div className="d-flex text-center align-items-center">
+                                        <label className="fw-medium me-2 text-center align-items-center">Cantidad:</label>
+                                        <input type="number" min={1} value={product.quantity} onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))} 
+                                            className="form-control align-content-center border shadow border-secondary-subtle " style={{ width: '60px' , height: 30}}/>
                                     </div>
                                 </div>
                             </div>
