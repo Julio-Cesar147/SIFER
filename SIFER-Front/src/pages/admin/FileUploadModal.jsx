@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/js/bootstrap.bundle.min"; // Para funcionalidades de Bootstrap
+import "bootstrap/dist/js/bootstrap.bundle.min"; 
 
 const FileUploadModal = ({ showModal, handleCloseModal }) => {
   const [uploadedFile, setUploadedFile] = useState(null);
