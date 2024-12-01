@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../assets/img/logo.png'
 import Letras from '../../assets/img/nombre.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,22 +7,47 @@ import Product from './Product';
 import { useNavigate } from 'react-router-dom';
 const blue = "#282C37";
 const orange = '#F75409';
+import apiConnect from '../../utils/api.connection';
+import Navbar from '../admin/NavBar';
 
 const Tools = () => {
 
     const navigate = useNavigate();
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const [products, setProducts] = useState([
-        { id: 1,image:"https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750179166059L.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",name: 'Martillo mazo duro', description: 'Util para clavar clavos', price: 200 , category: "Carpintería", status: "Disponible"},
-        { id: 2,image:'https://th.bing.com/th/id/R.8319cc0f6cfd0a294296ad0479c76142?rik=BpNH5jV3JthONQ&pid=ImgRaw&r=0',name: 'Pala podadora', description: 'Así recogeras mejor', price: 150 , category: "Volteo", status: "Disponible"},
-        { id: 3,image:'https://th.bing.com/th/id/OIP.FEPudhIH1w0QekbfQ6DZMAHaHa?rs=1&pid=ImgDetMain',name: 'Pico ', description: 'Sin pico no hay hoyos', price: 550 , category:"Jardinería", status: "Disponible"},
-        { id: 4,image:'https://http2.mlstatic.com/lampara-de-mano-led-recargable-marca-truper-11-leds-D_NQ_NP_735849-MLM26254069990_102017-F.jpg',name: 'Rastrillo', description: 'Mientras menos mejor', price: 100, category:"Jardinería" , status: "Disponible"},
-        { id: 5,image:'https://th.bing.com/th/id/OIP.FEPudhIH1w0QekbfQ6DZMAHaHa?rs=1&pid=ImgDetMain',name: 'Arenera plastica', description: 'Lo mejor', price: 450 , category:"Cultivo", status: "Disponible"},
-        { id: 6,image:'https://th.bing.com/th/id/OIP.FEPudhIH1w0QekbfQ6DZMAHaHa?rs=1&pid=ImgDetMain',name: 'Costal de tierra', description: 'Para uqe las plantas crezcan', price: 1000 , category:"Cultivo", status: "Disponible"},
-    ]);
+    const [products, setProducts] = useState([]);
 
     const [hoveredCard, setHoveredCard] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [hasToken, setHasToken] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setHasToken(!!token);
+        getAllProducts()
+    }, [])
+
+    const getAllProducts = async () => {
+        try {
+            const response = await apiConnect.get('api/products/')
+
+            setProducts(response)
+        } catch (error) {
+            console.error(error);
+            
+        }
+    }
+
+    const handleAddToOrder = async (product) => {
+        try {
+            const id = localStorage.getItem('id')
+            const payload = { id, products: Array.isArray(product) ? product : [product] };
+            await apiConnect.post('api/reserved/booking', payload)
+
+        } catch (error) {
+            console.error(error);
+            
+        }
+    };
 
     const handleProductClick = (product) => {
         navigate(`/product/${product.id}`, { state: { product } });
@@ -36,7 +61,8 @@ const Tools = () => {
 
     return (
         <>
-        <nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
+        <Navbar/>
+        {/*<nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
             <div style={{ backgroundColor: blue }} className="container-fluid">
                 <a className="navbar-brand text-white" href="/">
                     <img src={Letras} style={{ width: 250, height: 50 }} />
@@ -56,10 +82,10 @@ const Tools = () => {
                     </button>
                 </div>
             </div>
-        </nav>
+        </nav>*/}
 
             {/* Carrusel */}
-            <div id="carouselExampleInterval" className="carousel slide" style={{marginTop: 85}} data-bs-ride="carousel">
+            <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active" data-bs-interval="3000">
                         <img src="https://www.venturaferreteria.com/wp-content/uploads/herramientas.jpg" className="w-100" style={{ height: 500 }} alt="foto1" />
@@ -85,33 +111,55 @@ const Tools = () => {
             <div className="container my-4">
                 <p className="fs-2 fw-semibold mb-0">Productos disponibles</p>
                 <p className="p-0 mb-4">¡Lleva lo mejor y apártalo antes de que se agoten!</p>
-            <div className="row">
-                {filteProducts.map((product, index) => (
-                    <div className="col-md-4 mb-4 text-center" key={index} onClick={() => navigate('/productsing', { state: { selectedProduct: product } })}>
-                        <div className={`card h-100 border-secondary-subtle bg-body-tertiary ${hoveredCard === index ? 'shadow' : ''}`}
-                            onMouseEnter={() => setHoveredCard(index)}
-                            onMouseLeave={() => setHoveredCard(null)}>
-                            <img src={product.image}  className="card-img-top h-50 w-50 d-block mx-auto" alt={product.name}/>
-                            <div className="card-body justify-content-center mt-5 mb-0">
-                                <h5 className="card-title">{product.name}</h5>
-                                <p className="card-text">{product.description}</p>
-                                <p className="card-text fs-4"> <strong>${product.price}</strong></p>
-                                <p className='card-text'>{product.category}</p>
-                            </div>
-                            <div className="card-footer">
-                                <button className="btn w-100 text-white" style={{ backgroundColor: orange }}
-                                    onClick={(e) => {
-                                        e.stopPropagation(); // Prevenir que el evento se propague
-                                        navigate('/productsing', { state: { selectedProduct: product } });
-                                    }}>
-                                    Ver más
-                                </button>
+                <div className="row">
+                    {products.map((product, index) => (
+                        <div
+                            className="col-md-4 mb-4 text-center"
+                            key={index}
+                            //onClick={() => navigate('/sales', { state: { selectedProduct: product } })}
+                        >
+                            <div
+                                className={`card h-100 border-secondary-subtle bg-body-tertiary ${hoveredCard === index ? 'shadow' : ''}`}
+                                onMouseEnter={() => setHoveredCard(index)}
+                                onMouseLeave={() => setHoveredCard(null)}
+                            >
+                                <img src={product.image} className="card-img-top h-50 w-50 d-block mx-auto" alt={product.name} />
+                                <div className="card-body justify-content-center mt-5 mb-0">
+                                    <h5 className="card-title">{product.name}</h5>
+                                    <p className="card-text">{product.description}</p>
+                                    <p className="card-text fs-4">
+                                        <strong>${product.selling_price}</strong>
+                                    </p>
+                                    <p className="card-text">{product.category}</p>
+                                </div>
+                                <div className="card-footer">
+                                    <button
+                                        className="btn w-100 text-white mb-2"
+                                        style={{ backgroundColor: orange }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate('/product', { state: { selectedProduct: product } });
+                                        }}
+                                    >
+                                        Ver más
+                                    </button>
+                                    {hasToken && (
+                                        <div className="card-body d-flex flex-column">
+                                        
+                                        <button
+                                            className="btn btn-primary mt-auto"
+                                            onClick={() => handleAddToOrder(product)}
+                                        >
+                                            Agregar a pedidos
+                                        </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
         </>
     );
 };

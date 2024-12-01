@@ -1,47 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ferre from '../../assets/ferre.png';
 import NavBarEmployee from './NavBarEmployee';
-
-const productsData = [
-    {
-        id: 1,
-        name: 'Cinta sella roscas',
-        description: 'Blanca, uso general 7m',
-        brand: 'Pretul',
-        price: 3.90,
-        image: ferre,
-    },
-    {
-        id: 2,
-        name: 'Martillo de acero',
-        description: 'Mango de goma antideslizante',
-        brand: 'Truper',
-        price: 12.50,
-        image: ferre,
-    },
-    {
-        id: 3,
-        name: 'Taladro eléctrico',
-        description: '500W con 10 brocas',
-        brand: 'Makita',
-        price: 75.00,
-        image: ferre,
-    },
-];
+import apiConnect from '../../utils/api.connection';
 
 const Products = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [filteredProducts, setFilteredProducts] = useState(productsData);
+    //const [filteredProducts, setFilteredProducts] = useState([]);
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        getAllProducts()
+    }, [])
+
+    const getAllProducts = async () => {
+        try {
+            const response = await apiConnect.get('api/products/')
+            setProducts(response) 
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const handleSearch = (e) => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
 
-        const filtered = productsData.filter((product) =>
+        const filtered = products.filter((product) =>
             product.name.toLowerCase().includes(term)
         );
-        setFilteredProducts(filtered);
+        setProducts(filtered);
     };
 
     const handleAddToOrder = (product) => {
@@ -62,7 +50,7 @@ const Products = () => {
                         <h5 className="card-title">{product.name}</h5>
                         <p className="card-text">{product.description}</p>
                         <h6 className="card-subtitle mb-2 text-muted">{product.brand}</h6>
-                        <p className="text-success">${product.price}</p>
+                        <p className="text-success">${product.selling_price}</p>
                         <button
                             className="btn btn-primary mt-auto"
                             onClick={() => onAddToOrder(product)}
@@ -96,10 +84,10 @@ const Products = () => {
 
                 {/* Lista de Productos */}
                 <div className="row">
-                    {filteredProducts.length > 0 ? (
-                        filteredProducts.map((product) => (
+                    {products.length > 0 ? (
+                        products.map((product) => (
                             <ProductCard
-                                key={product.id}
+                                key={product.idProduct}
                                 product={product}
                                 onAddToOrder={handleAddToOrder}
                             />

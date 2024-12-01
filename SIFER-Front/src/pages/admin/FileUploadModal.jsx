@@ -1,33 +1,73 @@
 import React, { useState } from "react";
-import "bootstrap/dist/js/bootstrap.bundle.min"; 
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import apiConnect from "../../utils/api.connection";
 
 const FileUploadModal = ({ showModal, handleCloseModal }) => {
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [productName, setProductName] = useState("");
+  const [image, setImage] = useState(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [sku, setSku] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [model, setModel] = useState("");
   const [stock, setStock] = useState("");
+  const [stockMin, setStockMin] = useState("");
+  const [stockMax, setStockMax] = useState("");
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+  const [unit, setUnit] = useState("");
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setUploadedFile(file.name);
-    }
+    setImage(event.target.files[0]);
   };
 
   const handleRemoveFile = () => {
-    setUploadedFile(null);
+    setImage(null);
   };
 
-  const handleSubmit = () => {
-    // manejar el envío de los datos
-    console.log({
-      productName,
-      price,
-      category,
-      stock,
-      uploadedFile,
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      //const payload = {name, description, sku, price, model, stock, stockMin, stockMax, image, brand, category, unit}
+      console.log(image);
+
+      const formData = new FormData();
+
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("sku", sku);
+      formData.append("price", price);
+      formData.append("model", model);
+      formData.append("stock", stock);
+      formData.append("stockMin", stockMin);
+      formData.append("stockMax", stockMax);
+      formData.append("image", image); // Archivo seleccionado
+      formData.append("brand", brand);
+      formData.append("category", category);
+      formData.append("unit", unit);
+
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/products/register",
+          {
+            method: "POST",
+            body: formData
+          }
+        );
+
+        if (!response.ok)
+          throw new Error(`${response.status} ${response.statusText}`);
+
+        return await response.json();
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+
+      //const result = apiConnect.post(, formData)
+    } catch (error) {
+      console.log(error);
+    }
 
     // Cerrar el modal después de agregar el producto
     handleCloseModal();
@@ -65,7 +105,7 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
             <div className="row">
               {/* Columna de previsualización y carga de imagen */}
               <div className="col-md-6 d-flex flex-column align-items-center">
-                {uploadedFile ? (
+                {image ? (
                   <div
                     className="result mb-3"
                     style={{
@@ -79,7 +119,7 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
                       width: "100%",
                     }}
                   >
-                    <p>{uploadedFile}</p>
+                    <p>{image ? image.name : "No file selected"}</p>
                     <div
                       className="remove-file"
                       style={{
@@ -107,7 +147,7 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
                   <p>No se ha subido ninguna imagen.</p>
                 )}
                 <label
-                  htmlFor="file"
+                  htmlFor="image"
                   className="btn btn-outline-primary mt-auto"
                   style={{ width: "100%" }}
                 >
@@ -115,7 +155,8 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
                   <input
                     hidden
                     type="file"
-                    id="file"
+                    id="image"
+                    name="image"
                     onChange={handleFileChange}
                   />
                 </label>
@@ -129,8 +170,30 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
                     type="text"
                     className="form-control"
                     placeholder="Nombre del producto"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
+                    value={name}
+                    name="name"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label>Descripcion</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Descripcion"
+                    value={description}
+                    name="description"
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label>SKU</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="SKU"
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
                   />
                 </div>
                 <div className="form-group mb-3">
@@ -144,13 +207,13 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
                   />
                 </div>
                 <div className="form-group mb-3">
-                  <label>Categoría</label>
+                  <label>Modelo</label>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Categoría"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    placeholder="Modelo"
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
                   />
                 </div>
                 <div className="form-group mb-3">
@@ -163,10 +226,59 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
                     onChange={(e) => setStock(e.target.value)}
                   />
                 </div>
+                <div className="form-group mb-3">
+                  <label>Stock Minimo</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Minimo"
+                    value={stockMin}
+                    onChange={(e) => setStockMin(e.target.value)}
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label>Stock Maximo</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Maximo"
+                    value={stockMax}
+                    onChange={(e) => setStockMax(e.target.value)}
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label>Marca</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Marca"
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value)}
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label>Categoría</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Categoría"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                </div>
+                <div className="form-group mb-3">
+                  <label>Unidad</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Unidad"
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           </div>
-
           {/* Footer del modal */}
           <div className="modal-footer">
             <button
