@@ -4,18 +4,12 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OrderDetails from './OrderDetails';
 import NavBarEmployee from './NavBarEmployee';
+import apiConnect from '../../utils/api.connection';
 
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [orders, setOrders] = useState([
-    { numero: '3301', cliente: 'Ana Franco', productos: 1, total: '200.00', estado: 'En Almacén' },
-    { numero: '3302', cliente: 'Rogelio Guzman', productos: 1, total: '700.00', estado: 'En Almacén' },
-    { numero: '3303', cliente: 'Cecilia Rojas', productos: 1, total: '500.00', estado: 'En Almacén' },
-    { numero: '3304', cliente: 'Alejandra Ortiz', productos: 1, total: '30.00', estado: 'En Almacén' },
-    { numero: '3305', cliente: 'Minerva Duran', productos: 1, total: '15.00', estado: 'En Almacén' },
-    { numero: '3300', cliente: 'Emiliano Mendoza', productos: 12, total: '1500.00', estado: 'Entregado' },
-  ]);
+  const [orders, setOrders] = useState([]);
 
   // Filtrar órdenes
   const filteredOrders = orders.filter(
@@ -23,6 +17,16 @@ const Orders = () => {
       order.numero.includes(searchTerm) ||
       order.cliente.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const getAllOrders = async () => {
+    try {
+      const response = apiConnect.get('api/reserved/')
+
+      setOrders(response)
+    } catch (error) {
+      console(error)
+    }
+  }
 
   // Función para eliminar una orden con SweetAlert
   const handleDelete = (orderNumber) => {

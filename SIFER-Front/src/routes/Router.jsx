@@ -41,7 +41,6 @@ export const Router = () => {
             <Route path="/products" element={<Products />} />
             <Route  path="/cart" element={<Cart />} />
             <Route path="/product" element={<Product/>}/>
-            <Route path="/tools" element={<Tools/>}/>
 
         </Routes>
     </>

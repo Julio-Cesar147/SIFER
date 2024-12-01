@@ -4,6 +4,9 @@ const reserved = async (req, res) => {
     try {
         const { idUser, products } = req.body
 
+        console.log(req.body);
+        
+
         const result = await reservedService.reserved(idUser, products)
 
         res.status(200).json({ message: result })
