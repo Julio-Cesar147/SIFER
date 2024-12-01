@@ -1,31 +1,36 @@
-import React, { useState } from "react";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import NavBarEmployee from "./NavBarEmployee";
+import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBarEmployee from './NavBarEmployee';
 
 const Sales = () => {
-  const [step, setStep] = useState(1); // Controla el flujo entre formulario y tabla
+  const [step, setStep] = useState(1); 
   const [articles, setArticles] = useState([
-    { id: 1, codigo: "A001", nombre: "Martillo", precio: 50, cantidad: 1 },
-    { id: 2, codigo: "A002", nombre: "Clavo", precio: 1, cantidad: 10 },
-  ]); // Lista de productos
-  const [montoRecibido, setMontoRecibido] = useState(0); // Monto recibido por el cliente
+    { id: 1, codigo: 'A001', nombre: 'Martillo', precio: 50, cantidad: 1 },
+    { id: 2, codigo: 'A002', nombre: 'Clavo', precio: 1, cantidad: 10 },
+  ]); 
+  const [stock, setStock] = useState([]); 
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const [montoRecibido, setMontoRecibido] = useState(0); 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setStep(2); // Pasar a la tabla de artículos
-  };
+  
+  useEffect(() => {
+    const fetchStock = async () => {
+      try {
+        const response = await fetch('/api/stock');
+        const data = await response.json();
+        setStock(data);
+      } catch (error) {
+        console.error('Error al cargar el stock:', error);
+      }
+    };
 
-  const handleEliminar = (id) => {
-    setArticles(articles.filter((art) => art.id !== id));
-  };
+    fetchStock();
+  }, []);
 
   const calcularTotal = () => {
-    return articles.reduce(
-      (total, art) => total + art.precio * art.cantidad,
-      0
-    );
+    return articles.reduce((total, art) => total + art.precio * art.cantidad, 0);
   };
 
   const calcularCambio = () => {
@@ -33,116 +38,123 @@ const Sales = () => {
     return montoRecibido - total >= 0 ? montoRecibido - total : 0;
   };
 
-  // Función para eliminar una orden con SweetAlert
-  const handleDelete = (id) => {
+  const handleAddArticle = (article) => {
+    const existingArticle = articles.find((art) => art.id === article.id);
+    if (existingArticle) {
+      setArticles(
+        articles.map((art) =>
+          art.id === article.id ? { ...art, cantidad: art.cantidad + 1 } : art
+        )
+      );
+    } else {
+      setArticles([...articles, { ...article, cantidad: 1 }]);
+    }
     Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esta acción",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, eliminarlo!",
-      cancelButtonText: "No, cancelar!",
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Elimina el artículo del estado "articles"
-        setArticles(articles.filter((art) => art.id !== id));
-        Swal.fire("¡Eliminado!", "El artículo ha sido eliminado.", "success");
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("Cancelado", "El artículo no ha sido eliminado.", "error");
-      }
+      title: 'Artículo agregado',
+      text: `${article.nombre} se agregó a la lista.`,
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
     });
+  };
+
+  const filteredStock = stock.filter((item) =>
+    item.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSale = () => {
+    const total = calcularTotal();
+    const changeAmount = parseFloat(montoRecibido) - total;
+    if (changeAmount >= 0) {
+      Swal.fire({
+        title: 'Venta realizada',
+        text: `El cambio es: $${changeAmount.toFixed(2)}`,
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 3000,
+      });
+      setStep(1); // volver al paso 1 después de realizar la venta
+      setArticles([]); // limpiar la lista de artículos
+      setMontoRecibido(0); // limpiar el monto
+    } else {
+      Swal.fire({
+        title: 'Monto insuficiente',
+        text: 'El dinero recibido no es suficiente para cubrir la venta.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+      });
+    }
   };
 
   return (
     <>
-      {/* Barra de navegación */}
       <NavBarEmployee />
-
-      {/* Contenido principal */}
-      <div className="container my-5">
+      <div className="container mt-5">
         {step === 1 ? (
-          <div className="d-flex justify-content-center">
-            <div
-              className="p-4 bg-white shadow rounded"
-              style={{ maxWidth: "500px", width: "100%" }}
-            >
-              {/* Título del formulario */}
-              <h4 className="mb-4 text-primary">Información de comprador</h4>
-              <hr />
-
-              <form onSubmit={handleSubmit}>
-                <div className="form-group mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Nombre (s)
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    placeholder="Nombre del cliente"
-                    required
-                  />
-                </div>
-
-                <div className="form-group mb-3">
-                  <label htmlFor="paterno" className="form-label">
-                    Apellido Paterno
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="paterno"
-                    placeholder="Apellido paterno del cliente"
-                    required
-                  />
-                </div>
-
-                <div className="form-group mb-3">
-                  <label htmlFor="materno" className="form-label">
-                    Apellido Materno
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="materno"
-                    placeholder="Apellido materno del cliente"
-                    required
-                  />
-                </div>
-
-                <div className="form-group mb-3">
-                  <label htmlFor="tel" className="form-label">
-                    Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    className="form-control"
-                    id="tel"
-                    placeholder="Teléfono"
-                    pattern="[0-9]{10}"
-                    title="Debe ser un número de 10 dígitos" // aqui puse un  mensajito pa recordar que solo son 10 numeritos
-                    maxLength="10" // esto hace que solo sean 10 digitos jiji
-                    required
-                    onInput={(e) => {
-                      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Elimina letras y caracteres
-                    }}
-                  />
-                </div>
-
-                <div className="d-flex justify-content-end">
-                  <button type="submit" className="btn btn-primary">
-                    Siguiente
-                  </button>
-                </div>
-              </form>
-            </div>
+          <div className="p-4 bg-white shadow rounded" style={{ maxWidth: '600px', margin: 'auto' }}>
+            <h4 className="mb-4 text-primary">Información de comprador</h4>
+            <hr />
+            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
+              <div className="form-group mb-3">
+                <label htmlFor="name" className="form-label">Nombre (s)</label>
+                <input type="text" className="form-control" id="name" placeholder="Nombre del cliente" required />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="paterno" className="form-label">Apellido Paterno</label>
+                <input type="text" className="form-control" id="paterno" placeholder="Apellido paterno del cliente" required />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="materno" className="form-label">Apellido Materno</label>
+                <input type="text" className="form-control" id="materno" placeholder="Apellido materno del cliente" required />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="tel" className="form-label">Teléfono</label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  id="tel"
+                  placeholder="Teléfono"
+                  pattern="[0-9]{10}"
+                  title="Debe ser un número de 10 dígitos"
+                  maxLength="10"
+                  required
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                  }}
+                />
+              </div>
+              <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary">Siguiente</button>
+              </div>
+            </form>
           </div>
         ) : (
           <>
             <h4 className="mb-4 text-primary">Lista de artículos</h4>
-            <table className="table table-striped">
-              <thead>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Buscar herramienta..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <ul className="list-group mt-2">
+                {filteredStock.map((item) => (
+                  <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
+                    {item.nombre} - ${item.precio.toFixed(2)}
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={() => handleAddArticle(item)}
+                    >
+                      Agregar
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <table className="table table-striped table-hover">
+              <thead className="table-primary">
                 <tr>
                   <th>ID</th>
                   <th>Código</th>
@@ -150,7 +162,6 @@ const Sales = () => {
                   <th>Precio</th>
                   <th>Cantidad</th>
                   <th>Total</th>
-                  <th>Eliminar</th>
                 </tr>
               </thead>
               <tbody>
@@ -162,51 +173,29 @@ const Sales = () => {
                     <td>${art.precio.toFixed(2)}</td>
                     <td>{art.cantidad}</td>
                     <td>${(art.precio * art.cantidad).toFixed(2)}</td>
-                    <td>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDelete(art.id)}
-                      >Eliminar
-                      </button>
-                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-
-            <div className="row">
-              {/* botones realizar/cancelar venta */}
-              <div className="col-md-8 mt-5 mb-5">
-                <button
-                  className="btn btn-secondary me-2"
-                  onClick={() => setStep(1)}>Cancelar Venta</button>
-                <button className="btn btn-success">Realizar Venta</button>
+            <div className="row mt-4">
+              <div className="col-md-8">
+                <button className="btn btn-secondary me-2" onClick={() => setStep(1)}>Cancelar Venta</button>
+                <button className="btn btn-success" onClick={handleSale}>Realizar Venta</button>
               </div>
-              {/* fin botones realizar/cancelar venta */}
-
               <div className="col-md-4">
                 <div className="p-3 bg-light border rounded">
-                  <p>
-                    <strong>Total de venta:</strong> $
-                    {calcularTotal().toFixed(2)}
-                  </p>
+                  <p><strong>Total de venta:</strong> ${calcularTotal().toFixed(2)}</p>
                   <div className="form-group mb-2">
-                    <label htmlFor="montoRecibido" className="form-label">
-                      Monto recibido:
-                    </label>
+                    <label htmlFor="montoRecibido" className="form-label">Monto recibido:</label>
                     <input
                       type="number"
                       className="form-control"
                       id="montoRecibido"
                       value={montoRecibido}
-                      onChange={(e) =>
-                        setMontoRecibido(parseFloat(e.target.value) || 0)
-                      }
+                      onChange={(e) => setMontoRecibido(parseFloat(e.target.value) || 0)}
                     />
                   </div>
-                  <p>
-                    <strong>Cambio:</strong> ${calcularCambio().toFixed(2)}
-                  </p>
+                  <p><strong>Cambio:</strong> ${calcularCambio().toFixed(2)}</p>
                 </div>
               </div>
             </div>

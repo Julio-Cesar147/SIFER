@@ -9,7 +9,9 @@ const greenwhite = "#3FDA2B";
 import React, { useState, useEffect } from 'react';
 const orange = '#F75409';
 import Swal from 'sweetalert2';
+import NavBarCliente from './NavBarCliente';
 const red = "#DF0000";
+
 
 export const Cart = () => {
     const [products, setProducts] = useState([]);
@@ -78,6 +80,8 @@ export const Cart = () => {
 
     return (
         <>
+        <NavBarCliente/>
+         {/* Fila de productos 
         <nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
             <div style={{ backgroundColor: blue }} className="container-fluid">
                 <a className="navbar-brand text-white" href="/tools">
@@ -98,7 +102,7 @@ export const Cart = () => {
                 </div>
             </div>
         </nav>
-
+*/}
         <div className="container" style={{ marginTop: 90 }}>
         <div className="btn rounded-pill d-flex justify-content-center align-items-center text-center position-absolute shadow " 
                     style={{ backgroundColor: 'gray', top: "90px",  left: "15px", zIndex: 2,}} onClick={() => (window.location.href = '/profile')}>
