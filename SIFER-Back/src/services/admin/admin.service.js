@@ -58,7 +58,7 @@ const getAllEmployees = async () => {
     try {
 
         const employees = await User.findAll({
-            include: [{ model: Address, as: 'address' }]
+            include: [{ model: Address},{ model:Role }]
         });
         return employees;
 
@@ -98,9 +98,9 @@ const updateEmployee = async (idUser, payload) => {
                 surname: payload.surname,
                 email: payload.email,
                 telephone: payload.telephone,
-                birthday: payload.birthday,
-                role: payload.role,
-                occupation: payload.occupation
+                //birthday: payload.birthday,
+                //role: payload.role,
+                //occupation: payload.occupation
             }, { where: { idUser }, transaction });
 
             await Address.update({
