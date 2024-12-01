@@ -102,7 +102,7 @@ const Product = () => {
                         <p className="fs-4 fw-semibold">{selectedProduct.name}</p>
                         <p className="text-success fw-medium">{selectedProduct.status}</p>
                         <p className="text-muted">{selectedProduct.description}</p>
-                        <p className="fw-bold fs-2 text-dark">${selectedProduct.price}</p>
+                        <p className="fw-bold fs-2 text-dark">${selectedProduct.selling_price}</p>
                     </div>
                     <div className="d-flex align-items-center mb-4">
                         <p className="me-3 mb-0">Cantidad:</p>
