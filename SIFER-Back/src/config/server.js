@@ -1,6 +1,7 @@
 process.loadEnvFile()
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
 
 //En esta parte se mandan a traer las rutas del archivo router, por lo que se importa de ese archivo
 //const {} = require()
@@ -15,7 +16,7 @@ app.set('port', process.env.PORT || 3001)
 
 app.use(cors({origins: '*'}))
 app.use(express.json({limit: '50mb'}))
-app.use('/uploads', express.static('../uploads'))
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 app.get('/', (request, response) => {
     response.send('Esto es lo que viene a ser la APIRest para una ferreteria')

@@ -1,45 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import Navbar from "./NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import FileUploadModal from "./FileUploadModal";
-
-const productsData = [
-  {
-    id: "P01",
-    title: "Manguera",
-    description: "Mangueras armadas 3 capas, conexiones plásticas, Pretul",
-    price: 25.0,
-    stock: 10,
-    image: "https://via.placeholder.com/150",
-    category: "Herramientas",
-  },
-  {
-    id: "P02",
-    title: "Manguera XL",
-    description: "Mangueras reforzadas 5 capas, conexiones de metal, Pretul",
-    price: 35.0,
-    stock: 5,
-    image: "https://via.placeholder.com/150",
-    category: "Herramientas",
-  },
-  {
-    id: "P03",
-    title: "Taladro",
-    description: "Taladro de 500W, con broquero metálico y cable de 1.5m",
-    price: 120.0,
-    stock: 7,
-    image: "https://via.placeholder.com/150",
-    category: "Eléctricos",
-  },
-];
+import apiConnect from "../../utils/api.connection";
 
 const Stock = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [editableProduct, setEditableProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    getAllProducts()
+  }, [])
 
   const handleAddProduct = () => {
     setShowModal(true);
@@ -56,7 +32,7 @@ const Stock = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`laapi${editableProduct.id}`, {
+      const response = await fetch(`http://localhost:3000/api/products/${editableProduct.idProduct}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -85,9 +61,21 @@ const Stock = () => {
     }
   };
 
-  const filteredProducts = productsData.filter((product) =>
+  const getAllProducts = async () => {
+    try {
+      const response = await apiConnect.get('api/products/')
+      const productsData = response
+
+      setProducts(productsData )
+    } catch (error) {
+      console.error(error);
+      
+    }
+  }
+
+  /*const filteredProducts = productsData.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  );*/
 
   return (
     <>
@@ -114,9 +102,9 @@ const Stock = () => {
             </div>
             {/* Lista de productos */}
             <ul className="list-group">
-              {filteredProducts.map((product) => (
+              {products.map((product) => (
                 <li
-                  key={product.id}
+                  key={product.idProduct}
                   className="list-group-item d-flex justify-content-between align-items-center"
                   style={{ cursor: "pointer" }}
                   onClick={() => handleSelectProduct(product)}
@@ -124,11 +112,12 @@ const Stock = () => {
                   <div>
                     <img
                       src={product.image}
-                      alt={product.title}
+                      //alt={product.title}
                       style={{ width: "100px", marginRight: "10px" }}
                     />
-                    <strong>{product.title}</strong> - $
-                    {product.price.toFixed(2)}
+                    <strong>{product.description}</strong> - $
+                    {parseFloat(product.selling_price).toFixed(2)}
+                    <p>Disponible: {product.availableStock} Apartado: {product.reserved} Total: {product.stock}</p> 
                   </div>
                   <span
                     className={`badge ${
@@ -148,12 +137,12 @@ const Stock = () => {
           <div className="col-md-6">
             {editableProduct ? (
               <div className="card">
-                <img src={editableProduct.image} alt={editableProduct.title} style={{ width: "100%", height: "200px", objectFit: "cover", marginBottom: "10px",}}/>
+                <img src={editableProduct.image} alt={editableProduct.name} style={{ width: "100%", height: "200px", objectFit: "cover", marginBottom: "10px",}}/>
                 <div className="card-body">
                   <h5 className="card-title">
                     <input
                       type="text"
-                      value={editableProduct.title}
+                      value={editableProduct.name}
                       onChange={(e) =>
                         setEditableProduct({
                           ...editableProduct,
@@ -178,7 +167,7 @@ const Stock = () => {
                     <strong>Precio:</strong>{" "}
                     <input
                       type="number"
-                      value={editableProduct.price}
+                      value={editableProduct.selling_price}
                       onChange={(e) =>
                         setEditableProduct({
                           ...editableProduct,
