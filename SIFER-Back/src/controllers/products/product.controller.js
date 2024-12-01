@@ -5,7 +5,7 @@ const register = async (req, res) => {
     try {
         const { name, description, sku, price, model, stock, stockMin, stockMax, brand, category, unit } = req.body
 
-        const image = req.file.path
+        const image = req.file.filename
         
         const product = await productService.registerProduct({ name, description, sku, price, model, stock, stockMin, stockMax, image, brand, category, unit })
 

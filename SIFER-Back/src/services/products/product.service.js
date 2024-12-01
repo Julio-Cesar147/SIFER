@@ -83,7 +83,11 @@ const registerProduct = async (payload) => {
 // Obtener todos los productos
 const getProducts = async () => {
     // Obtener todos los productos
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+        include:[{
+            model: Category
+        }]
+    });
 
     // Iterar sobre cada producto
     const productsWithStock = await Promise.all(products.map(async (product) => {
@@ -111,10 +115,11 @@ const getProducts = async () => {
             stock: product.stock,
             minimum_stock: product.minimum_stock,
             maximum_stock: product.maximum_stock,
+            image: `http://localhost:3000/uploads/${product.image}`,
             status: product.status,
             created: product.created,
             brand: product.brand,
-            category: product.category,
+            category: product.Category.category,
             unit: product.unit,
             availableStock,       // Stock disponible calculado
             reserved              // Lo que está apartado (reservado)
@@ -168,24 +173,50 @@ const getProductId = async (id) => {
 //Actualizar un producto
 const updateProduct = async(id, payload) => {
     const product = await Product.findByPk(id);
-    if(!product) throw new Error('Product not found');
+        if(!product) throw new Error('Product not found');
+    
+    try {
+        const result = await sequelize.transaction(async (transaction) => {
+            let category = await Category.findOne({
+                where: { category: payload.category },
+                    //transaction: transaction
+            })
 
-    await product.update({
-        name: payload.name,
-        description: payload.description,
-        sku: payload.sku,
-        selling_price: payload.selling_price,
-        model: payload.model,
-        stock: payload.stock,
-        minimum_stock: payload.minimum_stock,
-        maximum_stock: payload.maximum_stock,
-        status: payload.status,
-        brand: payload.brand,
-        category: payload.category,
-        unit: payload.unit
-    });
+            if (!category) {
+                category = await Category.create({
+                    category: payload.category
+                },{
+                    transaction: transaction
+                })
+            }
 
-    await Brand.create({
+            await product.update({
+                name: payload.name,
+                description: payload.description,
+                //sku: payload.sku,
+                selling_price: payload.selling_price,
+                //model: payload.model,
+                stock: payload.stock,
+                //minimum_stock: payload.minimum_stock,
+                //maximum_stock: payload.maximum_stock,
+                //status: payload.status,
+                //brand: payload.brand,
+                category: category.idCategory,
+                //unit: payload.unit
+            },{
+                transaction: transaction
+            });
+
+            return 'Product updated successfully';
+        })
+
+        return result
+    } catch (error) {
+        throw new Error('Failed to register product')
+    }
+    
+
+    /*await Brand.create({
         brand: payload.brand
     },{
         transaction: transaction
@@ -201,9 +232,9 @@ const updateProduct = async(id, payload) => {
         unit: payload.Unit
     },{
         transaction: transaction
-    })
+    })*/
 
-    return 'Product updated successfully';
+    
 };
 
 //Eliminar un producto
