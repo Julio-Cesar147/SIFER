@@ -13,6 +13,7 @@ const apiConnect = {
             method: method,
             headers: {
                 //'authorization': `Bearer ${token}`,
+                //"Content-Type": "multipart/form-data",
                 'Content-Type': 'application/json'
             },
             body: data ? JSON.stringify(data) : null

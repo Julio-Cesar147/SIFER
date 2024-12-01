@@ -3,9 +3,11 @@ const productService = require('../../services/products/product.service');
 
 const register = async (req, res) => {
     try {
-        const { idProduct, name, description, sku, selling_price, model, stock, minimum_stock, maximum_stock, status, created, brand, category, unit } = req.body
+        const { name, description, sku, price, model, stock, stockMin, stockMax, brand, category, unit } = req.body
 
-        const product = await productService.registerProduct({ idProduct, name, description, sku, selling_price, model, stock, minimum_stock, maximum_stock, status, created, brand, category, unit })
+        const image = req.file.path
+        
+        const product = await productService.registerProduct({ name, description, sku, price, model, stock, stockMin, stockMax, image, brand, category, unit })
 
         res.status(201).json({ message: 'Product registered successfully', product })
     } catch (error) {

@@ -1,10 +1,10 @@
-const { Product, Brand, Category, Unit } = require('../../models/models')
+const { Product, Brand, Category, Unit, ReservationDetail } = require('../../models/models')
 const sequelize = require('../../config/database')
 
 
 //Crear producto
 const registerProduct = async (payload) => {
-    if (!payload.idProduct || !payload.name || !payload.description || !payload.sku || !payload.selling_price || !payload.model || !payload.stock || !payload.minimum_stock || !payload.maximum_stock || !payload.status || !payload.created || !payload.brand || !payload.category || !payload.unit)
+    if (!payload.name || !payload.description || !payload.sku || !payload.price || !payload.model || !payload.stock || !payload.stockMin || !payload.stockMax || !payload.image || !payload.brand || !payload.category || !payload.unit)
         throw new Error('Missing fields')
 
     const duplicateProduct = await Product.findOne({
@@ -18,43 +18,58 @@ const registerProduct = async (payload) => {
 
     try {
         const result = await sequelize.transaction(async (transaction) => {
+            let brand = await Brand.findOne({
+                where: { brand: payload.brand },
+                //transaction: transaction
+            })
+
+            if (!brand) {
+                brand = await Brand.create({
+                    brand: payload.brand
+                },{
+                    transaction: transaction
+                })
+            }
+
+            let category = await Category.findOne({
+                where: { category: payload.category },
+                //transaction: transaction
+            })
+
+            if (!category) {
+                category = await Category.create({
+                    category: payload.category
+                },{
+                    transaction: transaction
+                })
+            }
+
             const user = await Product.create({
-                idProduct: payload.idProduct,
+                //idProduct: payload.idProduct,
                 name: payload.name,
                 description: payload.description,
                 sku: payload.sku,
-                selling_price: payload.selling_price,
+                selling_price: payload.price,
                 model: payload.model,
                 stock: payload.stock,
-                minimum_stock: payload.minimum_stock,
-                maximum_stock: payload.maximum_stock,
-                status: payload.status,
-                created: payload.created,
-                brand: payload.brand,
-                category: payload.category,
+                minimum_stock: payload.stockMin,
+                maximum_stock: payload.stockMax,
+                image: payload.image,
+                //status: payload.status,
+                //created: payload.created,
+                brand: brand.idBrand,
+                category: category.idCategory,
                 unit: payload.unit
 
             },{
                 transaction: transaction
             });
 
-            await Brand.create({
-                brand: payload.brand
-            },{
-                transaction: transaction
-            })
-
-            await Category.create({
-                category: payload.Category
-            },{
-                transaction: transaction
-            })
-
-            await Unit.create({
+            /*wait Unit.create({
                 unit: payload.Unit
             },{
                 transaction: transaction
-            })
+            })*/
     
             return 'Product registered successfully';
         });
