@@ -63,7 +63,9 @@ const reserved = async (idUser, products) => {
 
         return result
     } catch (error) {
-        throw new Error('Failed to make the reservation')
+        console.error(error);
+        
+        throw new Error('Failed to make the reservation', error)
     }
 }
 

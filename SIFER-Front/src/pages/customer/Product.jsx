@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom'; // Importa useLocation
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'; // Importa useLocation
 import Logo from '../../assets/img/logo.png';
 import Letras from '../../assets/img/nombre.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,23 +8,24 @@ const bluee = "#04478D";
 const blue = "#282C37";
 const orange = '#F75409';
 import Swal from 'sweetalert2';
+import apiConnect from '../../utils/api.connection';
 
 const Product = () => {
+    const navigate = useNavigate()
     const location = useLocation(); // Usa useLocation para obtener datos de la navegación
     const { selectedProduct } = location.state || {}; // Extrae selectedProduct desde el estado
+    const [reserved, setReserved] = useState(1)
 
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState(1);
 
     if (!selectedProduct) {
         return <p>No se seleccionó ningún producto.</p>;
     }
 
-    const [quantity, setQuantity] = useState(1);
-
     const handleApartProduct = () => {
         Swal.fire({
             title: "¿Estás seguro?",
-            text: `Apartarás ${quantity} piezas del producto ${selectedProduct.name}`,
+            text: `Apartarás ${reserved} piezas del producto ${selectedProduct.name}`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -36,8 +37,8 @@ const Product = () => {
                 const apartados = JSON.parse(localStorage.getItem('apartados')) || [];
                 apartados.push({
                     ...selectedProduct,
-                    quantity: quantity,
-                    totalPrice: selectedProduct.price * quantity,
+                    reserved: reserved,
+                    totalPrice: selectedProduct.price * reserved,
                 });
                 localStorage.setItem('apartados', JSON.stringify(apartados));
 
@@ -106,7 +107,7 @@ const Product = () => {
                     </div>
                     <div className="d-flex align-items-center mb-4">
                         <p className="me-3 mb-0">Cantidad:</p>
-                        <input id='num' type='number' min={1} value={quantity} onChange={(e) => setQuantity(e.target.value)} className="form-control w-25"/>
+                        <input id='num' type='number' min={1} value={reserved} onChange={(e) => setReserved(e.target.value)} className="form-control w-25"/>
                     </div>
                     <div>
                         <button className="btn btn-lg text-white" style={{ backgroundColor: orange }} onClick={handleApartProduct} >

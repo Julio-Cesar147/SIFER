@@ -23,8 +23,8 @@ const configSendEmail = async (mailOptions) => {
             user: process.env.EUSER,
             pass: process.env.EPASS
         },
-        connectionTimeout: 6000,
-        socketTimeout: 6000
+        connectionTimeout: 60000,
+        socketTimeout: 60000
     })
 
     return await transporter.sendMail(mailOptions)

@@ -18,11 +18,9 @@ const Tools = () => {
 
     const [hoveredCard, setHoveredCard] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [hasToken, setHasToken] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        setHasToken(!!token);
+        
         getAllProducts()
     }, [])
 
@@ -143,17 +141,6 @@ const Tools = () => {
                                     >
                                         Ver más
                                     </button>
-                                    {hasToken && (
-                                        <div className="card-body d-flex flex-column">
-                                        
-                                        <button
-                                            className="btn btn-primary mt-auto"
-                                            onClick={() => handleAddToOrder(product)}
-                                        >
-                                            Agregar a pedidos
-                                        </button>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         </div>
