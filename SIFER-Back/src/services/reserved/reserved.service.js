@@ -153,7 +153,12 @@ const getReservation = async (code) => {
 const getAllReservations = async () => {
     const reservations = await Reservation.findAll({
         include:[{
-            model: ReservationDetail
+            model: ReservationDetail,
+            include: [{
+                model: Product
+            }]
+        },{
+            model: User
         }]
     })
 
