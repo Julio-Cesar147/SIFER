@@ -20,6 +20,8 @@ const collection = async (req, res) => {
     try {
         const { idUser, sales, products, code } = req.body
 
+        console.log(req.body)
+
         const result = await reservedService.collection(idUser, sales, products, code)
 
         res.status(200).json({ message: result })

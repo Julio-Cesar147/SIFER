@@ -1,7 +1,7 @@
 process.loadEnvFile()
 const { configSendEmail } = require('../utils/functions')
 
-const sendEmail = (user, code, productDetailsHTML) => {
+const sendEmail = async (user, code, productDetailsHTML) => {
     const mailOptions = {
         from: process.env.EUSER,
         to: user.email,
@@ -86,7 +86,7 @@ const sendEmail = (user, code, productDetailsHTML) => {
         `
     }
 
-    configSendEmail(mailOptions)
+    await configSendEmail(mailOptions)
 }
 
 module.exports = {

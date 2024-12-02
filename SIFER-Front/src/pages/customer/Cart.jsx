@@ -9,6 +9,7 @@ const greenwhite = "#3FDA2B";
 import React, { useState, useEffect } from 'react';
 const orange = '#F75409';
 import Swal from 'sweetalert2';
+import apiConnect from '../../utils/api.connection';
 const red = "#DF0000";
 
 export const Cart = () => {
@@ -76,6 +77,49 @@ export const Cart = () => {
         });
     };
 
+    const handleApart = async () => {
+        try {
+            // Obtenemos los productos del localStorage
+            const storedProducts = JSON.parse(localStorage.getItem('apartados')) || [];
+    
+            // Creamos un nuevo array con los productos que solo incluyen el sku y la cantidad
+            const products = storedProducts.map(product => ({
+                sku: product.sku,  // Asegúrate de que cada producto tenga un campo "sku"
+                reserved: product.reserved // O "cantidad reservada"
+            }));
+
+            const idUser = localStorage.getItem("id")
+
+            const payload = { idUser, products }
+    
+            // Hacer la petición POST con los productos transformados
+            await apiConnect.post('api/reserved/booking', payload);
+    
+            // Opcionalmente, puedes limpiar el localStorage después de enviar la solicitud
+            localStorage.removeItem('apartados');
+    
+            // Mostrar un mensaje de éxito usando SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Apartado Realizado',
+                text: 'Tus productos han sido apartados correctamente.',
+                showConfirmButton: false,
+                timer: 2500
+            });
+        } catch (error) {
+            console.error(error);
+    
+            // Mostrar un mensaje de error en caso de fallo
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error al intentar apartar los productos.',
+                showConfirmButton: false,
+                timer: 2500
+            });
+        }
+    }
+
     return (
         <>
         <nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
@@ -135,7 +179,7 @@ export const Cart = () => {
                                     <p className="card-text text-primary">
                                         <strong>Apartado</strong>
                                     </p>
-                                    <p className="card-text fw-bolder">${product.price}</p>
+                                    <p className="card-text fw-bolder">${product.selling_price}</p>
 
                                     <div className="d-flex text-center align-items-center">
                                         <label className="fw-medium me-2 text-center align-items-center">Cantidad:</label>
@@ -150,6 +194,9 @@ export const Cart = () => {
             </div>
             <div className="text-center fs-4 fw-semibold bg-secondary-subtle">
                 <p>Total: ${total}</p>
+                <button className="btn btn-lg text-white" style={{ backgroundColor: orange }} onClick={handleApart}>
+                    Apartar
+                </button>
             </div>
         </div>
         </>
