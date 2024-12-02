@@ -111,7 +111,7 @@ const Employees = () => {
   const getAllEmployees = async () => {
     try {
       const response = await apiConnect.get("api/admin/getAllEmployees");
-
+      console.log(response);
       const list = response.filter((user) => user.Role.role === "Empleado");
 
       setEmployees(list);

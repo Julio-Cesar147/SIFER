@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBarEmployee from './NavBarEmployee';
+import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NavBarEmployee from "./NavBarEmployee";
 
 const Sales = () => {
-  const [step, setStep] = useState(1); 
+  const [step, setStep] = useState(1);
   const [articles, setArticles] = useState([
-    { id: 1, codigo: 'A001', nombre: 'Martillo', precio: 50, cantidad: 1 },
-    { id: 2, codigo: 'A002', nombre: 'Clavo', precio: 1, cantidad: 10 },
-  ]); 
-  const [stock, setStock] = useState([]); 
-  const [searchTerm, setSearchTerm] = useState(''); 
-  const [montoRecibido, setMontoRecibido] = useState(0); 
+    { id: 1, codigo: "A001", nombre: "Martillo", precio: 50, cantidad: 1 },
+    { id: 2, codigo: "A002", nombre: "Clavo", precio: 1, cantidad: 10 },
+  ]);
+  const [stock, setStock] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [montoRecibido, setMontoRecibido] = useState(0);
 
-  
   useEffect(() => {
     const fetchStock = async () => {
       try {
-        const response = await fetch('/api/stock');
+        const response = await fetch("/api/stock");
         const data = await response.json();
         setStock(data);
       } catch (error) {
-        console.error('Error al cargar el stock:', error);
+        console.error("Error al cargar el stock:", error);
       }
     };
 
@@ -30,7 +29,10 @@ const Sales = () => {
   }, []);
 
   const calcularTotal = () => {
-    return articles.reduce((total, art) => total + art.precio * art.cantidad, 0);
+    return articles.reduce(
+      (total, art) => total + art.precio * art.cantidad,
+      0
+    );
   };
 
   const calcularCambio = () => {
@@ -50,9 +52,9 @@ const Sales = () => {
       setArticles([...articles, { ...article, cantidad: 1 }]);
     }
     Swal.fire({
-      title: 'Artículo agregado',
+      title: "Artículo agregado",
       text: `${article.nombre} se agregó a la lista.`,
-      icon: 'success',
+      icon: "success",
       timer: 1500,
       showConfirmButton: false,
     });
@@ -67,9 +69,9 @@ const Sales = () => {
     const changeAmount = parseFloat(montoRecibido) - total;
     if (changeAmount >= 0) {
       Swal.fire({
-        title: 'Venta realizada',
+        title: "Venta realizada",
         text: `El cambio es: $${changeAmount.toFixed(2)}`,
-        icon: 'success',
+        icon: "success",
         showConfirmButton: false,
         timer: 3000,
       });
@@ -78,10 +80,10 @@ const Sales = () => {
       setMontoRecibido(0); // limpiar el monto
     } else {
       Swal.fire({
-        title: 'Monto insuficiente',
-        text: 'El dinero recibido no es suficiente para cubrir la venta.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
+        title: "Monto insuficiente",
+        text: "El dinero recibido no es suficiente para cubrir la venta.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
       });
     }
   };
@@ -91,24 +93,58 @@ const Sales = () => {
       <NavBarEmployee />
       <div className="container mt-5">
         {step === 1 ? (
-          <div className="p-4 bg-white shadow rounded" style={{ maxWidth: '600px', margin: 'auto' }}>
+          <div
+            className="p-4 bg-white shadow rounded"
+            style={{ maxWidth: "600px", margin: "auto" }}
+          >
             <h4 className="mb-4 text-primary">Información de comprador</h4>
             <hr />
-            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setStep(2);
+              }}
+            >
               <div className="form-group mb-3">
-                <label htmlFor="name" className="form-label">Nombre (s)</label>
-                <input type="text" className="form-control" id="name" placeholder="Nombre del cliente" required />
+                <label htmlFor="name" className="form-label">
+                  Nombre (s)
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  placeholder="Nombre del cliente"
+                  required
+                />
               </div>
               <div className="form-group mb-3">
-                <label htmlFor="paterno" className="form-label">Apellido Paterno</label>
-                <input type="text" className="form-control" id="paterno" placeholder="Apellido paterno del cliente" required />
+                <label htmlFor="paterno" className="form-label">
+                  Apellido Paterno
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="paterno"
+                  placeholder="Apellido paterno del cliente"
+                  required
+                />
               </div>
               <div className="form-group mb-3">
-                <label htmlFor="materno" className="form-label">Apellido Materno</label>
-                <input type="text" className="form-control" id="materno" placeholder="Apellido materno del cliente" required />
+                <label htmlFor="materno" className="form-label">
+                  Apellido Materno
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="materno"
+                  placeholder="Apellido materno del cliente"
+                  required
+                />
               </div>
               <div className="form-group mb-3">
-                <label htmlFor="tel" className="form-label">Teléfono</label>
+                <label htmlFor="tel" className="form-label">
+                  Teléfono
+                </label>
                 <input
                   type="tel"
                   className="form-control"
@@ -119,12 +155,14 @@ const Sales = () => {
                   maxLength="10"
                   required
                   onInput={(e) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
                   }}
                 />
               </div>
               <div className="d-flex justify-content-end">
-                <button type="submit" className="btn btn-primary">Siguiente</button>
+                <button type="submit" className="btn btn-primary">
+                  Siguiente
+                </button>
               </div>
             </form>
           </div>
@@ -141,7 +179,10 @@ const Sales = () => {
               />
               <ul className="list-group mt-2">
                 {filteredStock.map((item) => (
-                  <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
+                  <li
+                    key={item.id}
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                  >
                     {item.nombre} - ${item.precio.toFixed(2)}
                     <button
                       className="btn btn-sm btn-primary"
@@ -179,23 +220,39 @@ const Sales = () => {
             </table>
             <div className="row mt-4">
               <div className="col-md-8">
-                <button className="btn btn-secondary me-2" onClick={() => setStep(1)}>Cancelar Venta</button>
-                <button className="btn btn-success" onClick={handleSale}>Realizar Venta</button>
+                <button
+                  className="btn btn-secondary me-2"
+                  onClick={() => setStep(1)}
+                >
+                  Cancelar Venta
+                </button>
+                <button className="btn btn-success" onClick={handleSale}>
+                  Realizar Venta
+                </button>
               </div>
               <div className="col-md-4">
                 <div className="p-3 bg-light border rounded">
-                  <p><strong>Total de venta:</strong> ${calcularTotal().toFixed(2)}</p>
+                  <p>
+                    <strong>Total de venta:</strong> $
+                    {calcularTotal().toFixed(2)}
+                  </p>
                   <div className="form-group mb-2">
-                    <label htmlFor="montoRecibido" className="form-label">Monto recibido:</label>
+                    <label htmlFor="montoRecibido" className="form-label">
+                      Monto recibido:
+                    </label>
                     <input
                       type="number"
                       className="form-control"
                       id="montoRecibido"
                       value={montoRecibido}
-                      onChange={(e) => setMontoRecibido(parseFloat(e.target.value) || 0)}
+                      onChange={(e) =>
+                        setMontoRecibido(parseFloat(e.target.value) || 0)
+                      }
                     />
                   </div>
-                  <p><strong>Cambio:</strong> ${calcularCambio().toFixed(2)}</p>
+                  <p>
+                    <strong>Cambio:</strong> ${calcularCambio().toFixed(2)}
+                  </p>
                 </div>
               </div>
             </div>

@@ -1,167 +1,190 @@
-import React, { useState, useEffect } from 'react';
-import Logo from '../../assets/img/logo.png'
-import Letras from '../../assets/img/nombre.png'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Lupa from '../../assets/img/buscar.png'
-import Product from './Product';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Logo from "../../assets/img/logo.png";
+import Letras from "../../assets/img/nombre.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Lupa from "../../assets/img/buscar.png";
+import Product from "./Product";
+import { useNavigate } from "react-router-dom";
 const blue = "#282C37";
-const orange = '#F75409';
-import apiConnect from '../../utils/api.connection';
-import Navbar from '../admin/NavBar';
+const orange = "#F75409";
+import apiConnect from "../../utils/api.connection";
+import Navbar from "../admin/NavBar";
+import NavBarCliente from "./NavBarCliente";
 
 const Tools = () => {
+  const navigate = useNavigate();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
 
-    const navigate = useNavigate();
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [products, setProducts] = useState([]);
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [hasToken, setHasToken] = useState(false);
 
-    const [hoveredCard, setHoveredCard] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [hasToken, setHasToken] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setHasToken(!!token);
+    getAllProducts();
+  }, []);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setHasToken(!!token);
-        getAllProducts()
-    }, [])
+  const getAllProducts = async () => {
+    try {
+      const response = await apiConnect.get("api/products/");
 
-    const getAllProducts = async () => {
-        try {
-            const response = await apiConnect.get('api/products/')
-
-            setProducts(response)
-        } catch (error) {
-            console.error(error);
-            
-        }
+      setProducts(response);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    const handleAddToOrder = async (product) => {
-        try {
-            const id = localStorage.getItem('id')
-            const payload = { id, products: Array.isArray(product) ? product : [product] };
-            await apiConnect.post('api/reserved/booking', payload)
+  const handleAddToOrder = async (product) => {
+    try {
+      const id = localStorage.getItem("id");
+      const payload = {
+        id,
+        products: Array.isArray(product) ? product : [product],
+      };
+      await apiConnect.post("api/reserved/booking", payload);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-        } catch (error) {
-            console.error(error);
-            
-        }
-    };
+  const handleProductClick = (product) => {
+    navigate(`/product/${product.id}`, { state: { product } });
+  };
 
-    const handleProductClick = (product) => {
-        navigate(`/product/${product.id}`, { state: { product } });
-    };
+  const filteProducts = products.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    const filteProducts = products.filter(
-        (product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  return (
+    <>
+      <NavBarCliente />
 
-    return (
-        <>
-        <Navbar/>
-        {/*<nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
-            <div style={{ backgroundColor: blue }} className="container-fluid">
-                <a className="navbar-brand text-white" href="/">
-                    <img src={Letras} style={{ width: 250, height: 50 }} />
-                </a>
-                <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <a class= "nav-link text-white fs-4" href="/">  Herramientas </a>
+      {/* Carrusel */}
+      <div
+        id="carouselExampleInterval"
+        className="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div className="carousel-inner">
+          <div className="carousel-item active" data-bs-interval="3000">
+            <img
+              src="https://www.venturaferreteria.com/wp-content/uploads/herramientas.jpg"
+              className="w-100"
+              style={{ height: 500 }}
+              alt="foto1"
+            />
+          </div>
+          <div className="carousel-item" data-bs-interval="3000">
+            <img
+              src="https://d100mj7v0l85u5.cloudfront.net/s3fs-public/2023-04/funciones-del-jefe-de-compras-6.png"
+              className="w-100"
+              style={{ height: 500 }}
+              alt="foto2"
+            />
+          </div>
+          <div className="carousel-item" data-bs-interval="3000">
+            <img
+              src="https://i.pinimg.com/originals/bf/de/72/bfde722655276150519f5399cfd5d730.jpg"
+              className="w-100"
+              style={{ height: 500 }}
+              alt="foto3"
+            />
+          </div>
+        </div>
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleInterval"
+          data-bs-slide="prev"
+        >
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleInterval"
+          data-bs-slide="next"
+        >
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div>
 
-                        <ul class="navbar-nav me-5 w-100 ">
-                            <div className="input-group bg-transparent border-0 rounded-pill text-dark w-100 ms-5">
-                                <input type="text" className="form-control rounded-pill" placeholder="Buscar" value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)} />
-                            </div>
-                        </ul>
-                    <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 17, width: 190, height: 35 }}
-                            onClick={() => (window.location.href = '/login')}>
-                            Iniciar Sesión
-                    </button>
+      {/* Sección de Cards */}
+      <div className="container my-4">
+        <p className="fs-2 fw-semibold mb-0">Productos disponibles</p>
+        <p className="p-0 mb-4">
+          ¡Lleva lo mejor y apártalo antes de que se agoten!
+        </p>
+        <div className="row">
+          {products.map((product, index) => (
+            <div
+              className="col-md-4 mb-4 text-center"
+              key={index}
+              //onClick={() => navigate('/sales', { state: { selectedProduct: product } })}
+            >
+              <div
+                className={`card h-100 border-secondary-subtle bg-body-tertiary ${
+                  hoveredCard === index ? "shadow" : ""
+                }`}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <img
+                  src={product.image}
+                  className="card-img-top h-50 w-50 d-block mx-auto"
+                  alt={product.name}
+                />
+                <div className="card-body justify-content-center mt-5 mb-0">
+                  <h5 className="card-title">{product.name}</h5>
+                  <p className="card-text">{product.description}</p>
+                  <p className="card-text fs-4">
+                    <strong>${product.selling_price}</strong>
+                  </p>
+                  <p className="card-text">{product.category}</p>
                 </div>
-            </div>
-        </nav>*/}
-
-            {/* Carrusel */}
-            <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
-                <div className="carousel-inner">
-                    <div className="carousel-item active" data-bs-interval="3000">
-                        <img src="https://www.venturaferreteria.com/wp-content/uploads/herramientas.jpg" className="w-100" style={{ height: 500 }} alt="foto1" />
+                <div className="card-footer">
+                  <button
+                    className="btn w-100 text-white mb-2"
+                    style={{ backgroundColor: orange }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate("/product", {
+                        state: { selectedProduct: product },
+                      });
+                    }}
+                  >
+                    Ver más
+                  </button>
+                  {hasToken && (
+                    <div className="card-body d-flex flex-column">
+                      <button
+                        className="btn btn-primary mt-auto"
+                        onClick={() => handleAddToOrder(product)}
+                      >
+                        Agregar a pedidos
+                      </button>
                     </div>
-                    <div className="carousel-item" data-bs-interval="3000">
-                        <img src="https://d100mj7v0l85u5.cloudfront.net/s3fs-public/2023-04/funciones-del-jefe-de-compras-6.png" className="w-100" style={{ height: 500 }} alt="foto2" />
-                    </div>
-                    <div className="carousel-item" data-bs-interval="3000">
-                        <img src="https://i.pinimg.com/originals/bf/de/72/bfde722655276150519f5399cfd5d730.jpg" className="w-100" style={{ height: 500 }} alt="foto3" />
-                    </div>
+                  )}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
-                </button>
+              </div>
             </div>
-
-            {/* Sección de Cards */}
-            <div className="container my-4">
-                <p className="fs-2 fw-semibold mb-0">Productos disponibles</p>
-                <p className="p-0 mb-4">¡Lleva lo mejor y apártalo antes de que se agoten!</p>
-                <div className="row">
-                    {products.map((product, index) => (
-                        <div
-                            className="col-md-4 mb-4 text-center"
-                            key={index}
-                            //onClick={() => navigate('/sales', { state: { selectedProduct: product } })}
-                        >
-                            <div
-                                className={`card h-100 border-secondary-subtle bg-body-tertiary ${hoveredCard === index ? 'shadow' : ''}`}
-                                onMouseEnter={() => setHoveredCard(index)}
-                                onMouseLeave={() => setHoveredCard(null)}
-                            >
-                                <img src={product.image} className="card-img-top h-50 w-50 d-block mx-auto" alt={product.name} />
-                                <div className="card-body justify-content-center mt-5 mb-0">
-                                    <h5 className="card-title">{product.name}</h5>
-                                    <p className="card-text">{product.description}</p>
-                                    <p className="card-text fs-4">
-                                        <strong>${product.selling_price}</strong>
-                                    </p>
-                                    <p className="card-text">{product.category}</p>
-                                </div>
-                                <div className="card-footer">
-                                    <button
-                                        className="btn w-100 text-white mb-2"
-                                        style={{ backgroundColor: orange }}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigate('/product', { state: { selectedProduct: product } });
-                                        }}
-                                    >
-                                        Ver más
-                                    </button>
-                                    {hasToken && (
-                                        <div className="card-body d-flex flex-column">
-                                        
-                                        <button
-                                            className="btn btn-primary mt-auto"
-                                            onClick={() => handleAddToOrder(product)}
-                                        >
-                                            Agregar a pedidos
-                                        </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </>
-    );
+          ))}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Tools;

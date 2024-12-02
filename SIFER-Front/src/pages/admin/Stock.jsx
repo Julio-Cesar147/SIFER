@@ -11,11 +11,11 @@ const Stock = () => {
   const [editableProduct, setEditableProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getAllProducts()
-  }, [])
+    getAllProducts();
+  }, []);
 
   const handleAddProduct = () => {
     setShowModal(true);
@@ -32,13 +32,16 @@ const Stock = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/products/${editableProduct.idProduct}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editableProduct),
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/products/${editableProduct.idProduct}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editableProduct),
+        }
+      );
 
       if (response.ok) {
         Swal.fire({
@@ -63,15 +66,14 @@ const Stock = () => {
 
   const getAllProducts = async () => {
     try {
-      const response = await apiConnect.get('api/products/')
-      const productsData = response
+      const response = await apiConnect.get("api/products/");
+      const productsData = response;
 
-      setProducts(productsData )
+      setProducts(productsData);
     } catch (error) {
       console.error(error);
-      
     }
-  }
+  };
 
   /*const filteredProducts = productsData.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -117,7 +119,10 @@ const Stock = () => {
                     />
                     <strong>{product.description}</strong> - $
                     {parseFloat(product.selling_price).toFixed(2)}
-                    <p>Disponible: {product.availableStock} Apartado: {product.reserved} Total: {product.stock}</p> 
+                    <p>
+                      Disponible: {product.availableStock} Apartado:{" "}
+                      {product.reserved} Total: {product.stock}
+                    </p>
                   </div>
                   <span
                     className={`badge ${
@@ -131,13 +136,25 @@ const Stock = () => {
             </ul>
           </div>
 
-          <FileUploadModal showModal={showModal} handleCloseModal={handleCloseModal}/>
+          <FileUploadModal
+            showModal={showModal}
+            handleCloseModal={handleCloseModal}
+          />
 
           {/* Detalle del Producto */}
           <div className="col-md-6">
             {editableProduct ? (
               <div className="card">
-                <img src={editableProduct.image} alt={editableProduct.name} style={{ width: "100%", height: "200px", objectFit: "cover", marginBottom: "10px",}}/>
+                <img
+                  src={editableProduct.image}
+                  alt={editableProduct.name}
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover",
+                    marginBottom: "10px",
+                  }}
+                />
                 <div className="card-body">
                   <h5 className="card-title">
                     <input
@@ -177,13 +194,40 @@ const Stock = () => {
                       className="form-control"
                     />
                   </p>
-                  <p> <strong>Categoría:</strong>{" "}
-                    <input type="text"value={editableProduct.category} onChange={(e) => setEditableProduct({ ...editableProduct, category: e.target.value, }) } className="form-control"/>
+                  <p>
+                    {" "}
+                    <strong>Categoría:</strong>{" "}
+                    <input
+                      type="text"
+                      value={editableProduct.category}
+                      onChange={(e) =>
+                        setEditableProduct({
+                          ...editableProduct,
+                          category: e.target.value,
+                        })
+                      }
+                      className="form-control"
+                    />
                   </p>
-                  <p> <strong>Stock:</strong>{" "}
-                    <input type="number" value={editableProduct.stock} onChange={(e) => setEditableProduct({ ...editableProduct, stock: parseInt(e.target.value), })} className="form-control"/>
+                  <p>
+                    {" "}
+                    <strong>Stock:</strong>{" "}
+                    <input
+                      type="number"
+                      value={editableProduct.stock}
+                      onChange={(e) =>
+                        setEditableProduct({
+                          ...editableProduct,
+                          stock: parseInt(e.target.value),
+                        })
+                      }
+                      className="form-control"
+                    />
                   </p>
-                  <button className="btn btn-warning float-end mb-2 me-2" onClick={handleSaveChanges}>
+                  <button
+                    className="btn btn-warning float-end mb-2 me-2"
+                    onClick={handleSaveChanges}
+                  >
                     Modificar
                   </button>
                 </div>
@@ -192,7 +236,11 @@ const Stock = () => {
               <div className="text-center mt-5">
                 <p>Selecciona un producto para editarlo...</p>
                 <div className="d-flex justify-content-center mt-3">
-                  <div className="spinner-border text-primary" role="status" style={{ width: "3rem", height: "3rem" }}>
+                  <div
+                    className="spinner-border text-primary"
+                    role="status"
+                    style={{ width: "3rem", height: "3rem" }}
+                  >
                     <span className="visually-hidden">Cargando...</span>
                   </div>
                 </div>

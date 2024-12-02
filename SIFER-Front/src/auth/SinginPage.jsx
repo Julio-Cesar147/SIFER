@@ -4,6 +4,7 @@ import ferre from "../assets/ferre.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
 import apiConnect from "../utils/api.connection";
+import Swal from "sweetalert2";
 const blue = "#282C37";
 const orange = "#F75409";
 
@@ -32,6 +33,13 @@ const SinginPage = () => {
       localStorage.setItem("role", result.role);
       localStorage.setItem("id", result.id);
 
+      Swal.fire({
+        title: "Inicio de sesión exitoso",
+        text: "¡Bienvenido a SIFER!",
+        icon: "success",
+        showConfirmButton: false,
+          timer: 2500,
+      }).then(() => {
       switch (result.role) {
         case "Cliente":
           window.location.href = "/tools";
@@ -45,8 +53,15 @@ const SinginPage = () => {
 
         default:
           break;
-      }
+        }
+      });
     } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "Usuario no registrado. Por favor verifica tus credenciales o regístrate.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
       console.error(error);
     }
   };
@@ -125,13 +140,13 @@ const SinginPage = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="username"
-                    placeholder="Usuario"
+                    id="email"
+                    placeholder="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <label htmlFor="username">Usuario</label>
+                  <label htmlFor="username">Correo electrónico</label>
                 </div>
 
                 <div className="form-floating mb-3">

@@ -235,7 +235,7 @@ const Register = () => {
                     htmlFor="date"
                     className="form-label fw-bold text-primary"
                   >
-                    Fecha de Nacimiento:
+                    Fecha de Nacimiento MM/DD/AAAA
                   </label>
                   <input
                     type="text"
@@ -248,7 +248,7 @@ const Register = () => {
                     onChange={(e) => setBirthday(e.target.value)}
                   />
                 </div>
-                <div className="col-6 ms-2">
+                <div className="col-6 ms-2 mt-4">
                   <label
                     htmlFor="phone"
                     className="form-label fw-bold text-primary"

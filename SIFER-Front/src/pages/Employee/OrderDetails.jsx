@@ -1,36 +1,39 @@
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const OrderDetails = ({ selectedOrder, onClose }) => {
-  const [payment, setPayment] = useState('');
+  const [payment, setPayment] = useState("");
 
   // Productos de ejemplo para el cliente seleccionado
   const products = [
-    { nombre: 'Martillo', cantidad: 1, precio: 50.0 },
-    { nombre: 'Taladro', cantidad: 2, precio: 200.0 },
-    { nombre: 'Llave inglesa', cantidad: 3, precio: 150.0 },
+    { nombre: "Martillo", cantidad: 1, precio: 50.0 },
+    { nombre: "Taladro", cantidad: 2, precio: 200.0 },
+    { nombre: "Llave inglesa", cantidad: 3, precio: 150.0 },
   ];
 
   // Calcular el total
-  const total = products.reduce((acc, item) => acc + item.cantidad * item.precio, 0);
+  const total = products.reduce(
+    (acc, item) => acc + item.cantidad * item.precio,
+    0
+  );
 
   // Manejar el cálculo del cambio
   const handleSale = () => {
     const changeAmount = parseFloat(payment) - total;
     if (changeAmount >= 0) {
       Swal.fire({
-        title: 'Venta realizada',
+        title: "Venta realizada",
         text: `El cambio es: $${changeAmount.toFixed(2)}`,
-        icon: 'success',
+        icon: "success",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
     } else {
       Swal.fire({
-        title: 'Monto insuficiente',
-        text: 'El dinero recibido no es suficiente para cubrir la venta.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
+        title: "Monto insuficiente",
+        text: "El dinero recibido no es suficiente para cubrir la venta.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
       });
     }
   };
@@ -40,8 +43,12 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
       <h4>Detalles de la Orden - {selectedOrder.cliente}</h4>
       <ul className="list-group mb-4">
         {products.map((item, index) => (
-          <li key={index} className="list-group-item d-flex justify-content-between">
-            {item.nombre} (x{item.cantidad}) <span>${item.cantidad * item.precio}</span>
+          <li
+            key={index}
+            className="list-group-item d-flex justify-content-between"
+          >
+            {item.nombre} (x{item.cantidad}){" "}
+            <span>${item.cantidad * item.precio}</span>
           </li>
         ))}
       </ul>
