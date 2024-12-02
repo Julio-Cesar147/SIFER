@@ -63,7 +63,9 @@ const reserved = async (idUser, products) => {
 
         return result
     } catch (error) {
-        throw new Error('Failed to make the reservation')
+        console.error(error);
+        
+        throw new Error('Failed to make the reservation', error)
     }
 }
 
@@ -151,7 +153,12 @@ const getReservation = async (code) => {
 const getAllReservations = async () => {
     const reservations = await Reservation.findAll({
         include:[{
-            model: ReservationDetail
+            model: ReservationDetail,
+            include: [{
+                model: Product
+            }]
+        },{
+            model: User
         }]
     })
 

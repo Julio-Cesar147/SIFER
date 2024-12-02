@@ -16,15 +16,13 @@ const Tools = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
 
-  const [hoveredCard, setHoveredCard] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [hasToken, setHasToken] = useState(false);
+    const [hoveredCard, setHoveredCard] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setHasToken(!!token);
-    getAllProducts();
-  }, []);
+    useEffect(() => {
+        
+        getAllProducts()
+    }, [])
 
   const getAllProducts = async () => {
     try {
@@ -121,70 +119,50 @@ const Tools = () => {
         </button>
       </div>
 
-      {/* Sección de Cards */}
-      <div className="container my-4">
-        <p className="fs-2 fw-semibold mb-0">Productos disponibles</p>
-        <p className="p-0 mb-4">
-          ¡Lleva lo mejor y apártalo antes de que se agoten!
-        </p>
-        <div className="row">
-          {products.map((product, index) => (
-            <div
-              className="col-md-4 mb-4 text-center"
-              key={index}
-              //onClick={() => navigate('/sales', { state: { selectedProduct: product } })}
-            >
-              <div
-                className={`card h-100 border-secondary-subtle bg-body-tertiary ${
-                  hoveredCard === index ? "shadow" : ""
-                }`}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <img
-                  src={product.image}
-                  className="card-img-top h-50 w-50 d-block mx-auto"
-                  alt={product.name}
-                />
-                <div className="card-body justify-content-center mt-5 mb-0">
-                  <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">{product.description}</p>
-                  <p className="card-text fs-4">
-                    <strong>${product.selling_price}</strong>
-                  </p>
-                  <p className="card-text">{product.category}</p>
+            {/* Sección de Cards */}
+            <div className="container my-4">
+                <p className="fs-2 fw-semibold mb-0">Productos disponibles</p>
+                <p className="p-0 mb-4">¡Lleva lo mejor y apártalo antes de que se agoten!</p>
+                <div className="row">
+                    {products.map((product, index) => (
+                        <div
+                            className="col-md-4 mb-4 text-center"
+                            key={index}
+                            //onClick={() => navigate('/sales', { state: { selectedProduct: product } })}
+                        >
+                            <div
+                                className={`card h-100 border-secondary-subtle bg-body-tertiary ${hoveredCard === index ? 'shadow' : ''}`}
+                                onMouseEnter={() => setHoveredCard(index)}
+                                onMouseLeave={() => setHoveredCard(null)}
+                            >
+                                <img src={product.image} className="card-img-top h-50 w-50 d-block mx-auto" alt={product.name} />
+                                <div className="card-body justify-content-center mt-5 mb-0">
+                                    <h5 className="card-title">{product.name}</h5>
+                                    <p className="card-text">{product.description}</p>
+                                    <p className="card-text fs-4">
+                                        <strong>${product.selling_price}</strong>
+                                    </p>
+                                    <p className="card-text">{product.category}</p>
+                                </div>
+                                <div className="card-footer">
+                                    <button
+                                        className="btn w-100 text-white mb-2"
+                                        style={{ backgroundColor: orange }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate('/product', { state: { selectedProduct: product } });
+                                        }}
+                                    >
+                                        Ver más
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                <div className="card-footer">
-                  <button
-                    className="btn w-100 text-white mb-2"
-                    style={{ backgroundColor: orange }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate("/product", {
-                        state: { selectedProduct: product },
-                      });
-                    }}
-                  >
-                    Ver más
-                  </button>
-                  {hasToken && (
-                    <div className="card-body d-flex flex-column">
-                      <button
-                        className="btn btn-primary mt-auto"
-                        onClick={() => handleAddToOrder(product)}
-                      >
-                        Agregar a pedidos
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default Tools;

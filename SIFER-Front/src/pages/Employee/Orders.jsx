@@ -1,28 +1,32 @@
-import React, { useState } from "react";
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import OrderDetails from "./OrderDetails";
-import NavBarEmployee from "./NavBarEmployee";
-import apiConnect from "../../utils/api.connection";
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import OrderDetails from './OrderDetails';
+import NavBarEmployee from './NavBarEmployee';
+import apiConnect from '../../utils/api.connection';
 
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orders, setOrders] = useState([]);
 
+  useEffect(() => {
+    getAllOrders()
+  }, [])
+
   // Filtrar órdenes
   const filteredOrders = orders.filter(
     (order) =>
-      order.numero.includes(searchTerm) ||
-      order.cliente.toLowerCase().includes(searchTerm.toLowerCase())
+      order.code.includes(searchTerm) ||
+      order.User.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getAllOrders = async () => {
     try {
-      const response = apiConnect.get("api/reserved/");
+      const response = await apiConnect.get('api/reserved/')
 
-      setOrders(response);
+      setOrders(response.reservations)
     } catch (error) {
       console(error);
     }
@@ -99,11 +103,11 @@ const Orders = () => {
                   onClick={() => setSelectedOrder(order)}
                   style={{ cursor: "pointer" }}
                 >
-                  <td>{order.numero}</td>
-                  <td>{order.cliente}</td>
-                  <td>{order.productos}</td>
-                  <td>${order.total}</td>
-                  <td>{order.estado}</td>
+                  <td>{order.code}</td>
+                  <td>{order.User.name + ' ' + order.User.lastname + ' ' + order.User.surname}</td>
+                  <td>{order.ReservationDetails.reduce((acc, detail) => acc + detail.reserved_quantity, 0)}</td>
+                  <td>${order.ReservationDetails.reduce((acc, detail) => acc + (detail.reserved_quantity * parseFloat(detail.Product.selling_price)),0)}</td>
+                  <td>{order.status}</td>
                   <td>
                     <button
                       className="btn btn-danger"
