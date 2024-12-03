@@ -17,13 +17,13 @@ const SalesHistory = () => {
         getHistory()
     }, [])
 
-    const handleStartDateChange = (e) => {
-        setStartDate(e.target.value);
-    };
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
 
-    const handleEndDateChange = (e) => {
-        setEndDate(e.target.value);
-    };
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
 
     const filteredHistory = history.filter(item => {
         const date = new Date(item.sales_date);
@@ -70,14 +70,19 @@ const SalesHistory = () => {
         }
     }
 
-    const totalSales = filteredHistory.reduce((total, item) => total + item.total, 0);
+  const totalSales = filteredHistory.reduce(
+    (total, item) => total + item.total,
+    0
+  );
 
-    return (
-        <>
-            <Navbar />
+  return (
+    <>
+      <Navbar />
 
-            <div className="container mt-5">
-                <h2 className="text-dark mx-auto text-center mb-4">Historial de Ventas</h2>
+      <div className="container mt-5">
+        <h2 className="text-dark mx-auto text-center mb-4">
+          Historial de Ventas
+        </h2>
 
                 {/* Filtros por fecha */}
                 <div className="row mb-4">
@@ -116,19 +121,19 @@ const SalesHistory = () => {
                     </div>
                 </div>
 
-                {/* Buscador de ventas por empleado */}
-                <div className="pt-3 input-group w-75 align-items-center justify-content-center start-50 translate-middle">
-                    <input
-                        type="text"
-                        className="form-control rounded-pill"
-                        placeholder="Buscar por empleado"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    <span className="input-group-text bg-white border-0">
-                        <i className="bi bi-search"></i>
-                    </span>
-                </div>
+        {/* Buscador de ventas por empleado */}
+        <div className="pt-3 input-group w-75 align-items-center justify-content-center start-50 translate-middle">
+          <input
+            type="text"
+            className="form-control rounded-pill"
+            placeholder="Buscar por empleado"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span className="input-group-text bg-white border-0">
+            <i className="bi bi-search"></i>
+          </span>
+        </div>
 
                 {/* Tabla de historial de ventas */}
                 {/*<h3 className="text-dark mt-5 mb-5">aqui podemos poner el dia traido dinamicamente o no c</h3>*/}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Logo from "../assets/img/logo.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
+import Swal from "sweetalert2";
 import { Button, FloatingLabel, Label } from "flowbite-react";
 import apiConnect from "../utils/api.connection";
 const blue = "#282C37";
@@ -58,11 +59,32 @@ const Register = () => {
       const result = await apiConnect.post("api/auth/register", payload);
 
       if (result) {
-        console.log("Registro exitoso");
+        Swal.fire({
+          title: "Registro exitoso",
+          text: "¡Bienvenido a SIFER!",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+
+        setTimeout(() => {
+          window.location.href = "/login"; // Redirigir al inicio de sesión
+        }, 2500);
       } else {
-        console.error("Error en el registro");
+        Swal.fire({
+          title: "Error",
+          text: "Error en el registro, por favor intenta nuevamente.",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
       }
     } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "Usuario no registrado. Por favor verifica tus datos o intenta de nuevo.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
       console.error(error);
     }
     // Funcionalidad de autenticación
@@ -235,7 +257,7 @@ const Register = () => {
                     htmlFor="date"
                     className="form-label fw-bold text-primary"
                   >
-                    Fecha de Nacimiento:
+                    Fecha de Nacimiento MM/DD/AAAA
                   </label>
                   <input
                     type="text"
@@ -248,7 +270,7 @@ const Register = () => {
                     onChange={(e) => setBirthday(e.target.value)}
                   />
                 </div>
-                <div className="col-6 ms-2">
+                <div className="col-6 ms-2 mt-4">
                   <label
                     htmlFor="phone"
                     className="form-label fw-bold text-primary"
