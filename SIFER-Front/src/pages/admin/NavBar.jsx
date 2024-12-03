@@ -143,7 +143,7 @@ const NavBar = () => {
                                 <img src={Letras} style={{ width: 250, height: 50 }} />
                             </a>
                             <div class="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                                    <a class= "nav-link text-white fs-4" href="/"> Catálogo </a>
+                                    <a class= "nav-link text-white fs-4" href="/login"> Catálogo </a>
 
                                     <ul class="navbar-nav me-5 w-100 ">
                                         <div className="input-group bg-transparent border-0 rounded-pill text-dark w-100 ms-5">

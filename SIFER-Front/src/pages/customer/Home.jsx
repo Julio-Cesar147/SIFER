@@ -58,12 +58,13 @@ const Tools = () => {
 
 
   const getDataUser = async () => {
+    const id = localStorage.getItem("id");
+    if (!id) {
+      setUser(null); 
+      navigate("/");
+      return;
+    }
     try {
-      const id = localStorage.getItem("id");
-      if (!id) {
-        navigate("/");
-        return;
-      }
       const response = await apiConnect.get(`api/admin/getEmployee/${id}`);
       setUser(response);
     } catch (error) {
