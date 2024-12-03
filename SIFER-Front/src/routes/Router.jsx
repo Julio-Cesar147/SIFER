@@ -5,7 +5,6 @@ import Profile from "../pages/admin/Profile.jsx";
 import Stock from "../pages/admin/Stock.jsx";
 import Cart from "../pages/customer/Cart.jsx"
 import Home from "../pages/customer/Home.jsx"
-import Tools from "../pages/customer/Tools.jsx";
 import Orders from "../pages/Employee/Orders.jsx";
 import Products from "../pages/Employee/Products.jsx";
 import Sales from "../pages/Employee/Sales.jsx";

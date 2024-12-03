@@ -38,7 +38,7 @@ const SinginPage = () => {
         text: "¡Bienvenido a SIFER!",
         icon: "success",
         showConfirmButton: false,
-          timer: 2500,
+          timer: 900,
       }).then(() => {
       switch (result.role) {
         case "Cliente":

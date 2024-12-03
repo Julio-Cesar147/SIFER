@@ -78,6 +78,20 @@ export const Cart = () => {
         });
     };
 
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        getDataUser();
+      }, []);
+    
+      const getDataUser = async () => {
+        try {
+          const id = localStorage.getItem("id");
+          const response = await apiConnect.get(`api/admin/getEmployee/${id}`);
+          setUser(response);
+        } catch (error) {
+          console.error(error);
+        }
+      };
     const handleApart = async () => {
         try {
             // Obtenemos los productos del localStorage
@@ -160,7 +174,7 @@ export const Cart = () => {
             style={{ width: 37, height: 35 }}
             className="bg-white border shadow rounded-circle me-2"
           />
-          <p className="fs-5 fw-bolder text-center text-white m-0">Luz Elena</p>
+          <p className="fs-5 fw-bolder text-center text-white m-0">{user?.name}</p>
         </div>
         <p className="fs-1 fw-bolder text-center pt-3">Mis Apartados</p>
         <div className="border-black border-bottom" />
