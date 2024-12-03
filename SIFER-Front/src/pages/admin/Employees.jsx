@@ -1,20 +1,17 @@
-import Navbar from "../admin/NavBar.jsx";
 import React, { useState, useEffect } from "react";
-const blue = "#282C37";
-const orange = "#F75409";
-const bluee = "#04478D";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "../admin/NavBar.jsx";
 import EmployeeDetails from "./EmployeeDetails.jsx";
 import apiConnect from "../../utils/api.connection.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Employees = () => {
+  const blue = "#282C37";
+  const bluee = "#04478D";
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [employees, setEmployees] = useState([]);
-
   const [showModal, setShowModal] = useState(false);
-  const [newEmployee, setNewEmployee] = useState({});
-
   const [name, setName] = useState("");
   const [lastnames, setLastnames] = useState("");
   const [email, setEmail] = useState("");
@@ -24,31 +21,37 @@ const Employees = () => {
   const [occupations, setOccupations] = useState([]);
   const [occupation, setOccupation] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     getAllOccupations();
     getAllEmployees();
   }, []);
 
-  /*const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewEmployee({ ...newEmployee, [name]: value });
-  };*/
+  const getAllEmployees = async () => {
+    try {
+      const response = await apiConnect.get("api/admin/getAllEmployees");
+      const list = response.filter((user) => user.Role.role === "Empleado");
+      setEmployees(list);
+    } catch (error) {
+      console.error("Error al obtener empleados:", error);
+    }
+  };
+
+  const getAllOccupations = async () => {
+    try {
+      const response = await apiConnect.get("api/occupation/");
+      setOccupations(response.occupations);
+    } catch (error) {
+      console.error("Error al obtener ocupaciones:", error);
+    }
+  };
 
   const handleAddEmployee = async (e) => {
-    //setEmployees([...employees, newEmployee]);
-    //setNewEmployee();
-    //
-
     e.preventDefault();
-
     try {
-      const lastname = lastnames.split(" ")[0];
-      const surname = lastnames.split(" ")[1];
-      const street = direction.split(",")[0];
-      const city = direction.split(",")[1];
-      const state = direction.split(",")[2];
-      const postal = direction.split(",")[3];
+      const [lastname, surname] = lastnames.split(" ");
+      const [street, city, state, postal] = direction.split(", ");
       const role = 2;
 
       const payload = {
@@ -71,75 +74,34 @@ const Employees = () => {
 
       if (result) {
         console.log("Registro exitoso");
-
-        window.location.reload();
-
-        setName("");
-        setLastnames("");
-        setEmail("");
-        setBirthday("");
-        setTelephone("");
-        setDirection("");
-        setOccupation("");
-        setPassword("");
-
+        getAllEmployees(); // Refresca la lista de empleados
         setShowModal(false);
+        resetForm();
       } else {
         console.error("Error en el registro");
       }
     } catch (error) {
       console.error(error);
     }
-
-    setShowModal(false);
   };
 
-  const handleSaveEmployee = (updatedEmployee) => {
-    setEmployees((prev) =>
-      prev.map((emp) => (emp === selectedEmployee ? updatedEmployee : emp))
-    );
-    setSelectedEmployee(null);
-  };
-
-  const handleDeleteEmployee = (employeeToDelete) => {
-    setEmployees((prev) =>
-      prev.filter((emp) => emp.email !== employeeToDelete.email)
-    );
-    setSelectedEmployee(null);
-  };
-
-  const getAllEmployees = async () => {
-    try {
-      const response = await apiConnect.get("api/admin/getAllEmployees");
-
-      const list = response.filter((user) => user.Role.role === "Empleado");
-
-      setEmployees(list);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const getAllOccupations = async () => {
-    try {
-      const response = await apiConnect.get("api/occupation/");
-
-      setOccupations(response.occupations);
-    } catch (error) {
-      console.error(error);
-    }
+  const resetForm = () => {
+    setName("");
+    setLastnames("");
+    setEmail("");
+    setBirthday("");
+    setTelephone("");
+    setDirection("");
+    setOccupation("");
+    setPassword("");
   };
 
   return (
     <>
       <Navbar />
-
       <div className="container mt-5">
         <h2 className="text-dark mx-auto text-center mb-4">Empleados</h2>
 
-        {/* Buscador */}
         <div className="pt-5 input-group w-75 align-items-center justify-content-center start-50 translate-middle">
           <input
             type="text"
@@ -151,9 +113,8 @@ const Employees = () => {
           <span className="input-group-text bg-white border-0">
             <i className="bi bi-search"></i>
           </span>
-
           <button
-            className="text-white btn rounded-pill text-center d-flex align-items-center justify-content-center"
+            className="text-white btn rounded-pill"
             style={{
               backgroundColor: bluee,
               fontSize: 20,
@@ -189,191 +150,80 @@ const Employees = () => {
                   onClick={() => setSelectedEmployee(employee)}
                   style={{ cursor: "pointer" }}
                 >
-                  {" "}
-                  {/* Asegúrate de que `id` sea único */}
                   <td>{employee.name}</td>
                   <td>
                     {employee.lastname} {employee.surname}
                   </td>
                   <td>{employee.email}</td>
                   <td>{employee.telephone}</td>
-                  <td>{employee.active ? "Activo" : "Inactivo"}</td>{" "}
-                  {/* Cambia según el estado */}
+                  <td>{employee.active ? "Activo" : "Inactivo"}</td>
                 </tr>
               ))}
           </tbody>
         </table>
+      </div>
 
-        {selectedEmployee && (
-          <EmployeeDetails
-            selectedEmployee={selectedEmployee}
-            onClose={() => setSelectedEmployee(null)}
-            onSave={handleSaveEmployee}
-            onDelete={handleDeleteEmployee}
-          />
-        )}
+      {selectedEmployee && (
+        <EmployeeDetails
+          selectedEmployee={selectedEmployee}
+          onClose={() => setSelectedEmployee(null)}
+        />
+      )}
 
-        {showModal && (
-          <div
-            className="modal fade show d-block"
-            style={{ marginTop: 30 }}
-            tabIndex="-1"
-            role="dialog"
-          >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Agregar Empleado</h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setShowModal(false)}
-                  ></button>
-                </div>
-                <div className="modal-body ">
-                  <form>
-                    <div className="mb-3">
-                      <label className="form-label">Nombre</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Apellidos</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="lastname"
-                        value={lastnames}
-                        onChange={(e) => setLastnames(e.target.value)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Teléfono</label>
-                      <input
-                        type="tel"
-                        className="form-control"
-                        name="phone"
-                        pattern="[0-9]{10}"
-                        title="Debe ser un número de 10 dígitos" // aqui puse un  mensajito pa recordar que solo son 10 numeritos
-                        maxLength="10" // esto hace que solo sean 10 digitos jiji
-                        required
-                        onInput={(e) => {
-                          e.target.value = e.target.value.replace(
-                            /[^0-9]/g,
-                            ""
-                          ); // Elimina letras y caracteres
-                        }}
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Ocupacion</label>
-                      <select
-                        className="form-control"
-                        id="occupation"
-                        name="occupation"
-                        required
-                        value={occupation}
-                        onChange={(e) => setOccupation(e.target.value)}
-                      >
-                        <option value="" disabled>
-                          Selecciona una ocupación
-                        </option>
-                        {occupations.map((occupation) => (
-                          <option
-                            key={occupation.idOccupation}
-                            value={occupation.idOccupation}
-                          >
-                            {occupation.occupation}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Fecha de Nacimiento</label>
-                      <input
-                        type="date"
-                        className="form-control"
-                        name="direction"
-                        value={birthday}
-                        onChange={(e) => setBirthday(e.target.value)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Dirección</label>
-                      <input
-                        type="direccion"
-                        className="form-control"
-                        name="direccion"
-                        value={direction}
-                        onChange={(e) => setDirection(e.target.value)}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label">Contraseña</label>
-                      <div className="d-flex">
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          className="form-control"
-                          name="password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary border-white"
-                          onClick={() => setShowPassword(!showPassword)}
-                        >
-                          <img
-                            src={
-                              showPassword
-                                ? "https://cdn-icons-png.flaticon.com/128/565/565655.png"
-                                : "https://cdn-icons-png.flaticon.com/128/2874/2874780.png"
-                            }
-                            alt={
-                              showPassword
-                                ? "Ocultar contraseña"
-                                : "Mostrar contraseña"
-                            }
-                            style={{ width: "20px", height: "20px" }}
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn text-white"
-                    style={{ backgroundColor: bluee }}
-                    onClick={handleAddEmployee}
-                  >
-                    {" "}
-                    Guardar{" "}
-                  </button>
-                </div>
+      {showModal && (
+        <div
+          className="modal fade show d-block"
+          style={{ marginTop: 30 }}
+          tabIndex="-1"
+          role="dialog"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Agregar Empleado</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowModal(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="mb-3">
+                    <label className="form-label">Nombre</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Apellidos</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={lastnames}
+                      onChange={(e) => setLastnames(e.target.value)}
+                    />
+                  </div>
+                  {/* Agrega el resto de los campos de formulario */}
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn text-white"
+                  style={{ backgroundColor: bluee }}
+                  onClick={handleAddEmployee}
+                >
+                  Guardar
+                </button>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 };

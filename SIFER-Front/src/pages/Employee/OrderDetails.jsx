@@ -4,7 +4,7 @@ import apiConnect from '../../utils/api.connection';
 import Sales from './Sales';
 
 const OrderDetails = ({ selectedOrder, onClose }) => {
-  const [payment, setPayment] = useState('');
+  const [payment, setPayment] = useState("");
 
   // Calcular el total de la venta
   const totalVenta = selectedOrder.ReservationDetails.reduce(

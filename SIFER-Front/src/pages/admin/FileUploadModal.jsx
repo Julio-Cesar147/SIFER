@@ -51,7 +51,7 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
           "http://localhost:3000/api/products/register",
           {
             method: "POST",
-            body: formData
+            body: formData,
           }
         );
 

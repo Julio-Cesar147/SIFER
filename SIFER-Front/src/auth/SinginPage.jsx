@@ -4,6 +4,7 @@ import ferre from "../assets/ferre.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
 import apiConnect from "../utils/api.connection";
+import Swal from "sweetalert2";
 const blue = "#282C37";
 const orange = "#F75409";
 
@@ -32,9 +33,16 @@ const SinginPage = () => {
       localStorage.setItem("role", result.role);
       localStorage.setItem("id", result.id);
 
+      Swal.fire({
+        title: "Inicio de sesión exitoso",
+        text: "¡Bienvenido a SIFER!",
+        icon: "success",
+        showConfirmButton: false,
+          timer: 2500,
+      }).then(() => {
       switch (result.role) {
         case "Cliente":
-          window.location.href = "/tools";
+          window.location.href = "/";
           break;
         case "Empleado":
           window.location.href = "/orders";
@@ -45,8 +53,15 @@ const SinginPage = () => {
 
         default:
           break;
-      }
+        }
+      });
     } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "Usuario no registrado. Por favor verifica tus credenciales o regístrate.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
       console.error(error);
     }
   };
@@ -58,10 +73,10 @@ const SinginPage = () => {
       {/* Barra de Navegación */}
       <nav className="navbar navbar-expand-lg p-0 ">
         <div style={{ backgroundColor: "#282c37" }} className="container-fluid">
-          <a className="navbar-brand text-white" href="/">
+          <a className="navbar-brand text-white " href="/">
             <img src={Letras} style={{ width: 250, height: 50 }} alt="Logo" />
           </a>
-          <div className="collapse navbar-collapse p-4">
+          <div className="collapse navbar-collapse p-4 ">
             <a className="nav-link text-white fs-4" href="/">
               Catálogo
             </a>
@@ -85,11 +100,11 @@ const SinginPage = () => {
               className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center"
               style={{
                 backgroundColor: "#f75409",
-                fontSize: 20,
+                fontSize: 15,
                 width: 150,
                 height: 35,
               }}
-              onClick={() => (window.location.href = "/")}
+              onClick={() => (window.location.href = "/login")}
             >
               Iniciar Sesión
             </button>
@@ -125,13 +140,13 @@ const SinginPage = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="username"
-                    placeholder="Usuario"
+                    id="email"
+                    placeholder="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <label htmlFor="username">Usuario</label>
+                  <label htmlFor="username">Correo electrónico</label>
                 </div>
 
                 <div className="form-floating mb-3">

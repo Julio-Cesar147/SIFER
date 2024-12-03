@@ -7,7 +7,7 @@ import NavBarEmployee from './NavBarEmployee';
 import apiConnect from '../../utils/api.connection';
 
 const Orders = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orders, setOrders] = useState([]);
 
@@ -28,36 +28,32 @@ const Orders = () => {
 
       setOrders(response.reservations)
     } catch (error) {
-      console(error)
+      console(error);
     }
-  }
+  };
 
   // Función para eliminar una orden con SweetAlert
   const handleDelete = (orderNumber) => {
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: "No podrás revertir esta acción",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Sí, eliminarlo!',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
+      confirmButtonText: "Sí, eliminarlo!",
+      cancelButtonText: "No, cancelar!",
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        setOrders(orders.filter(order => order.numero !== orderNumber));
+        setOrders(orders.filter((order) => order.numero !== orderNumber));
         Swal.fire({
           icon: "success",
-          title: "Elimiado",
+          title: "Eliminado",
           text: "La orden ha sido eliminada!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelado',
-          'La orden no ha sido eliminada.',
-          'error'
-        );
+        Swal.fire("Cancelado", "La orden no ha sido eliminada.", "error");
       }
     });
   };
@@ -101,9 +97,11 @@ const Orders = () => {
               filteredOrders.map((order, index) => (
                 <tr
                   key={index}
-                  className={order.estado === 'Entregado' ? 'table-success' : ''}
+                  className={
+                    order.estado === "Entregado" ? "table-success" : ""
+                  }
                   onClick={() => setSelectedOrder(order)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <td>{order.code}</td>
                   <td>{order.User.name + ' ' + order.User.lastname + ' ' + order.User.surname}</td>
