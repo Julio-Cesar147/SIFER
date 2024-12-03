@@ -1,26 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Perfil from "../../assets/img/perfil.png";
-import Employees from "../../assets/img/employees.png";
-import Historial from "../../assets/img/historial.png";
-import Inventario from "../../assets/img/inven.png";
 import { useState, useEffect } from "react";
-import Logo from "../../assets/img/logo.png";
+import Swal from "sweetalert2";
 import Navbar from "./NavBar";
 import apiConnect from "../../utils/api.connection";
 
 const blue = "#282C37";
-const orange = "#F75409";
 const lightGray = "#D9D9D9";
 
 export const Profile = () => {
-  const [hovered1, setHovered1] = useState(false);
-  const [hovered2, setHovered2] = useState(false);
-  const [hovered3, setHovered3] = useState(false);
-  const [hovered4, setHovered4] = useState(false);
-  const [showModal, setShowModal] = useState(false); // Controla la visibilidad del modal
-
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState({});
   const [change, setChange] = useState("");
 
@@ -31,19 +19,53 @@ export const Profile = () => {
   const getDataUser = async () => {
     try {
       const id = localStorage.getItem("id");
-
       const response = await apiConnect.get(`api/admin/getEmployee/${id}`);
-
       setUser(response);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleChangePass = async () => {
+    if (!change) {
+      Swal.fire({
+        icon: "warning",
+        title: "Advertencia",
+        text: "La nueva contraseña no puede estar vacía.",
+        showConfirmButton: true,
+      });
+      return;
+    }
+
+    try {
+      const id = localStorage.getItem("id");
+      const payload = { password: change };
+      await apiConnect.patch(`api/auth/${id}`, payload);
+
+      Swal.fire({
+        icon: "success",
+        title: "Éxito",
+        text: "Contraseña cambiada exitosamente.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      setShowModal(false); // Cierra el modal
+      setChange(""); // Limpia el estado de la contraseña
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un problema al cambiar la contraseña.",
+        showConfirmButton: true,
+      });
+    }
+  };
+
   return (
     <>
-    
-      <Navbar/>
+      <Navbar />
 
       <div className="container mt-5">
         {/* Información de Usuario */}
@@ -55,7 +77,9 @@ export const Profile = () => {
               <label className="form-label">Nombre:</label>
               <input
                 type="text"
-                value={user?.name + " " + user?.lastname + " " + user?.surname}
+                value={`${user?.name || ""} ${user?.lastname || ""} ${
+                  user?.surname || ""
+                }`}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -65,7 +89,7 @@ export const Profile = () => {
               <label className="form-label">Correo:</label>
               <input
                 type="text"
-                value={user?.email}
+                value={user?.email || ""}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -75,7 +99,7 @@ export const Profile = () => {
               <label className="form-label">Fecha de nacimiento:</label>
               <input
                 type="text"
-                value={user?.birthday}
+                value={user?.birthday || ""}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -85,7 +109,7 @@ export const Profile = () => {
               <label className="form-label">Rol:</label>
               <input
                 type="text"
-                value={user.Role?.role}
+                value={user?.Role?.role || ""}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -99,7 +123,7 @@ export const Profile = () => {
               borderRadius: "10px",
               fontWeight: "500",
             }}
-            onClick={handleOpenModal} // Abre el modal al hacer clic
+            onClick={() => setShowModal(true)}
           >
             Cambiar contraseña
           </button>
@@ -114,15 +138,11 @@ export const Profile = () => {
               <label className="form-label">Dirección:</label>
               <input
                 type="text"
-                value={
-                  user.Address?.street +
-                  " " +
-                  user.Address?.city +
-                  " " +
-                  user.Address?.state +
-                  " " +
-                  user.Address?.postal_code
-                }
+                value={`${user.Address?.street || ""}, ${
+                  user.Address?.city || ""
+                }, ${user.Address?.state || ""}, ${
+                  user.Address?.postal_code || ""
+                }`}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -132,7 +152,7 @@ export const Profile = () => {
               <label className="form-label">Número de teléfono:</label>
               <input
                 type="text"
-                value={user?.telephone}
+                value={user?.telephone || ""}
                 readOnly
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
@@ -149,27 +169,36 @@ export const Profile = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Cambiar contraseña</h5>
-                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowModal(false)}
+                ></button>
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <label className="form-label">Contraseña actual:</label>
-                  <input type="password" className="form-control" />
-                </div>
-                <div className="mb-3">
                   <label className="form-label">Nueva contraseña:</label>
-                  <input type="password" className="form-control" />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Confirmar nueva contraseña:</label>
-                  <input type="password" className="form-control" />
+                  <input
+                    type="password"
+                    className="form-control"
+                    value={change}
+                    onChange={(e) => setChange(e.target.value)}
+                  />
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
                   Cancelar
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleChangePass}
+                >
                   Guardar cambios
                 </button>
               </div>
