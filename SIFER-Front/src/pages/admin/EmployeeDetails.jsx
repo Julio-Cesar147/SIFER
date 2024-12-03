@@ -225,7 +225,7 @@ const EmployeeDetails = ({ selectedEmployee, onClose, onSave, onDelete }) => {
               <input
                 className="form-control ms-2 text-dark h-75 w-75 rounded-pill"
                 type="text"
-                name="phone"
+                name="telephone"
                 value={editableEmployee.telephone}
                 onChange={handleInputChange}
               />

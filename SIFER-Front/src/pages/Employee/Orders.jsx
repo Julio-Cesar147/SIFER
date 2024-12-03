@@ -115,7 +115,7 @@ const Orders = () => {
                         e.stopPropagation(); // Evitar que se ejecute el evento de selección
                         handleDelete(order.numero);
                       }}
-                    >
+                    >Eliminar
                       <i className="bi bi-x-circle"></i>
                     </button>
                   </td>
