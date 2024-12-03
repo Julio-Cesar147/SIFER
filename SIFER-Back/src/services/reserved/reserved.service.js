@@ -183,11 +183,15 @@ const cancelReservation = async (idReservation) => {
     return message = 'Successfully cancelled'
 }
 
-const getHistory = async (startDate, endDate) => {
-    if (!startDate || !endDate) {
+const getHistory = async () => {
         const histories = await History.findAll({
             include: [{
-                model: PurchaseDetail
+                model: PurchaseDetail,
+                include: [{
+                    model: Product
+                }]
+            },{
+                model: User
             }]
         })
 
@@ -195,24 +199,30 @@ const getHistory = async (startDate, endDate) => {
             throw new Error('No reservations found')
 
         return histories
-    } else {
-        const histories = await History.findAll({
-            where: {
-                sales_date: {
-                    [Sequelize.Op.gte]: startDate,
-                    [Sequelize.Op.lte]: endDate
-                }
-            },
+}
+
+const filteredHistory = async (startDate, endDate) => {
+    const histories = await History.findAll({
+        where: {
+            sales_date: {
+                [Sequelize.Op.gte]: startDate,
+                [Sequelize.Op.lte]: endDate
+            }
+        },
+        include: [{
+            model: PurchaseDetail,
             include: [{
-                model: PurchaseDetail
+                model: Product
             }]
-        })
+        },{
+            model: User
+        }]
+    })
 
-        if (!histories)
-            throw new Error('No reservations found')
+    if (!histories)
+        throw new Error('No reservations found')
 
-        return histories
-    }
+    return histories
 }
 
 module.exports = {
@@ -221,5 +231,6 @@ module.exports = {
     getReservation,
     getAllReservations,
     cancelReservation,
-    getHistory
+    getHistory,
+    filteredHistory
 }
