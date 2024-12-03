@@ -3,30 +3,55 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBarEmployee from "./NavBarEmployee";
+import apiConnect from "../../utils/api.connection.js";
 
 const Sales = () => {
   const [step, setStep] = useState(1);
-  const [articles, setArticles] = useState([
-    { id: 1, codigo: "A001", nombre: "Martillo", precio: 50, cantidad: 1 },
-    { id: 2, codigo: "A002", nombre: "Clavo", precio: 1, cantidad: 10 },
-  ]);
+  const [articles, setArticles] = useState([]);
   const [stock, setStock] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredStock, setFilteredStock] = useState([]);
   const [montoRecibido, setMontoRecibido] = useState(0);
 
   useEffect(() => {
+        
+    getAllProducts()
+}, [])
+
+const getAllProducts = async () => {
+try {
+  const response = await apiConnect.get("api/products/");
+
+  setProducts(response);
+} catch (error) {
+  console.error(error);
+}
+};
+  // Fetch inicial de los productos del stock
+  useEffect(() => {
     const fetchStock = async () => {
       try {
-        const response = await fetch("/api/stock");
-        const data = await response.json();
+        const data = await apiConnect.get("api/");
         setStock(data);
+        setFilteredStock(data); // Inicializar con todos los productos
       } catch (error) {
         console.error("Error al cargar el stock:", error);
       }
     };
-
     fetchStock();
   }, []);
+
+  // Filtrar productos en el cliente según el término de búsqueda
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredStock(stock); // Mostrar todo si no hay término de búsqueda
+    } else {
+      const filtered = stock.filter((item) =>
+        item.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredStock(filtered);
+    }
+  }, [searchTerm, stock]);
 
   const calcularTotal = () => {
     return articles.reduce(
@@ -59,10 +84,6 @@ const Sales = () => {
       showConfirmButton: false,
     });
   };
-
-  const filteredStock = stock.filter((item) =>
-    item.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const handleSale = () => {
     const total = calcularTotal();
