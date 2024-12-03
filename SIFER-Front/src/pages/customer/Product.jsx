@@ -31,26 +31,28 @@ const Product = () => {
             confirmButtonText: "Aceptar"
         }).then((result) => {
             if (result.isConfirmed) {
-                // Almacenar los productos en el localStorage (o en el estado global de tu app)
                 const apartados = JSON.parse(localStorage.getItem('apartados')) || [];
-                apartados.push({
+                const newProduct = {
                     ...selectedProduct,
                     reserved: reserved,
-                    totalPrice: selectedProduct.price * reserved,
-                });
+                    totalPrice: selectedProduct.selling_price * reserved,
+                };
+                console.log('Producto agregado:', newProduct); // Agrega esto para verificar
+                apartados.push(newProduct);
                 localStorage.setItem('apartados', JSON.stringify(apartados));
-
-        Swal.fire({
-          title: "Producto apartado",
-          text: "El producto solo será apartado 3 días",
-          icon: "success",
-        }).then(() => {
-          // Redirige a la página de apartados
-          navigate("/cart");
+    
+                Swal.fire({
+                    title: "Producto apartado",
+                    text: "El producto solo será apartado 3 días",
+                    icon: "success",
+                }).then(() => {
+                    navigate("/cart");
+                });
+            }
         });
-      }
-    });
-  };
+    };
+    
+      
 
     return (
         <>

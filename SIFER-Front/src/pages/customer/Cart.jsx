@@ -16,10 +16,10 @@ export const Cart = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Cargar productos desde el localStorage
     const storedProducts = JSON.parse(localStorage.getItem("apartados")) || [];
     setProducts(storedProducts);
-  }, []);
+}, []);
+
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,22 +29,25 @@ export const Cart = () => {
       product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const total = products.reduce((acc, product) => acc + product.totalPrice, 0);
+  const total = products.reduce((acc, product) => acc + (product.totalPrice || 0), 0);
+
 
   // Función para actualizar la cantidad de un producto
   const handleQuantityChange = (index, newQuantity) => {
-    // Actualizamos la cantidad en el estado local
-    const updatedProducts = [...products];
-    updatedProducts[index].quantity = newQuantity;
-    updatedProducts[index].totalPrice =
-      updatedProducts[index].price * newQuantity;
+    // Asegúrate de que la cantidad no sea menor a 1
+    if (newQuantity < 1) return;
 
-    // Guardamos los productos actualizados en el localStorage
+    // Actualiza la cantidad en el estado local
+    const updatedProducts = [...products];
+    updatedProducts[index].reserved = newQuantity;
+    updatedProducts[index].totalPrice = updatedProducts[index].selling_price * newQuantity;
+
+    // Guarda los productos actualizados en el localStorage
     localStorage.setItem("apartados", JSON.stringify(updatedProducts));
 
-    // Actualizamos el estado local
+    // Actualiza el estado local
     setProducts(updatedProducts);
-  };
+};
 
   // Función para eliminar un producto
   const handleDeleteProduct = (index) => {
@@ -210,7 +213,7 @@ export const Cart = () => {
 
                                     <div className="d-flex text-center align-items-center">
                                         <label className="fw-medium me-2 text-center align-items-center">Cantidad:</label>
-                                        <input type="number" min={1} value={product.quantity} onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))} 
+                                        <input type="number" min={1} value={product.reserved} onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))} 
                                             className="form-control align-content-center border shadow border-secondary-subtle " style={{ width: '60px' , height: 30}}/>
                                     </div>
                                 </div>
