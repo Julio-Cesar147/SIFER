@@ -52,7 +52,7 @@ const Employees = () => {
     try {
       const [lastname, surname] = lastnames.split(" ");
       const [street, city, state, postal] = direction.split(", ");
-      const role = 2;
+      const role = 2; // Rol 2 es para "Empleado"
 
       const payload = {
         name,
@@ -207,7 +207,79 @@ const Employees = () => {
                       onChange={(e) => setLastnames(e.target.value)}
                     />
                   </div>
-                  {/* Agrega el resto de los campos de formulario */}
+                  <div className="mb-3">
+                    <label className="form-label">Correo Electrónico</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Fecha de Nacimiento</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={birthday}
+                      onChange={(e) => setBirthday(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Teléfono</label>
+                    <input
+                      type="tel"
+                      className="form-control"
+                      value={telephone}
+                      onChange={(e) => setTelephone(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Dirección</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={direction}
+                      onChange={(e) => setDirection(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Ocupación</label>
+                    <select
+                      className="form-select"
+                      value={occupation}
+                      onChange={(e) => setOccupation(e.target.value)}
+                    >
+                      <option value="">Selecciona una ocupación</option>
+                      {occupations && occupations.length > 0 ? (
+                        occupations.map((occ) => (
+                          <option key={occ.idOccupation} value={occ.idOccupation}>
+                            {occ.occupation} {/* Aquí puedes cambiar 'name' por el campo que sea adecuado */}
+                          </option>
+                        ))
+                      ) : (
+                        <option value="">No hay ocupaciones disponibles</option>
+                      )}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Contraseña</label>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <div className="form-check mt-2">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={showPassword}
+                        onChange={() => setShowPassword(!showPassword)}
+                      />
+                      <label className="form-check-label">Mostrar Contraseña</label>
+                    </div>
+                  </div>
                 </form>
               </div>
               <div className="modal-footer">
