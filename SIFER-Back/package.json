@@ -18,6 +18,7 @@
     "mysql2": "^3.11.3",
     "nodemailer": "^6.9.16",
     "request": "^2.88.2",
+    "require": "^2.4.20",
     "sequelize": "^6.37.5",
     "sifer-back": "file:",
     "uuid": "^11.0.3"
