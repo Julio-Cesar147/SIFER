@@ -70,9 +70,21 @@ const cancelReservation = async (req, res) => {
 
 const getHistory = async (req, res) => {
     try {
-        const { startDate, endDate } = req.body
+        const histories = await reservedService.getHistory()
 
-        const histories = await reservedService.getHistory(startDate, endDate)
+        res.status(200).json({ histories: histories })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ message: `${error}` })
+    }
+}
+
+const filteredHistory = async (req, res) => {
+    try {
+        const startDate = req.params.start
+        const endDate = req.params.end
+
+        const histories = await reservedService.filteredHistory(startDate, endDate)
 
         res.status(200).json({ histories: histories })
     } catch (error) {
@@ -87,5 +99,6 @@ module.exports = {
     getReservation,
     getAllReservations,
     cancelReservation,
-    getHistory
+    getHistory,
+    filteredHistory
 }
