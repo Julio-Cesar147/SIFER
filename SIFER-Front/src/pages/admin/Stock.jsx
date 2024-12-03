@@ -49,6 +49,9 @@ const Stock = () => {
           icon: "success",
         });
         setSelectedProduct(editableProduct);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         Swal.fire({
           title: "Error al guardar cambios",
@@ -79,6 +82,7 @@ const Stock = () => {
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );*/
 
+  
   return (
     <>
       <Navbar />
@@ -150,7 +154,7 @@ const Stock = () => {
                   alt={editableProduct.name}
                   style={{
                     width: "100%",
-                    height: "200px",
+                    height: "300px",
                     objectFit: "cover",
                     marginBottom: "10px",
                   }}
@@ -185,6 +189,7 @@ const Stock = () => {
                     <input
                       type="number"
                       value={editableProduct.selling_price}
+                      min={1}
                       onChange={(e) =>
                         setEditableProduct({
                           ...editableProduct,
@@ -214,7 +219,7 @@ const Stock = () => {
                     <strong>Stock:</strong>{" "}
                     <input
                       type="number"
-                      value={editableProduct.stock}
+                      value={editableProduct.stock} min={1}
                       onChange={(e) =>
                         setEditableProduct({
                           ...editableProduct,

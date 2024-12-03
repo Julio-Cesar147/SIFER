@@ -10,7 +10,7 @@ const Tools = () => {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
-
+  const [user, setUser] = useState({});
     const [hoveredCard, setHoveredCard] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -52,6 +52,26 @@ const Tools = () => {
       product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  useEffect(() => {
+    getDataUser();
+  }, []);
+
+
+  const getDataUser = async () => {
+    try {
+      const id = localStorage.getItem("id");
+      if (!id) {
+        navigate("/");
+        return;
+      }
+      const response = await apiConnect.get(`api/admin/getEmployee/${id}`);
+      setUser(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   return (
     <>
       <NavBar role="admin" searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -59,9 +79,29 @@ const Tools = () => {
       {/* Carrusel */}
       <div
         id="carouselExampleInterval"
-        className="carousel slide"
+        className="carousel slide position-relative"
+        style={{ marginTop:  25}}
         data-bs-ride="carousel"
       >
+        {user?.name && (
+          <div
+            className="btn rounded-pill d-flex justify-content-center align-items-center text-center position-absolute shadow"
+            style={{
+              backgroundColor: "gray",
+              top: "5px",
+              left: "15px",
+              zIndex: 2,
+            }}
+            onClick={() => (window.location.href = "/profile")}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/6676/6676016.png"
+              style={{ width: 37, height: 35 }}
+              className="bg-white border shadow rounded-circle me-2"
+            />
+            <p className="fs-5 fw-bolder text-center text-white m-0">{user.name}</p>
+          </div>
+        )}
         <div className="carousel-inner">
           <div className="carousel-item active" data-bs-interval="3000">
             <img
