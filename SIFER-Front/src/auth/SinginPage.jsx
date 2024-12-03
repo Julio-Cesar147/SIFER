@@ -42,7 +42,7 @@ const SinginPage = () => {
       }).then(() => {
       switch (result.role) {
         case "Cliente":
-          window.location.href = "/tools";
+          window.location.href = "/";
           break;
         case "Empleado":
           window.location.href = "/orders";
@@ -73,10 +73,10 @@ const SinginPage = () => {
       {/* Barra de Navegación */}
       <nav className="navbar navbar-expand-lg p-0 ">
         <div style={{ backgroundColor: "#282c37" }} className="container-fluid">
-          <a className="navbar-brand text-white" href="/">
+          <a className="navbar-brand text-white " href="/">
             <img src={Letras} style={{ width: 250, height: 50 }} alt="Logo" />
           </a>
-          <div className="collapse navbar-collapse p-4">
+          <div className="collapse navbar-collapse p-4 ">
             <a className="nav-link text-white fs-4" href="/">
               Catálogo
             </a>
@@ -100,11 +100,11 @@ const SinginPage = () => {
               className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center"
               style={{
                 backgroundColor: "#f75409",
-                fontSize: 20,
+                fontSize: 15,
                 width: 150,
                 height: 35,
               }}
-              onClick={() => (window.location.href = "/")}
+              onClick={() => (window.location.href = "/login")}
             >
               Iniciar Sesión
             </button>

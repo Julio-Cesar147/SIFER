@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa useLocation
-import Logo from '../../assets/img/logo.png';
-import Letras from '../../assets/img/nombre.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Lupa from '../../assets/img/buscar.png';
 const bluee = "#04478D";
 const blue = "#282C37";
 const orange = '#F75409';
 import Swal from 'sweetalert2';
 import apiConnect from '../../utils/api.connection';
+import NavBar from "../../pages/admin/NavBar.jsx";
 
 const Product = () => {
     const navigate = useNavigate()
@@ -56,36 +54,7 @@ const Product = () => {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg p-0 ">
-                <div style={{ backgroundColor: blue }} className="container-fluid">
-                    <a className="navbar-brand text-white" href="/tools">
-                        <img src={Letras} style={{ width: 250, height: 50 }} />
-                    </a>
-
-                    <div className="collapse navbar-collapse p-4" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-5 w-50 ms-5">
-                            <div className="input-group bg-transparent border-0 rounded-pill text-dark w-100">
-                                <input
-                                    type="text"
-                                    className="form-control rounded-pill"
-                                    placeholder="Buscar"
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                            </div>
-                        </ul>
-                        <a className="nav-link text-white fs-5 me-5" href="/tools">Herramientas</a>
-                        <a className="nav-link text-white fs-5 me-5" href="/cart">Apartados</a>
-                        <button
-                            className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center"
-                            style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }}
-                            onClick={() => (window.location.href = '/login')}
-                        >
-                            Salir
-                        </button>
-                    </div>
-                </div>
-            </nav>
+            <NavBar role="admin" searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         
         <div className="container" style={{marginTop: 100}}>
             <div className="btn rounded-pill d-flex justify-content-center align-items-center text-center position-absolute shadow " 

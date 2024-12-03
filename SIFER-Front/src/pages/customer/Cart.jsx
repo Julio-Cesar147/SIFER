@@ -125,7 +125,7 @@ export const Cart = () => {
         <>
         <nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
             <div style={{ backgroundColor: blue }} className="container-fluid">
-                <a className="navbar-brand text-white" href="/tools">
+                <a className="navbar-brand text-white" href="/">
                     <img src={Letras} style={{ width: 250, height: 50 }} />
                 </a>
                 <div className="collapse navbar-collapse p-4" id="navbarSupportedContent">
@@ -134,7 +134,7 @@ export const Cart = () => {
                             <input type="text" className="form-control rounded-pill" placeholder="Buscar" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
                         </div>
                     </ul>
-                    <a className="nav-link text-white fs-5 me-5" href="/tools"> Herramientas </a>
+                    <a className="nav-link text-white fs-5 me-5" href="/"> Catálogo </a>
                     <a className="nav-link text-white fs-5 me-5" href="/cart">Apartados</a>
                     <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center"
                         style={{ backgroundColor: orange, fontSize: 20, width: 150, height: 35 }} onClick={() => (window.location.href = '/login')} >

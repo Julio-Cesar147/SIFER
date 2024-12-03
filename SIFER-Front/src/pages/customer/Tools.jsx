@@ -95,7 +95,7 @@ const Tools = () => {
         style={{ top: 0, left: 0, zIndex: 1030 }}
       >
         <div style={{ backgroundColor: blue }} className="container-fluid">
-          <a className="navbar-brand text-white" href="/tools">
+          <a className="navbar-brand text-white" href="/">
             <img src={Letras} style={{ width: 250, height: 50 }} />
           </a>
           <div
@@ -113,7 +113,7 @@ const Tools = () => {
                 />
               </div>
             </ul>
-            <a className="nav-link text-white fs-5 me-5" href="/tools">
+            <a className="nav-link text-white fs-5 me-5" href="/">
               {" "}
               Herramientas{" "}
             </a>

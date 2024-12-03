@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../../assets/img/logo.png";
-import Letras from "../../assets/img/nombre.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Lupa from "../../assets/img/buscar.png";
-import Product from "./Product";
 import { useNavigate } from "react-router-dom";
 const blue = "#282C37";
 const orange = "#F75409";
 import apiConnect from "../../utils/api.connection";
-import Navbar from "../admin/NavBar";
-import NavBarCliente from "./NavBarCliente";
+import NavBar from "../../pages/admin/NavBar.jsx";
 
 const Tools = () => {
   const navigate = useNavigate();
@@ -59,7 +54,7 @@ const Tools = () => {
 
   return (
     <>
-      <NavBarCliente />
+      <NavBar role="admin" searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       {/* Carrusel */}
       <div

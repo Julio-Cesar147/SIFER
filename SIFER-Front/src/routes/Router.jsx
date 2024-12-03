@@ -23,7 +23,7 @@ export const Router = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<SinginPage />} />
             <Route path="/register" element= {<Register/>}/>
-            <Route path="/tools" element={<Tools/>}/>
+            <Route path="/profile" element={<Profile />} />
 
             {/* Admin */}
             <Route path="/employees" element = {<Employees/>}/>
@@ -33,14 +33,12 @@ export const Router = () => {
 
             {/* Empleados */}
             <Route path="/sales" element={<Sales />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
-
-            {/* Clientes */}
             <Route path="/products" element={<Products/>} />
+            {/* Clientes */}
+            
             <Route  path="/cart" element={<Cart />} />
             <Route path="/product" element={<Product/>}/>
-            <Route path="/tools" element={<Tools/>}/>
             <Route  path="/productsing" element={<ProductSing />} />
 
         </Routes>
