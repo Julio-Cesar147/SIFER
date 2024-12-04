@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa useLocation
 import 'bootstrap/dist/css/bootstrap.min.css';
 const bluee = "#04478D";
-const blue = "#282C37";
 const orange = '#F75409';
 import Swal from 'sweetalert2';
-import apiConnect from '../../utils/api.connection';
 import NavBar from "../../pages/admin/NavBar.jsx";
 
 const Product = () => {
@@ -29,7 +27,7 @@ const Product = () => {
                 icon: "error",
                 confirmButtonText: "Aceptar"
             });
-            navigate("/product");
+            navigate("/");
             return;
         }
         Swal.fire({
@@ -67,7 +65,7 @@ const Product = () => {
 
     return (
         <>
-        <NavBar role="admin" searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <NavBar />
         
         <div className="container" style={{marginTop: 100}}>
 

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ferre from "../../assets/img/ferre.png";
-import NavBarEmployee from "./NavBarEmployee";
 import apiConnect from "../../utils/api.connection";
+import NavBar from "../admin/NavBar";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,7 +67,7 @@ const Products = () => {
   return (
     <>
       {/* nabvarsito empleaduki*/}
-      <NavBarEmployee />
+      <NavBar />
 
       <div className="container mt-4">
         <h2 className="text-center mb-4">Catálogo de Productos</h2>
