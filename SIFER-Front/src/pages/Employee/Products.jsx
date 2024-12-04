@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ferre from "../../assets/ferre.png";
+import ferre from "../../assets/img/ferre.png";
 import NavBarEmployee from "./NavBarEmployee";
 import apiConnect from "../../utils/api.connection";
 
