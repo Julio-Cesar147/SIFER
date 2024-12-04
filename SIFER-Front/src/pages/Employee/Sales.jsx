@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavBarEmployee from "./NavBarEmployee";
 import apiConnect from "../../utils/api.connection.js";
+import NavBar from "../admin/NavBar.jsx";
 
 const Sales = () => {
   const [step, setStep] = useState(1);
@@ -15,9 +14,8 @@ const Sales = () => {
   const [montoRecibido, setMontoRecibido] = useState(0);
 
   useEffect(() => {
-        
-    getAllProducts()
-}, [])
+    getAllProducts();
+  }, []);
 
 const getAllProducts = async () => {
   try {
@@ -88,13 +86,21 @@ const handleSuccess = () => {
 
   return (
     <>
-      <NavBarEmployee />
+      <NavBar />
       <div className="container mt-5">
         {step === 1 ? (
-          <div className="p-4 bg-white shadow rounded" style={{ maxWidth: "600px", margin: "auto" }}>
+          <div
+            className="p-4 bg-white shadow rounded"
+            style={{ maxWidth: "600px", margin: "auto" }}
+          >
             <h4 className="mb-4 text-primary">Información de comprador</h4>
             <hr />
-            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setStep(2);
+              }}
+            >
               <div className="form-group mb-3">
                 <label htmlFor="name" className="form-label">
                   Nombre (s)
@@ -165,18 +171,27 @@ const handleSuccess = () => {
                 </tr>
               </thead>
               <tbody>
-                {articles.filter((article) =>
-                  article.name.toLowerCase().includes(searchTerm.toLowerCase())
-                ).map((article) => (
-                  <tr key={article.idProduct}>
-                    <td>{article.idProduct}</td>
-                    <td>{article.sku}</td>
-                    <td>{article.name}</td>
-                    <td>${Number(article.selling_price).toFixed(2)}</td>
-                    <td>{article.cantidad}</td>
-                    <td>${Number(article.selling_price * article.cantidad).toFixed(2)}</td>
-                  </tr>
-                ))}
+                {articles
+                  .filter((article) =>
+                    article.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  )
+                  .map((article) => (
+                    <tr key={article.idProduct}>
+                      <td>{article.idProduct}</td>
+                      <td>{article.sku}</td>
+                      <td>{article.name}</td>
+                      <td>${Number(article.selling_price).toFixed(2)}</td>
+                      <td>{article.cantidad}</td>
+                      <td>
+                        $
+                        {Number(
+                          article.selling_price * article.cantidad
+                        ).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
             <div className="row mt-4 justify-content-center text-center">

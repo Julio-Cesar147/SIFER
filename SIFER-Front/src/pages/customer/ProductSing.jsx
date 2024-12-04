@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom"; // Importa useLocation
-import Logo from "../../assets/img/logo.png";
-import Letras from "../../assets/img/nombre.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Lupa from "../../assets/img/buscar.png";
-const bluee = "#04478D";
-const blue = "#282C37";
-const orange = "#F75409";
 import Swal from "sweetalert2";
-import NavBarCliente from "./NavBarCliente";
+import NavBar from "../admin/NavBar";
+const orange = "#F75409";
+
 
 const ProductSing = () => {
   const location = useLocation(); // Usa useLocation para obtener datos de la navegación
@@ -34,7 +30,7 @@ const ProductSing = () => {
 
   return (
     <>
-      <NavBarCliente />
+      <NavBar />
 
       <div className="container p-4">
         <p className="fs-3 fw-semibold mt-5 mb-4">{selectedProduct.category}</p>
