@@ -75,7 +75,7 @@ const Tools = () => {
 
   return (
     <>
-      <NavBar role="admin" searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <NavBar />
 
       {/* Carrusel */}
       <div

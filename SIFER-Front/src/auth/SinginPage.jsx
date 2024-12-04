@@ -138,7 +138,7 @@ const SinginPage = () => {
               <form onSubmit={signin} className="w-75">
                 <div className="form-floating mb-3">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     id="email"
                     placeholder="email"

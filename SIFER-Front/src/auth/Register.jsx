@@ -270,7 +270,7 @@ const Register = () => {
                     onChange={(e) => setBirthday(e.target.value)}
                   />
                 </div>
-                <div className="col-6 ms-2 mt-4">
+                <div className="col-6 ms-2">
                   <label
                     htmlFor="phone"
                     className="form-label fw-bold text-primary"
