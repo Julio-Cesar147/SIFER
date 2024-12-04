@@ -27,7 +27,7 @@ const Product = () => {
                 icon: "error",
                 confirmButtonText: "Aceptar"
             });
-            navigate("/");
+            navigate("/login");
             return;
         }
         Swal.fire({

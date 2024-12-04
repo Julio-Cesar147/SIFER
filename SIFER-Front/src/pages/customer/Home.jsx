@@ -8,11 +8,10 @@ import NavBar from "../../pages/admin/NavBar.jsx";
 
 const Tools = () => {
   const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
-    const [hoveredCard, setHoveredCard] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         
@@ -75,13 +74,13 @@ const Tools = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar setSearchTerm={setSearchTerm} />
 
       {/* Carrusel */}
       <div
         id="carouselExampleInterval"
         className="carousel slide position-relative"
-        style={{ marginTop:  25}}
+        style={{ marginTop:  86}}
         data-bs-ride="carousel"
       >
         {user?.name && (
