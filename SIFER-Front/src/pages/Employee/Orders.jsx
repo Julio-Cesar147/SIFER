@@ -112,7 +112,7 @@ const Orders = () => {
                     <button
                       className="btn btn-danger"
                       onClick={(e) => {
-                        e.stopPropagation(); // Evitar que se ejecute el evento de selección
+                        e.stopPropagation();
                         handleDelete(order.numero);
                       }}
                     >Eliminar

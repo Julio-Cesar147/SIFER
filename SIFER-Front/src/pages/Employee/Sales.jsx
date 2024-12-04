@@ -8,9 +8,11 @@ import apiConnect from "../../utils/api.connection.js";
 const Sales = () => {
   const [step, setStep] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
-  const [montoRecibido, setMontoRecibido] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const [Products, setProducts] = useState([]); 
   const [articles, setArticles] = useState([]);
+  const handleCloseModal = () => setShowModal(false);
+  const [montoRecibido, setMontoRecibido] = useState(0);
 
   useEffect(() => {
         
@@ -21,7 +23,7 @@ const getAllProducts = async () => {
   try {
     const response = await apiConnect.get("api/products/");
     console.log("Productos recibidos desde la API:", response); 
-    setProducts(response); // Asegúrate de acceder a los datos correctamente
+    setProducts(response);
   } catch (error) {
     console.error(error);
   }
@@ -42,6 +44,46 @@ const handleAddArticle = (product) => {
   }
 };
 
+const calcularTotal = () => {
+  return articles.reduce(
+    (total, art) => total + art.selling_price * art.cantidad, 
+      0
+  );
+};
+
+const handleShowModal = () => {
+  if (calcularTotal() > 0) {
+    setShowModal(true);
+  } else {
+    Swal.fire({
+      title: "Error",
+      text: "No hay productos en la venta.",
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
+  }
+};
+
+const calcularCambio = () => {
+  const diferencia = montoRecibido - calcularTotal();
+  if (diferencia < 0) {
+    return "Falta dinero";
+  }
+  return `$${Number(diferencia).toFixed(2)}`;
+};
+
+
+const handleSuccess = () => {
+  Swal.fire({
+    title: "Venta Realizada",
+    text: "La venta ha sido realizada perfectamente",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 900,
+}).then(() =>{
+    window.location.reload(); 
+  })
+};
 
 
   return (
@@ -57,51 +99,25 @@ const handleAddArticle = (product) => {
                 <label htmlFor="name" className="form-label">
                   Nombre (s)
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  placeholder="Nombre del cliente"
-                  required
-                />
+                <input type="text" className="form-control" id="name" placeholder="Nombre del cliente" required/>
               </div>
               <div className="form-group mb-3">
                 <label htmlFor="paterno" className="form-label">
                   Apellido Paterno
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="paterno"
-                  placeholder="Apellido paterno del cliente"
-                  required
-                />
+                <input type="text" className="form-control" id="paterno" placeholder="Apellido paterno del cliente" required/>
               </div>
               <div className="form-group mb-3">
                 <label htmlFor="materno" className="form-label">
                   Apellido Materno
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="materno"
-                  placeholder="Apellido materno del cliente"
-                  required
-                />
+                <input type="text" className="form-control" id="materno" placeholder="Apellido materno del cliente" required/>
               </div>
               <div className="form-group mb-3">
                 <label htmlFor="tel" className="form-label">
                   Teléfono
                 </label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  id="tel"
-                  placeholder="Teléfono"
-                  pattern="[0-9]{10}"
-                  title="Debe ser un número de 10 dígitos"
-                  maxLength="10"
-                  required
+                <input type="tel" className="form-control" id="tel" placeholder="Teléfono" pattern="[0-9]{10}" title="Debe ser un número de 10 dígitos" maxLength="10"  required
                   onInput={(e) => {
                     e.target.value = e.target.value.replace(/[^0-9]/g, "");
                   }}
@@ -118,26 +134,14 @@ const handleAddArticle = (product) => {
           <>
             <h4 className="mb-4 text-primary">Lista de artículos</h4>
             <div className="mb-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Buscar herramienta..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <input type="text" className="form-control" placeholder="Buscar herramienta..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             <ul className="list-group mt-2">
               {Products.filter((product) => 
                 product.name.toLowerCase().includes(searchTerm.toLowerCase())
               ).map((product) => (
-                <li
-                  key={product.idProduct}
-                  className="list-group-item d-flex justify-content-between align-items-center"
-                >
+                <li key={product.idProduct} className="list-group-item d-flex justify-content-between align-items-center">
                   {product.name} - ${product.selling_price}
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => handleAddArticle(product)} // Agrega el producto al carrito
-                  >
+                  <button className="btn btn-sm btn-primary" onClick={() => handleAddArticle(product)} >
                     Agregar
                   </button>
                 </li>
@@ -175,44 +179,71 @@ const handleAddArticle = (product) => {
                 ))}
               </tbody>
             </table>
-            <div className="row mt-4">
+            <div className="row mt-4 justify-content-center text-center">
               <div className="col-md-8">
-                <button
-                  className="btn btn-secondary me-2"
-                  onClick={() => setStep(1)}
-                >
+                <button className="btn btn-danger me-2" onClick={() => setStep(1)}>
                   Cancelar Venta
                 </button>
-                <button className="btn btn-success">
+                <button className="btn btn-success" onClick={handleShowModal}>
                   Realizar Venta
                 </button>
               </div>
-              <div className="col-md-4">
-                <div className="p-3 bg-light border rounded">
-                  <p>
-                    <strong>Total de venta:</strong> $
-                    
-                  </p>
-                  <div className="form-group mb-2">
-                    <label htmlFor="montoRecibido" className="form-label">
-                      Monto recibido:
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="montoRecibido"
-                      value={montoRecibido}
-                      onChange={(e) =>
-                        setMontoRecibido(parseFloat(e.target.value) || 0)
-                      }
-                    />
+            </div>
+            {showModal && (
+              <div className="modal show d-block" tabIndex="-1" role="dialog">
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title">Resumen de Venta</h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        onClick={handleCloseModal}
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      <p>
+                        <strong>Total de venta:</strong> ${Number(calcularTotal()).toFixed(2)}
+                      </p>
+                      <div className="form-group mb-2">
+                        <label htmlFor="montoRecibido" className="form-label">
+                          Monto recibido:
+                        </label>
+                        <input type="number" className="form-control" id="montoRecibido" value={montoRecibido} min={0} onChange={(e) =>
+                            setMontoRecibido(parseFloat(e.target.value) || 0)
+                          }
+                        />
+                      </div>
+                      <p>
+                        <strong>Cambio:</strong> {calcularCambio()}
+                      </p>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-success" 
+                        onClick={() => {
+                          if (montoRecibido < calcularTotal()) {
+                            Swal.fire({
+                              title: "Monto Insuficiente",
+                              text: "El monto recibido no es suficiente para completar la venta.",
+                              icon: "error",
+                              confirmButtonText: "Aceptar",
+                            });
+                          } else {
+                            handleCloseModal();
+                            handleSuccess();
+                          }
+                        }}
+                      >
+                        Confirmar Venta
+                      </button>
+                    </div>
                   </div>
-                  <p>
-                    <strong>Cambio:</strong> $
-                  </p>
                 </div>
               </div>
-            </div>
+            )}
           </>
         )}
       </div>
