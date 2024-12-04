@@ -21,8 +21,7 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
           title: 'Venta realizada',
           text: `El cambio es: $${changeAmount.toFixed(2)}`,
           icon: 'success',
-          showConfirmButton: false,
-          timer: 1500
+          showConfirmButton: true,
         });
       } else {
         Swal.fire({
@@ -51,7 +50,7 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
 
   return (
     <div className="card p-4 shadow my-4">
-      <h4>Detalles de la Orden - {selectedOrder.cliente}</h4>
+      <h4>Detalles de la Orden {selectedOrder.cliente}</h4>
       <ul className="list-group mb-4">
         {selectedOrder.ReservationDetails.map((detail, index) => (
           <li key={index} className="list-group-item d-flex justify-content-between">
