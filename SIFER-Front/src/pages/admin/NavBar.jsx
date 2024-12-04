@@ -8,6 +8,7 @@ import Historial from "../../assets/img/historial.png";
 import Inventario from "../../assets/img/inven.png";
 import Venta from "../../assets/img/venta.png"; // Empleado
 import Lupa from "../../assets/img/buscar.png";
+import OrderP from "../../assets/img/inven.png"
 import Logo from "../../assets/img/logo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 const bluee = "#04478D";
@@ -85,34 +86,40 @@ const NavBar = () => {
         );
       case "Empleado":
         return (
-          <div className="bg-white rounded-pill border border-dark-subtle d-flex justify-content-center">
-            {["profile", "sales", "orders"].map((link, idx) => (
-              <Link
-                key={link}
-                className="nav-link active px-5"
-                to={`/${link}`}
-                onMouseEnter={() => handleHover(idx, true)}
-                onMouseLeave={() => handleHover(idx, false)}
-                style={{ transition: "transform 0.3s ease, filter 0.3s ease" }}
-              >
-                <img
-                  src={idx === 0 ? Perfil : idx === 1 ? Venta : Inventario}
-                  alt={link}
-                  style={{
-                    width: 41,
-                    height: 41,
-                    transform: hovered[idx] ? "scale(1.1)" : "scale(1)",
-                    filter: hovered[idx] ? "brightness(1.2)" : "brightness(1)",
-                  }}
-                />
-              </Link>
-            ))}
+          <nav className="navbar navbar-expand-lg p-0">
+          <div style={{ backgroundColor: blue }} className="container-fluid">
+              <div className="collapse navbar-collapse p-4" id="navbarSupportedContent">
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                      <div className="bg-white rounded-pill border border-dark-subtle d-flex position-absolute start-50 translate-middle">
+                          <a className="nav-link active px-5" href="/profile"
+                              onMouseEnter={() => setHovered1(true)} onMouseLeave={() => setHovered1(false)}
+                              style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
+                              <img src={Perfil} style={{ width: 41, height: 41, transform: hovered1 ? 'scale(1.1)' : 'scale(1)', filter: hovered1 ? 'brightness(1.2)' : 'brightness(1)' }} alt="perfil" />
+                          </a>
+
+                          <a className="nav-link active px-5" href="/sales"
+                              onMouseEnter={() => setHovered2(true)} onMouseLeave={() => setHovered2(false)}
+                              style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
+                              <img src={Venta} style={{ width: 41, height: 41, transform: hovered2 ? 'scale(1.1)' : 'scale(1)', filter: hovered2 ? 'brightness(1.2)' : 'brightness(1)' }} alt="employees" />
+                          </a>
+
+                          <a className="nav-link active px-5" href="/orders"
+                              onMouseEnter={() => setHovered3(true)} onMouseLeave={() => setHovered3(false)}
+                              style={{ transition: 'transform 0.3s ease, filter 0.3s ease' }}>
+                              <img src={OrderP} style={{ width: 41, height: 41, transform: hovered3 ? 'scale(1.1)' : 'scale(1)', filter: hovered3 ? 'brightness(1.2)' : 'brightness(1)' }} alt="historial" />
+                          </a>
+                      </div>
+                  </ul>
+                  <button className="btn rounded-pill text-center fw-medium d-flex align-items-center justify-content-center" style={{ backgroundColor: orange, fontSize: 20, width: 100, height: 35 }}
+                  onClick={() => (window.location.href = '/login')}> Salir </button>
+              </div>
           </div>
+      </nav>
         );
       case "Cliente":
         return (
           <>
-        <nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>
+        <nav className="navbar navbar-expand-lg p-0" >
             <div style={{ backgroundColor: blue }} className="container-fluid">
                 <a className="navbar-brand text-white" href="/">
                     <img src={Letras} style={{ width: 250, height: 50 }} />
@@ -134,7 +141,7 @@ const NavBar = () => {
         </nav>
           </>
         );
-        default: // No logueado
+        default: 
         return (
           <>
             <nav className="navbar navbar-expand-lg p-0 position-fixed w-100" style={{ top: 0, left: 0, zIndex: 1030 }}>

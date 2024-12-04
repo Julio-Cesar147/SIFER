@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import ferre from "../assets/ferre.png";
+import ferre from "../assets/img/ferre.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
 import apiConnect from "../utils/api.connection";

@@ -21,6 +21,17 @@ const Product = () => {
     }
 
     const handleApartProduct = () => {
+        const userId = localStorage.getItem("id");
+        if (!userId) {
+            Swal.fire({
+                title: "¡Acceso denegado!",
+                text: "Debes inciar sesión para apartar un producto",
+                icon: "error",
+                confirmButtonText: "Aceptar"
+            });
+            navigate("/product");
+            return;
+        }
         Swal.fire({
             title: "¿Estás seguro?",
             text: `Apartarás ${reserved} piezas del producto ${selectedProduct.name}`,
@@ -37,7 +48,7 @@ const Product = () => {
                     reserved: reserved,
                     totalPrice: selectedProduct.selling_price * reserved,
                 };
-                console.log('Producto agregado:', newProduct); // Agrega esto para verificar
+                console.log('Producto agregado:', newProduct); 
                 apartados.push(newProduct);
                 localStorage.setItem('apartados', JSON.stringify(apartados));
     

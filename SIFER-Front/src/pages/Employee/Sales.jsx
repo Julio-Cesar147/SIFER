@@ -7,11 +7,10 @@ import apiConnect from "../../utils/api.connection.js";
 
 const Sales = () => {
   const [step, setStep] = useState(1);
-  const [articles, setArticles] = useState([]);
-  const [stock, setStock] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredStock, setFilteredStock] = useState([]);
   const [montoRecibido, setMontoRecibido] = useState(0);
+  const [Products, setProducts] = useState([]); 
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
         
@@ -19,113 +18,41 @@ const Sales = () => {
 }, [])
 
 const getAllProducts = async () => {
-try {
-  const response = await apiConnect.get("api/products/");
-
-  setProducts(response);
-} catch (error) {
-  console.error(error);
-}
+  try {
+    const response = await apiConnect.get("api/products/");
+    console.log("Productos recibidos desde la API:", response); 
+    setProducts(response); // Asegúrate de acceder a los datos correctamente
+  } catch (error) {
+    console.error(error);
+  }
 };
-  // Fetch inicial de los productos del stock
-  useEffect(() => {
-    const fetchStock = async () => {
-      try {
-        const data = await apiConnect.get("api/");
-        setStock(data);
-        setFilteredStock(data); // Inicializar con todos los productos
-      } catch (error) {
-        console.error("Error al cargar el stock:", error);
-      }
-    };
-    fetchStock();
-  }, []);
 
-  // Filtrar productos en el cliente según el término de búsqueda
-  useEffect(() => {
-    if (searchTerm === "") {
-      setFilteredStock(stock); // Mostrar todo si no hay término de búsqueda
-    } else {
-      const filtered = stock.filter((item) =>
-        item.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredStock(filtered);
-    }
-  }, [searchTerm, stock]);
-
-  const calcularTotal = () => {
-    return articles.reduce(
-      (total, art) => total + art.precio * art.cantidad,
-      0
+const handleAddArticle = (product) => {
+  const existingProduct = articles.find((art) => art.idProduct === product.idProduct);
+  if (existingProduct) {
+    setArticles(
+      articles.map((art) =>
+        art.idProduct === product.idProduct
+          ? { ...art, cantidad: art.cantidad + 1 }
+          : art
+      )
     );
-  };
+  } else {
+    setArticles([...articles, { ...product, cantidad: 1 }]);
+  }
+};
 
-  const calcularCambio = () => {
-    const total = calcularTotal();
-    return montoRecibido - total >= 0 ? montoRecibido - total : 0;
-  };
 
-  const handleAddArticle = (article) => {
-    const existingArticle = articles.find((art) => art.id === article.id);
-    if (existingArticle) {
-      setArticles(
-        articles.map((art) =>
-          art.id === article.id ? { ...art, cantidad: art.cantidad + 1 } : art
-        )
-      );
-    } else {
-      setArticles([...articles, { ...article, cantidad: 1 }]);
-    }
-    Swal.fire({
-      title: "Artículo agregado",
-      text: `${article.nombre} se agregó a la lista.`,
-      icon: "success",
-      timer: 1500,
-      showConfirmButton: false,
-    });
-  };
-
-  const handleSale = () => {
-    const total = calcularTotal();
-    const changeAmount = parseFloat(montoRecibido) - total;
-    if (changeAmount >= 0) {
-      Swal.fire({
-        title: "Venta realizada",
-        text: `El cambio es: $${changeAmount.toFixed(2)}`,
-        icon: "success",
-        showConfirmButton: false,
-        timer: 3000,
-      });
-      setStep(1); // volver al paso 1 después de realizar la venta
-      setArticles([]); // limpiar la lista de artículos
-      setMontoRecibido(0); // limpiar el monto
-    } else {
-      Swal.fire({
-        title: "Monto insuficiente",
-        text: "El dinero recibido no es suficiente para cubrir la venta.",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
-    }
-  };
 
   return (
     <>
       <NavBarEmployee />
       <div className="container mt-5">
         {step === 1 ? (
-          <div
-            className="p-4 bg-white shadow rounded"
-            style={{ maxWidth: "600px", margin: "auto" }}
-          >
+          <div className="p-4 bg-white shadow rounded" style={{ maxWidth: "600px", margin: "auto" }}>
             <h4 className="mb-4 text-primary">Información de comprador</h4>
             <hr />
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setStep(2);
-              }}
-            >
+            <form onSubmit={(e) => { e.preventDefault(); setStep(2); }}>
               <div className="form-group mb-3">
                 <label htmlFor="name" className="form-label">
                   Nombre (s)
@@ -198,22 +125,29 @@ try {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <ul className="list-group mt-2">
-                {filteredStock.map((item) => (
-                  <li
-                    key={item.id}
-                    className="list-group-item d-flex justify-content-between align-items-center"
+            <ul className="list-group mt-2">
+              {Products.filter((product) => 
+                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+              ).map((product) => (
+                <li
+                  key={product.idProduct}
+                  className="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  {product.name} - ${product.selling_price}
+                  <button
+                    className="btn btn-sm btn-primary"
+                    onClick={() => handleAddArticle(product)} // Agrega el producto al carrito
                   >
-                    {item.nombre} - ${item.precio.toFixed(2)}
-                    <button
-                      className="btn btn-sm btn-primary"
-                      onClick={() => handleAddArticle(item)}
-                    >
-                      Agregar
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                    Agregar
+                  </button>
+                </li>
+              ))}
+              {Products.filter((product) => 
+                product.name.toLowerCase().includes(searchTerm.toLowerCase())
+              ).length === 0 && (
+                <li className="list-group-item">No hay productos disponibles</li>
+              )}
+            </ul>
             </div>
             <table className="table table-striped table-hover">
               <thead className="table-primary">
@@ -227,14 +161,16 @@ try {
                 </tr>
               </thead>
               <tbody>
-                {articles.map((art) => (
-                  <tr key={art.id}>
-                    <td>{art.id}</td>
-                    <td>{art.codigo}</td>
-                    <td>{art.nombre}</td>
-                    <td>${art.precio.toFixed(2)}</td>
-                    <td>{art.cantidad}</td>
-                    <td>${(art.precio * art.cantidad).toFixed(2)}</td>
+                {articles.filter((article) =>
+                  article.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ).map((article) => (
+                  <tr key={article.idProduct}>
+                    <td>{article.idProduct}</td>
+                    <td>{article.sku}</td>
+                    <td>{article.name}</td>
+                    <td>${Number(article.selling_price).toFixed(2)}</td>
+                    <td>{article.cantidad}</td>
+                    <td>${Number(article.selling_price * article.cantidad).toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -247,7 +183,7 @@ try {
                 >
                   Cancelar Venta
                 </button>
-                <button className="btn btn-success" onClick={handleSale}>
+                <button className="btn btn-success">
                   Realizar Venta
                 </button>
               </div>
@@ -255,7 +191,7 @@ try {
                 <div className="p-3 bg-light border rounded">
                   <p>
                     <strong>Total de venta:</strong> $
-                    {calcularTotal().toFixed(2)}
+                    
                   </p>
                   <div className="form-group mb-2">
                     <label htmlFor="montoRecibido" className="form-label">
@@ -272,7 +208,7 @@ try {
                     />
                   </div>
                   <p>
-                    <strong>Cambio:</strong> ${calcularCambio().toFixed(2)}
+                    <strong>Cambio:</strong> $
                   </p>
                 </div>
               </div>
