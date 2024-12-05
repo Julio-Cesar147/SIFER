@@ -1,4 +1,3 @@
-import Navbar from "./NavBar";
 import React, { useState, useEffect } from "react";
 const blue = "#282C37";
 const orange = "#F75409";

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import OrderDetails from './OrderDetails';
-import NavBarEmployee from './NavBarEmployee';
-import apiConnect from '../../utils/api.connection';
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import OrderDetails from "./OrderDetails";
+import NavBar from "../admin/NavBar";
+import apiConnect from "../../utils/api.connection";
 
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,8 +12,8 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    getAllOrders()
-  }, [])
+    getAllOrders();
+  }, []);
 
   // Filtrar órdenes
   const filteredOrders = orders.filter(
@@ -24,9 +24,9 @@ const Orders = () => {
 
   const getAllOrders = async () => {
     try {
-      const response = await apiConnect.get('api/reserved/')
+      const response = await apiConnect.get("api/reserved/");
 
-      setOrders(response.reservations)
+      setOrders(response.reservations);
     } catch (error) {
       console(error);
     }
@@ -61,7 +61,7 @@ const Orders = () => {
   return (
     <>
       {/* NavBar para empleados */}
-      <NavBarEmployee />
+      <NavBar />
 
       <div className="container mt-5">
         <h2 className="text-dark mx-auto text-center">Pedidos</h2>
@@ -104,18 +104,39 @@ const Orders = () => {
                   style={{ cursor: "pointer" }}
                 >
                   <td>{order.code}</td>
-                  <td>{order.User.name + ' ' + order.User.lastname + ' ' + order.User.surname}</td>
-                  <td>{order.ReservationDetails.reduce((acc, detail) => acc + detail.reserved_quantity, 0)}</td>
-                  <td>${order.ReservationDetails.reduce((acc, detail) => acc + (detail.reserved_quantity * parseFloat(detail.Product.selling_price)),0)}</td>
+                  <td>
+                    {order.User.name +
+                      " " +
+                      order.User.lastname +
+                      " " +
+                      order.User.surname}
+                  </td>
+                  <td>
+                    {order.ReservationDetails.reduce(
+                      (acc, detail) => acc + detail.reserved_quantity,
+                      0
+                    )}
+                  </td>
+                  <td>
+                    $
+                    {order.ReservationDetails.reduce(
+                      (acc, detail) =>
+                        acc +
+                        detail.reserved_quantity *
+                          parseFloat(detail.Product.selling_price),
+                      0
+                    )}
+                  </td>
                   <td>{order.status}</td>
                   <td>
                     <button
                       className="btn btn-danger"
                       onClick={(e) => {
-                        e.stopPropagation(); // Evitar que se ejecute el evento de selección
+                        e.stopPropagation();
                         handleDelete(order.numero);
                       }}
-                    >Eliminar
+                    >
+                      Eliminar
                       <i className="bi bi-x-circle"></i>
                     </button>
                   </td>

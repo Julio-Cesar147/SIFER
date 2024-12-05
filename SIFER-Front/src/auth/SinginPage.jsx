@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import ferre from "../assets/ferre.png";
+import ferre from "../assets/img/ferre.png";
 import Letras from "../assets/img/nombre.png";
 import Lupa from "../assets/img/buscar.png";
 import apiConnect from "../utils/api.connection";
@@ -138,7 +138,7 @@ const SinginPage = () => {
               <form onSubmit={signin} className="w-75">
                 <div className="form-floating mb-3">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control"
                     id="email"
                     placeholder="email"

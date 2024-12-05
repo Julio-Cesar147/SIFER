@@ -257,20 +257,20 @@ const Register = () => {
                     htmlFor="date"
                     className="form-label fw-bold text-primary"
                   >
-                    Fecha de Nacimiento MM/DD/AAAA
+                    Fecha de Nacimiento
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="date"
                     name="date"
-                    placeholder="Fecha de nacimiento"
+                    placeholder="MM/DD/AAAA"
                     required
                     value={birthday}
                     onChange={(e) => setBirthday(e.target.value)}
                   />
                 </div>
-                <div className="col-6 ms-2 mt-4">
+                <div className="col-6 ms-2">
                   <label
                     htmlFor="phone"
                     className="form-label fw-bold text-primary"

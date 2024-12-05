@@ -8,11 +8,10 @@ import NavBar from "../../pages/admin/NavBar.jsx";
 
 const Tools = () => {
   const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState({});
-    const [hoveredCard, setHoveredCard] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         
@@ -58,12 +57,13 @@ const Tools = () => {
 
 
   const getDataUser = async () => {
+    const id = localStorage.getItem("id");
+    if (!id) {
+      setUser(null); 
+      navigate("/");
+      return;
+    }
     try {
-      const id = localStorage.getItem("id");
-      if (!id) {
-        navigate("/");
-        return;
-      }
       const response = await apiConnect.get(`api/admin/getEmployee/${id}`);
       setUser(response);
     } catch (error) {
@@ -74,13 +74,13 @@ const Tools = () => {
 
   return (
     <>
-      <NavBar role="admin" searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <NavBar setSearchTerm={setSearchTerm} />
 
       {/* Carrusel */}
       <div
         id="carouselExampleInterval"
         className="carousel slide position-relative"
-        style={{ marginTop:  25}}
+        style={{ marginTop:  86}}
         data-bs-ride="carousel"
       >
         {user?.name && (
