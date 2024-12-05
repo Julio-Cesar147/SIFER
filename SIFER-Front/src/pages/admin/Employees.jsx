@@ -52,7 +52,7 @@ const Employees = () => {
     try {
       const [lastname, surname] = lastnames.split(" ");
       const [street, city, state, postal] = direction.split(", ");
-      const role = 2;
+      const role = 2; // Rol 2 es para "Empleado"
 
       const payload = {
         name,
@@ -156,7 +156,7 @@ const Employees = () => {
                   </td>
                   <td>{employee.email}</td>
                   <td>{employee.telephone}</td>
-                  <td>{employee.active ? "Activo" : "Inactivo"}</td>
+                  <td>{employee.created ? "Activo" : "Inactivo"}</td>
                 </tr>
               ))}
           </tbody>

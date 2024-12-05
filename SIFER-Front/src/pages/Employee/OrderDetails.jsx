@@ -23,6 +23,21 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
           icon: 'success',
           showConfirmButton: true,
         });
+
+        const idUser = localStorage.getItem("id")
+        const sales = totalVenta
+        const products = selectedOrder.ReservationDetails.map(detail => ({
+          sku: detail.Product.sku,
+          sales_quantity: detail.reserved_quantity,
+          //price: parseFloat(detail.Product.selling_price)
+        }))
+        const code = selectedOrder.code
+
+        const payload = {idUser, sales, products, code}
+
+        const response = await apiConnect.post('api/reserved/collection', payload)
+
+        window.location.reload()
       } else {
         Swal.fire({
           title: 'Monto insuficiente',
@@ -31,18 +46,6 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
           confirmButtonText: 'Aceptar'
         });
       }
-      const idUser = localStorage.getItem("id")
-      const sales = totalVenta
-      const products = selectedOrder.ReservationDetails.map(detail => ({
-        sku: detail.Product.sku,
-        sales_quantity: detail.reserved_quantity,
-        //price: parseFloat(detail.Product.selling_price)
-      }))
-      const code = selectedOrder.code
-
-      const payload = {idUser, sales, products, code}
-
-      const response = await apiConnect.post('api/reserved/collection', payload)
     } catch (error) {
       console.error(error);
     }

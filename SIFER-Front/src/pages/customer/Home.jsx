@@ -21,8 +21,8 @@ const Tools = () => {
   const getAllProducts = async () => {
     try {
       const response = await apiConnect.get("api/products/");
-
-      setProducts(response);
+      const filteredProducts = response.filter(product => product.availableStock > 0); // Asegura que tengan stock disponible
+      setProducts(filteredProducts);
     } catch (error) {
       console.error(error);
     }
