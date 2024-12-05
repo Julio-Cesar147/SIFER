@@ -18,6 +18,7 @@ export const Router = () => {
   const userRole = localStorage.getItem("role"); // Asumimos que guardas el rol del usuario en localStorage
 
   return (
+    /* se supone que aqui se valida el router */
     <Routes>
       {/* Rutas públicas */}
       <Route path="/" element={<Home />} />
@@ -46,7 +47,7 @@ export const Router = () => {
           )}
 
           {/* Rutas para el rol "cliente" */}
-          {userRole === "cliente" && (
+          {userRole === "Cliente" && (
             <>
               <Route path="/cart" element={<Cart />} />
               <Route path="/product" element={<Product />} />

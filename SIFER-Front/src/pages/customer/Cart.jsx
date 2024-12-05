@@ -119,6 +119,8 @@ export const Cart = () => {
                 text: 'Tus productos han sido apartados correctamente.',
                 showConfirmButton: false,
                 timer: 2500
+            }).then(() => {
+              window.location.reload();
             });
         } catch (error) {
             console.error(error);

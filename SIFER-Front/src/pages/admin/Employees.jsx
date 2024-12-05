@@ -156,7 +156,7 @@ const Employees = () => {
                   </td>
                   <td>{employee.email}</td>
                   <td>{employee.telephone}</td>
-                  <td>{employee.active ? "Activo" : "Inactivo"}</td>
+                  <td>{employee.created ? "Activo" : "Inactivo"}</td>
                 </tr>
               ))}
           </tbody>
