@@ -32,12 +32,15 @@ const Stock = () => {
 
   const handleSaveChanges = async () => {
     try {
+      const token = localStorage.getItem('token')
+
       const response = await fetch(
         `http://localhost:3000/api/products/${editableProduct.idProduct}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            'authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(editableProduct),
         }

@@ -132,6 +132,8 @@ const collection = async (idUser, sales,  products, code) => {
 
         return result
     } catch (error) {
+        console.error(error);
+        
         throw new Error('Failed to make the collection')
     }   
 }
