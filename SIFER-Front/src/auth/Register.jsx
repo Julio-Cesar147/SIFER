@@ -23,6 +23,7 @@ const Register = () => {
   const [postal, setPostal] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     getAllOccupations();
@@ -34,6 +35,17 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        title: "Error",
+        text: "Las contraseñas no coinciden",
+        icon: "warning",
+        showConfirmButton: false,
+          timer: 900,
+      })
+      return;
+    }
 
     try {
       const lastname = lastnames.split(" ")[0];
@@ -232,6 +244,7 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                
                 <button
                   type="button"
                   className="btn btn-outline-secondary border-white "
@@ -249,6 +262,21 @@ const Register = () => {
                     style={{ width: "20px", height: "20px" }}
                   />
                 </button>
+              </div>
+
+              <label htmlFor="confirmPassword" className="form-label fw-bold text-primary">
+                  Confirmar Contraseña:
+                </label>
+              <div className="mb-3 d-flex">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="form-control"
+                  id="confirmPassword"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                
               </div>
 
               <div className="d-flex mb-3">

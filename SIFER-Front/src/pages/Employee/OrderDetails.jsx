@@ -17,12 +17,12 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
     try {
       const changeAmount = parseFloat(payment) - totalVenta;
       if (changeAmount >= 0) {
-        Swal.fire({
+        /*Swal.fire({
           title: 'Venta realizada',
           text: `El cambio es: $${changeAmount.toFixed(2)}`,
           icon: 'success',
           showConfirmButton: true,
-        });
+        });*/
 
         const idUser = localStorage.getItem("id")
         const sales = totalVenta
@@ -36,6 +36,15 @@ const OrderDetails = ({ selectedOrder, onClose }) => {
         const payload = {idUser, sales, products, code}
 
         const response = await apiConnect.post('api/reserved/collection', payload)
+
+        if (response) {
+          Swal.fire({
+            title: 'Venta realizada',
+            text: `El cambio es: $${changeAmount.toFixed(2)}`,
+            icon: 'success',
+            showConfirmButton: true,
+          });
+        }
 
         window.location.reload()
       } else {

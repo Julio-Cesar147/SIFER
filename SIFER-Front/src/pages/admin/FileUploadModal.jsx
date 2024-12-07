@@ -77,8 +77,13 @@ const FileUploadModal = ({ showModal, handleCloseModal }) => {
     formData.append("unit", unit);
 
     try {
+      const token = localStorage.getItem('token')
+
       const response = await fetch("http://localhost:3000/api/products/register", {
         method: "POST",
+        headers: {
+          'authorization': `Bearer ${token}`
+        },
         body: formData,
       });
 

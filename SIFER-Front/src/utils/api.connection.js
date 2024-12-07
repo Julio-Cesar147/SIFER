@@ -4,7 +4,7 @@ const apiConnect = {
     makeRequest: async (method, endpoint, data, param) => {
         const url = param ? `${BASE_URL}${endpoint}/${param}` : `${BASE_URL}${endpoint}`
 
-        //const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token')
 
         /*if (!token)
             throw new Error('Token not found')*/
@@ -12,9 +12,9 @@ const apiConnect = {
         const options = {
             method: method,
             headers: {
-                //'authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${token}`,
                 //"Content-Type": "multipart/form-data",
-                'Content-Type': 'application/json'
             },
             body: data ? JSON.stringify(data) : null
         }

@@ -3,6 +3,7 @@ import Navbar from "../admin/NavBar.jsx";
 import EmployeeDetails from "./EmployeeDetails.jsx";
 import apiConnect from "../../utils/api.connection.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from "sweetalert2";
 
 const Employees = () => {
   const blue = "#282C37";
@@ -22,6 +23,7 @@ const Employees = () => {
   const [occupation, setOccupation] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     getAllOccupations();
@@ -49,6 +51,18 @@ const Employees = () => {
 
   const handleAddEmployee = async (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        title: "Error",
+        text: "Las contraseñas no coinciden",
+        icon: "warning",
+        showConfirmButton: false,
+          timer: 900,
+      })
+      return;
+    }
+
     try {
       const [lastname, surname] = lastnames.split(" ");
       const [street, city, state, postal] = direction.split(", ");
@@ -73,7 +87,14 @@ const Employees = () => {
       const result = await apiConnect.post("api/auth/register", payload);
 
       if (result) {
-        console.log("Registro exitoso");
+        Swal.fire({
+          title: "Empleado Registrado",
+          text: "El empleado se registró correctamente.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+
         getAllEmployees(); // Refresca la lista de empleados
         setShowModal(false);
         resetForm();
@@ -94,6 +115,7 @@ const Employees = () => {
     setDirection("");
     setOccupation("");
     setPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -296,6 +318,15 @@ const Employees = () => {
                           </label>
                         </div>
                       </div>
+                      <div className="mb-3">
+                      <label className="form-label">Confirmar Contraseña</label>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
                     </div>
                   </div>
                 </form>

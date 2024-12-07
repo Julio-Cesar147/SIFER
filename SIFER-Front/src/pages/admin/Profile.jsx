@@ -11,6 +11,8 @@ export const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState({});
   const [change, setChange] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     getDataUser();
@@ -27,6 +29,17 @@ export const Profile = () => {
   };
 
   const handleChangePass = async () => {
+    if (change !== confirmPassword) {
+      Swal.fire({
+        title: "Error",
+        text: "Las contraseñas no coinciden",
+        icon: "warning",
+        showConfirmButton: false,
+          timer: 900,
+      })
+      return;
+    }
+
     if (!change) {
       Swal.fire({
         icon: "warning",
@@ -52,6 +65,7 @@ export const Profile = () => {
 
       setShowModal(false); // Cierra el modal
       setChange(""); // Limpia el estado de la contraseña
+      setConfirmPassword("");
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -185,7 +199,17 @@ export const Profile = () => {
                     onChange={(e) => setChange(e.target.value)}
                   />
                 </div>
+                <div className="mb-3">
+                      <label className="form-label">Confirmar Contraseña</label>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
               </div>
+              
               <div className="modal-footer">
                 <button
                   type="button"
