@@ -225,6 +225,13 @@ const EmployeeDetails = ({ selectedEmployee, onClose, onSave, onDelete }) => {
                 className="form-control ms-2 text-dark h-75 w-75 rounded-pill"
                 type="text"
                 name="telephone"
+                pattern="[0-9]{10}"
+                title="Debe ser un número de 10 dígitos"
+                maxLength="10"
+                required
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                }}
                 value={editableEmployee.telephone}
                 onChange={handleInputChange}
               />

@@ -6,6 +6,7 @@ import apiConnect from "../../utils/api.connection";
 
 const blue = "#282C37";
 const lightGray = "#D9D9D9";
+const pink = "#ff0080";
 
 export const Profile = () => {
   const [showModal, setShowModal] = useState(false);
@@ -81,9 +82,9 @@ export const Profile = () => {
     <>
       <Navbar />
 
-      <div className="container mt-5">
+      <div className="container mt-5" style={{color:pink}}>
         {/* Información de Usuario */}
-        <div className="mb-4">
+        <div className="mb-4" style={{color:pink}}>
           <h5 className="fw-bold">Información de Usuario</h5>
           <hr />
           <div className="row">
@@ -171,6 +172,16 @@ export const Profile = () => {
                 className="form-control"
                 style={{ backgroundColor: lightGray, border: "none" }}
               />
+               <button
+            className="btn text-white mt-3"
+            style={{
+              backgroundColor: blue,
+              borderRadius: "10px",
+              fontWeight: "500",
+            }}
+          >otro boton
+            
+          </button>
             </div>
           </div>
         </div>

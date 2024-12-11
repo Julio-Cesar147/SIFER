@@ -106,9 +106,10 @@ const getProducts = async () => {
 
         // Retornar el producto con stock disponible, reservado y demás atributos del producto
         return {
+            ...product.toJSON(),
             idProduct: product.idProduct,
             name: product.name,
-            description: product.description,
+            description: "Hola Ana",
             sku: product.sku,
             selling_price: product.selling_price,
             model: product.model,

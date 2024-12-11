@@ -312,6 +312,12 @@ const Register = () => {
                     name="phone"
                     placeholder="Número telefonico"
                     required
+                    pattern="[0-9]{10}"
+                    title="Debe ser un número de 10 dígitos"
+                    maxLength="10" 
+                    onInput={(e) => {
+                      e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                    }}  
                     value={telephone}
                     onChange={(e) => setTelephone(e.target.value)}
                   />

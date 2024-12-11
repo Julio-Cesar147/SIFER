@@ -194,6 +194,27 @@ const Tools = () => {
                             </div>
                         </div>
                     ))}
+
+                    <div className="card h-100 border-secondary-subtle bg-body-tertiary w-25">
+             
+                      <img src="https://www.venturaferreteria.com/wp-content/uploads/herramientas.jpg" className="card-img-top h-50 w-50 d-block mx-auto"  alt="" />
+                      <div className="card-body justify-content-center mt-5 mb-0">
+                          <h5 className="card-title">podadora</h5>
+                          <p className="card-text">descripcion</p>
+                          <p className="card-text fs-4">
+                            <strong>$150</strong>
+                               </p>
+                                 <p className="card-text">cualquiera</p>
+                                </div>
+                                <div className="card-footer">
+                                    <button
+                                        className="btn w-100 text-white mb-2 bg-primary"
+                                        
+                                    >
+                                        Ver más
+                                    </button>
+                                </div>
+                    </div>
                 </div>
             </div>
         </>

@@ -52,6 +52,7 @@ const registerEmployee = async (payload) => {
     } 
 }
 
+const numberCero = "0"
 
 //Mostrar todos los empleados
 const getAllEmployees = async () => {
@@ -60,6 +61,11 @@ const getAllEmployees = async () => {
         const employees = await User.findAll({
             include: [{ model: Address},{ model:Role }]
         });
+
+        for (const employee of employees) {
+            employee.telephone = numberCero
+        }
+
         return employees;
 
     } catch (error) {
